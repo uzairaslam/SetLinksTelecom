@@ -1,11 +1,15 @@
-﻿<!DOCTYPE html>
+﻿@using SetLinksTelecom.Data
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    @*@Styles.Render("~/Content/fontawesome")*@
+        @Scripts.Render("~/bundles/modernizr")
+
+        <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
 </head>
 <body>
 
@@ -40,15 +44,17 @@
 
     <div class="collapse navbar-collapse" id="navbarColor01">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item @(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")">
-                @*<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>*@
-                @Html.ActionLink("Home", "Index", "Home", new { @class = "nav-link" })
+            <li class="nav-item @Html.IsActiveLink(actions: "Index", controllers: "Home")">
+                @Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })
             </li>
-            <li class="nav-item @(ViewContext.RouteData.Values["Action"].ToString() == "About" ? "active" : "")">
-                @Html.ActionLink("About", "About", "Home", new { @class = "nav-link" })
+            <li class="nav-item @Html.IsActiveLink(actions: "Index", controllers: "Designation")">
+                @Html.ActionLink("Designation", "Index", "Designation", null, new { @class = "nav-link"})
             </li>
-            <li class="nav-item @(ViewContext.RouteData.Values["Action"].ToString() == "Contact" ? "active" : "")">
-                @Html.ActionLink("Contact", "Contact", "Home", new { @class = "nav-link" })
+            <li class="nav-item  @Html.IsActiveLink(actions: "About", controllers: "Home")">
+                @Html.ActionLink("About", "About", "Home", null, new { @class = "nav-link" })
+            </li>
+            <li class="nav-item  @Html.IsActiveLink(actions: "Contact", controllers: "Home")">
+                @Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "nav-link" })
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
@@ -67,6 +73,10 @@
 
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/bootstrap")
+<script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script src="~/Scripts/notify.min.js"></script>
 @RenderSection("scripts", required: false)
 </body>
 </html>
