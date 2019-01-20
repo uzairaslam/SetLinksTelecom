@@ -17,6 +17,7 @@ namespace SetLinksTelecom.Data
         }
 
         public DbSet<Designation> Designations { get; set; }
+        public DbSet<Person> Persons { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

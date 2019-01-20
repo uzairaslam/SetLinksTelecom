@@ -1,0 +1,206 @@
+﻿@{
+    ViewBag.Title = "Persons";
+}
+
+<h2>Persons</h2>
+
+<a class="btn btn-success" style="margin-bottom: 10px;" onclick="popUpForm('@Url.Action("AddOrEdit", "Person")')"><i class="fa fa-plus"></i> Add New</a>
+<table id="personTable" class="table table-hover">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Name</th>
+            <th>Father Name</th>
+            <th>Gender</th>
+            <th>CNIC</th>
+            <th>DOB</th>
+            <th>Designation</th>
+            <th></th>
+        </tr>
+    </thead>
+</table>
+
+
+<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+
+@section scripts
+{
+
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+        var popUp, dataTable;
+        $(document).ready(function () {
+            dataTable = $("#personTable").DataTable({
+                "ajax": {
+                    "url": "/Person/GetData",
+                    "type": "GET",
+                    "dataType": "json"
+                },
+                "columns": [
+                    {
+                        "className": 'details-control',
+                        "orderable": false,
+                        "searchable": false,
+                        "data": null,
+                        "defaultContent": ''
+                    },
+                    { "data": "Name" },
+                    { "data": "FatherName" },
+                    { "data": "Gender" },
+                    { "data": "CNIC" },
+                    { "data": "DOBFormatted" },
+                    { "data": "Designation.Name" },
+                    {
+                        "data": "PersonId",
+                        "render": function (data) {
+                            return "<a class='btn btn-info btn-sm' onClick=popUpForm('@Url.Action("AddOrEdit", "Person")/" +
+                                    data +
+                                    "')><i class='fa fa-pencil'></i> Edit</a><a class='btn btn-danger btn-sm' style='margin-left:5px;' onClick=Delete(" +
+                                    data +
+                                    ")><i class='fa fa-trash'></i> Delete</a>";
+                        },
+                        "orderable": false,
+                        "searchable": false,
+                        "width": "150px"
+                    }
+                ],
+                "order": [[1, 'asc']],
+                "language": {
+                    "emptyTable": "No data found, Please Click on <b>Add New</b> button",
+                    "processing": "Processing... Please wait"
+                }
+            });
+            $(dataTable.table().body()).on('click', 'td.details-control', function () {
+
+                //console.log('hi');
+                var tr = $(this).closest('tr');
+                //console.log(tr);
+                var row = dataTable.row(tr);
+                //console.log(row);
+
+                if (row.child.isShown()) {
+                    // This row is already open - close it
+                    row.child.hide();
+                    tr.removeClass('shown');
+                }
+                else {
+                    // Open this row
+                    row.child(format(row.data())).show();
+                    tr.addClass('shown');
+                }
+            });
+        });
+
+        function format(d) {
+            // `d` is the original data object for the row
+            //console.log('hi');
+            return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
+                '<tr class="table-secondary">' +
+                '<th>CNIC Issue Date:</th>' +
+                '<td>' + d.CNICIssueDateFormatted + '</td>' +
+                '<th>Mobile Business:</th>' +
+                '<td>' + d.MobileBusiness + '</td>' +
+                '</tr>' +
+                '<tr class="table-secondary">' +
+                '<th>Current Address:</th>' +
+                '<td>' + d.CurrentAddress + '</td>' +
+                '<th>Mobile Personal:</th>' +
+                '<td>' + d.MobilePersonal + '</td>' +
+                '</tr>' +
+                '<tr class="table-secondary">' +
+                '<th>Permanent Address:</th>' +
+                '<td>' + d.PermanentAddress + '</td>' +
+                '<th>Qualification:</th>' +
+                '<td>' + d.Qualification + '</td>' +
+                '</tr>' +
+                '</table>';
+        }
+
+
+
+        function popUpForm(url) {
+            var formDiv = $('<div />');
+            $.get(url).done(function (response) {
+                formDiv.html(response);
+
+                popUp = formDiv.dialog({
+                    autoOpen: true,
+                    resizable: false,
+                    title: 'Fill Designation Details',
+                    draggable: false,
+                    width: 1000,
+                    height: 500,
+                    modal: true,
+                    close: function () {
+                        //popUp.dialog('destroy').close();
+                        popUp.dialog('close');
+                    }
+                });
+                $(".date-control").datepicker({
+                    dateFormat: "dd-mm-yy",
+                    changeMonth: true,
+                    changeYear: true
+                });
+            });
+        }
+
+        function SubmitForm(form) {
+            $.validator.unobtrusive.parse(form);
+            if ($(form).valid()) {
+                $.ajax({
+                    type: "POST",
+                    url: form.action,
+                    data: $(form).serialize(),
+                    success: function (data) {
+                        if (data.success) {
+                            popUp.dialog('close');
+
+                            dataTable.ajax.reload();
+
+                            $.notify(
+                                data.message,
+                                {
+                                    position: "top center",
+                                    className: "success"
+                                }
+                            );
+                        }
+                    }
+                });
+            } else {
+                $.notify(
+                    "Validation Error",
+                    {
+                        position: "top center",
+                        className: "error"
+                    }
+                );
+            }
+
+            return false;
+        }
+
+        function Delete(id) {
+            if (confirm('Are you sure to delete this record')) {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("Delete","Person")/' + id,
+                    success: function (data) {
+                        if (data.success) {
+                            dataTable.ajax.reload();
+                            $.notify(
+                                data.message,
+                                {
+                                    position: "top center",
+                                    className: "success"
+                                }
+                            );
+                        }
+                    }
+                });
+            }
+        }
+    </script>
+}

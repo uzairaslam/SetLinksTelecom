@@ -50,6 +50,9 @@
             <li class="nav-item @Html.IsActiveLink(actions: "Index", controllers: "Designation")">
                 @Html.ActionLink("Designation", "Index", "Designation", null, new { @class = "nav-link"})
             </li>
+            <li class="nav-item @Html.IsActiveLink(actions: "Index", controllers: "Person")">
+                @Html.ActionLink("Person", "Index", "Person", null, new { @class = "nav-link" })
+            </li>
             <li class="nav-item  @Html.IsActiveLink(actions: "About", controllers: "Home")">
                 @Html.ActionLink("About", "About", "Home", null, new { @class = "nav-link" })
             </li>

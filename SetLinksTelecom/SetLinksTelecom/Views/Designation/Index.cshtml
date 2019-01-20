@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Designations";
 }
 
@@ -17,7 +16,7 @@
 </table>
 
 @*<link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />*@
-<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"/>
+<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
 
 @section scripts
 {
@@ -26,7 +25,7 @@
 
     <script>
         var popUp, dataTable;
-        $(document).ready(function() {
+        $(document).ready(function () {
             dataTable = $("#designationTable").DataTable({
                 "ajax": {
                     "url": "/Designation/GetData",
@@ -36,12 +35,17 @@
                 "columns": [
                     { "data": "Name", "name": "Name" },
                     { "data": "Active", "name": "Active" },
-                    { "data": "Id", "render": function(data) {
-                        return "<a class='btn btn-info btn-sm' onClick=popUpForm('@Url.Action("AddOrEdit", "Designation")/"+data+"')><i class='fa fa-pencil'></i> Edit</a><a class='btn btn-danger btn-sm' style='margin-left:5px;' onClick=Delete("+data+")><i class='fa fa-trash'></i> Delete</a>"
-                    }, "orderable": false,
+                    {
+                        "data": "Id", "render": function (data) {
+                            return "<a class='btn btn-info btn-sm' onClick=popUpForm('@Url.Action("AddOrEdit", "Designation")/" +
+                                data +
+                                "')><i class='fa fa-pencil'></i> Edit</a><a class='btn btn-danger btn-sm' style='margin-left:5px;' onClick=Delete(" +
+                                data +
+                                ")><i class='fa fa-trash'></i> Delete</a>";
+                        }, "orderable": false,
                         "searchable": false,
                         "width": "150px"
-        }
+                    }
                 ],
                 "language": {
                     "emptyTable": "No data found, Please Click on <b>Add New</b> button",
@@ -56,7 +60,7 @@
 
         function popUpForm(url) {
             var formDiv = $('<div />');
-            $.get(url).done(function(response) {
+            $.get(url).done(function (response) {
                 formDiv.html(response);
 
                 popUp = formDiv.dialog({
@@ -67,7 +71,7 @@
                     width: 250,
                     height: 270,
                     modal: true,
-                    close: function() {
+                    close: function () {
                         //popUp.dialog('destroy').close();
                         popUp.dialog('close');
                     }
@@ -82,7 +86,7 @@
                     type: "POST",
                     url: form.action,
                     data: $(form).serialize(),
-                    success: function(data) {
+                    success: function (data) {
                         if (data.success) {
                             popUp.dialog('close');
 
@@ -116,7 +120,7 @@
                 $.ajax({
                     type: "POST",
                     url: '@Url.Action("Delete","Designation")/' + id,
-                    success: function(data) {
+                    success: function (data) {
                         if (data.success) {
                             dataTable.ajax.reload();
                             $.notify(
