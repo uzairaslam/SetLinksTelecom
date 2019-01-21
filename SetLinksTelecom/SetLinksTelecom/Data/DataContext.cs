@@ -18,6 +18,8 @@ namespace SetLinksTelecom.Data
 
         public DbSet<Designation> Designations { get; set; }
         public DbSet<Person> Persons { get; set; }
+        public DbSet<InventoryType> InventoryTypes { get; set; }
+        public DbSet<Item> Items { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
