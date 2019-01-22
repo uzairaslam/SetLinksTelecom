@@ -18,6 +18,7 @@ namespace SetLinksTelecom
             // e.g. container.RegisterType<ITestService, TestService>();
             container.RegisterType<IDesignationRepo, DesignationRepo>();
             container.RegisterType<IPersonRepo, PersonRepo>();
+            container.RegisterType<IItemsRepo, ItemsRepo>();
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }
     }

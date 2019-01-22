@@ -174,10 +174,12 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\DesignationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Data\DataContext.cs" />
     <Compile Include="Data\HtmlHelpers.cs" />
     <Compile Include="Data\IDesignationRepo.cs" />
+    <Compile Include="Data\IItemsRepo.cs" />
     <Compile Include="Data\IPersonRepo.cs" />
     <Compile Include="GeneralFolder\EnumsRepo.cs" />
     <Compile Include="GeneralFolder\ExtensionMethods.cs" />
@@ -196,11 +198,30 @@
     <Compile Include="Migrations\201901191513278_PersontableChanged.Designer.cs">
       <DependentUpon>201901191513278_PersontableChanged.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901200713314_InventoryTypeCreatedTable.cs" />
+    <Compile Include="Migrations\201901200713314_InventoryTypeCreatedTable.Designer.cs">
+      <DependentUpon>201901200713314_InventoryTypeCreatedTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901200718279_PopulateInventoryType.cs" />
+    <Compile Include="Migrations\201901200718279_PopulateInventoryType.Designer.cs">
+      <DependentUpon>201901200718279_PopulateInventoryType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901200724186_InventoryTypeTableChanges.cs" />
+    <Compile Include="Migrations\201901200724186_InventoryTypeTableChanges.Designer.cs">
+      <DependentUpon>201901200724186_InventoryTypeTableChanges.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901210706027_AddItemTable.cs" />
+    <Compile Include="Migrations\201901210706027_AddItemTable.Designer.cs">
+      <DependentUpon>201901210706027_AddItemTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Designation.cs" />
+    <Compile Include="Models\InventoryType.cs" />
+    <Compile Include="Models\Item.cs" />
     <Compile Include="Models\Person.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\DesignationRepo.cs" />
+    <Compile Include="Repositories\ItemsRepo.cs" />
     <Compile Include="Repositories\PersonRepo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -342,6 +363,8 @@
     <Content Include="Views\Designation\AddOrEdit.cshtml" />
     <Content Include="Views\Person\Index.cshtml" />
     <Content Include="Views\Person\AddOrEdit.cshtml" />
+    <Content Include="Views\Item\Index.cshtml" />
+    <Content Include="Views\Item\AddOrEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -363,6 +386,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901191513278_PersontableChanged.resx">
       <DependentUpon>201901191513278_PersontableChanged.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901200713314_InventoryTypeCreatedTable.resx">
+      <DependentUpon>201901200713314_InventoryTypeCreatedTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901200718279_PopulateInventoryType.resx">
+      <DependentUpon>201901200718279_PopulateInventoryType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901200724186_InventoryTypeTableChanges.resx">
+      <DependentUpon>201901200724186_InventoryTypeTableChanges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901210706027_AddItemTable.resx">
+      <DependentUpon>201901210706027_AddItemTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
