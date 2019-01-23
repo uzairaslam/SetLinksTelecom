@@ -1,30 +1,144 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Items";
 }
 
 <h2>Items</h2>
 
-<a class="btn btn-success" style="margin-bottom: 10px;" onclick="popUpForm('@Url.Action("AddOrEdit", "Item")')"><i class="fa fa-plus"></i> Add New</a>
-<table id="itemsTable" class="table table-hover">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Item Type</th>
-        <th>Item Code</th>
-        <th></th>
-    </tr>
-    </thead>
-</table>
+<div class="container" id="dvAddOrEditItem">
+    @Html.Action("AddOrEdit")
+</div>
+<div class="container" id="dvItemsTable">
+    <table id="itemsTable" class="table table-hover">
+        <thead>
+        <tr>
+            <th>Inventory Type</th>
+            <th>Product Category</th>
+            <th>Name</th>
+            <th>Item Code</th>
+            <th></th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+
+@section scripts
+{
+
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('.ddl').chosen();
+            //$.ajax({
+            //    "url": "/Item/GetData",
+            //    "type": "Get",
+            //    success: function(data) {
+            //        console.log(data);
+            //    }
+            //});
+
+            var popUp, dataTable;
+            dataTable = $("#itemsTable").DataTable({
+                "ajax": {
+                    "url": "/Item/GetData",
+                    "type": "Get",
+                    "datatype": "json"
+                },
+                "columns": [
+                    { "data": "InventoryTypeName", "name": "InventoryTypeName" },
+                    { "data": "ProductCategoryName", "name": "ProductCategoryName" },
+                    { "data": "Name", "name": "Name" },
+                    { "data": "ItemCode", "name": "ItemCode" },
+                    {
+                        "data": "ItemId", "render": function (data) {
+                            return "<a class='btn btn-info btn-sm' onClick=popUpForm('@Url.Action("AddOrEdit", "Item")/" +
+                                data +
+                                "')><i class='fa fa-pencil'></i> Edit</a><a class='btn btn-danger btn-sm' style='margin-left:5px;' onClick=Delete(" +
+                                data +
+                                ")><i class='fa fa-trash'></i> Delete</a>";
+                        }, "orderable": false,
+                        "searchable": false,
+                        "width": "150px"
+                    }
+                ],
+                "language": {
+                    "emptyTable": "No data found, Please Click on <b>Add New</b> button",
+                    "processing": "Processing... Please wait"
+                }
+            });
+        });
+
+        function SubmitForm(form) {
+            $.validator.unobtrusive.parse(form);
+            if ($(form).valid()) {
+                $.ajax({
+                    type: "POST",
+                    url: form.action,
+                    data: $(form).serialize(),
+                    success: function (data) {
+                        if (data.success) {
+
+                            $.notify(
+                                data.message,
+                                {
+                                    position: "top center",
+                                    className: "success"
+                                }
+                            );
+                        }
+                    }
+                });
+            } else {
+                $.notify(
+                    "Validation Error",
+                    {
+                        position: "top center",
+                        className: "error"
+                    }
+                );
+            }
+
+            return false;
+        }
+    </script>
+}
+
+<!-- #region Old Code -->
+@*@{
+    ViewBag.Title = "Items";
+}
+
+<h2>Items</h2>
+
+<div class="container">
+
+</div>
+
+<div class="container">
+    <a class="btn btn-success" style="margin-bottom: 10px;" onclick="popUpForm('@Url.Action("AddOrEdit", "Item")')"><i class="fa fa-plus"></i> Add New</a>
+    <table id="itemsTable" class="table table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Item Type</th>
+                <th>Item Code</th>
+                <th></th>
+            </tr>
+        </thead>
+    </table>
+</div>*@
 
 @*<link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />*@
-<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+@*<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
 
 @section scripts
 {
     <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
-    
+
     <script>
         var popUp, dataTable;
         $(document).ready(function () {
@@ -78,41 +192,7 @@
             });
         }
 
-        function SubmitForm(form) {
-            $.validator.unobtrusive.parse(form);
-            if ($(form).valid()) {
-                $.ajax({
-                    type: "POST",
-                    url: form.action,
-                    data: $(form).serialize(),
-                    success: function (data) {
-                        if (data.success) {
-                            popUp.dialog('close');
-
-                            dataTable.ajax.reload();
-
-                            $.notify(
-                                data.message,
-                                {
-                                    position: "top center",
-                                    className: "success"
-                                }
-                            );
-                        }
-                    }
-                });
-            } else {
-                $.notify(
-                    "Validation Error",
-                    {
-                        position: "top center",
-                        className: "error"
-                    }
-                );
-            }
-
-            return false;
-        }
+        
 
         function Delete(id) {
             if (confirm('Are you sure to delete this record')) {
@@ -136,4 +216,5 @@
         }
 
     </script>
-}
+}*@
+<!-- #endregion -->

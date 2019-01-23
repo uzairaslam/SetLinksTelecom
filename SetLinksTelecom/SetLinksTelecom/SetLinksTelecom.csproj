@@ -174,6 +174,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\DesignationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InventoryTypeController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Data\DataContext.cs" />
@@ -181,6 +182,7 @@
     <Compile Include="Data\IDesignationRepo.cs" />
     <Compile Include="Data\IItemsRepo.cs" />
     <Compile Include="Data\IPersonRepo.cs" />
+    <Compile Include="DTO\dtoItem.cs" />
     <Compile Include="GeneralFolder\EnumsRepo.cs" />
     <Compile Include="GeneralFolder\ExtensionMethods.cs" />
     <Compile Include="Global.asax.cs">
@@ -214,11 +216,28 @@
     <Compile Include="Migrations\201901210706027_AddItemTable.Designer.cs">
       <DependentUpon>201901210706027_AddItemTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901230623077_addProductCategoryTable.cs" />
+    <Compile Include="Migrations\201901230623077_addProductCategoryTable.Designer.cs">
+      <DependentUpon>201901230623077_addProductCategoryTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901230650485_changeProductCategoryTable.cs" />
+    <Compile Include="Migrations\201901230650485_changeProductCategoryTable.Designer.cs">
+      <DependentUpon>201901230650485_changeProductCategoryTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901230753055_updateItemTable.cs" />
+    <Compile Include="Migrations\201901230753055_updateItemTable.Designer.cs">
+      <DependentUpon>201901230753055_updateItemTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901230759278_updateItemTableSubName.cs" />
+    <Compile Include="Migrations\201901230759278_updateItemTableSubName.Designer.cs">
+      <DependentUpon>201901230759278_updateItemTableSubName.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Designation.cs" />
     <Compile Include="Models\InventoryType.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\Person.cs" />
+    <Compile Include="Models\ProductCategory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\DesignationRepo.cs" />
     <Compile Include="Repositories\ItemsRepo.cs" />
@@ -231,6 +250,12 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\chosen-sprite%402x.png" />
+    <Content Include="Content\chosen-sprite.png" />
+    <Content Include="Content\chosen.css" />
+    <Content Include="Content\chosen.min.css" />
+    <Content Include="Content\Chosen\chosen-sprite.png" />
+    <Content Include="Content\Chosen\chosen.min.css" />
     <Content Include="Content\flatly.bootstrap.css" />
     <Content Include="Content\flatly.bootstrap.min.css" />
     <Content Include="Content\font-awesome.css" />
@@ -280,12 +305,17 @@
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Notes.txt" />
     <Content Include="resources\details_close.png" />
     <Content Include="resources\details_open.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\chosen.jquery.js" />
+    <Content Include="Scripts\chosen.jquery.min.js" />
+    <Content Include="Scripts\chosen.proto.js" />
+    <Content Include="Scripts\chosen.proto.min.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
@@ -329,6 +359,7 @@
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
     <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\prototype.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\umd\popper-utils.js" />
@@ -365,6 +396,7 @@
     <Content Include="Views\Person\AddOrEdit.cshtml" />
     <Content Include="Views\Item\Index.cshtml" />
     <Content Include="Views\Item\AddOrEdit.cshtml" />
+    <Content Include="Views\InventoryType\InventoryType.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -398,6 +430,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901210706027_AddItemTable.resx">
       <DependentUpon>201901210706027_AddItemTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901230623077_addProductCategoryTable.resx">
+      <DependentUpon>201901230623077_addProductCategoryTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901230650485_changeProductCategoryTable.resx">
+      <DependentUpon>201901230650485_changeProductCategoryTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901230753055_updateItemTable.resx">
+      <DependentUpon>201901230753055_updateItemTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901230759278_updateItemTableSubName.resx">
+      <DependentUpon>201901230759278_updateItemTableSubName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

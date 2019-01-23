@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using SetLinksTelecom.Data;
+using SetLinksTelecom.DTO;
 using SetLinksTelecom.Models;
 
 namespace SetLinksTelecom.Repositories
@@ -16,19 +17,63 @@ namespace SetLinksTelecom.Repositories
         {
             _db = db;
         }
-        public IList<Item> GetData()
+        public IEnumerable<dtoItem> GetData()
         {
-            return _db.Items.ToList();
+            //return _db.Items.Include(i => i.ProductCategory).Include(pc => pc.ProductCategories.Select(x => x.InventoryType)).ToList();
+            return (from i in _db.Items
+                select new dtoItem
+                {
+                    ItemId = i.ItemId,
+                    Name = i.Name,
+                    ItemCode = i.ItemCode,
+                    Subname = i.Subname,
+                    ProductCategoryId = i.ProductCategoryId,
+                    ProductCategoryName = i.ProductCategory.Name,
+                    InventoryTypeId = i.ProductCategory.InventoryTypeId,
+                    InventoryTypeName = i.ProductCategory.InventoryType.Name
+                }).ToList();
         }
 
         public Item GetItem(int id)
         {
-            return _db.Items.FirstOrDefault(d => d.ItemId.Equals(id));
+            var item = new Item();
+            if (id != 0)
+            {
+                //item = _db.Items.Include(i => i.ProductCategories.Select(pc => pc.InventoryTypes)).FirstOrDefault(d => d.ItemId.Equals(id));
+                item = (from i in _db.Items
+                    where i.ItemId == id
+                    select new Item
+                    {
+                        ItemId = i.ItemId,
+                        Name = i.Name,
+                        ItemCode = i.ItemCode,
+                        Subname = i.Subname,
+                        ProductCategoryId = i.ProductCategoryId,
+                        ProductCategory = new ProductCategory
+                        {
+                            ProductCategoryId = i.ProductCategory.ProductCategoryId,
+                            Name = i.ProductCategory.Name,
+                            InventoryType = new InventoryType()
+                            {
+                                InventoryTypeId = i.ProductCategory.InventoryTypeId,
+                                Name = i.ProductCategory.InventoryType.Name
+                            }
+                        }
+                    }).FirstOrDefault();
+            }
+            item.ProductCategories = _db.ProductCategories.ToList();
+            item.ProductCategory.InventoryTypes = _db.InventoryTypes.ToList();
+            return item;
         }
 
         public void SaveItem(Item item)
         {
-            _db.Items.Add(item);
+            ProductCategory productCategory = _db.ProductCategories.Include(pc => pc.InventoryType)
+                .FirstOrDefault(c => c.ProductCategoryId.Equals(item.ProductCategoryId));
+            productCategory.Items.Add(item);
+            //productCategory.it
+            //_db.Items.Add(item);
+            _db.Entry(productCategory).State = EntityState.Modified;
             _db.SaveChanges();
         }
 

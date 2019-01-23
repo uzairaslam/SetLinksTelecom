@@ -25,38 +25,36 @@ namespace SetLinksTelecom.Controllers
 
         public ActionResult GetData()
         {
-            return Json(new { data = _itemsRepo.GetData() }, JsonRequestBehavior.AllowGet);
+            return Json(new { data = _itemsRepo.GetData().ToList() }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
         public ActionResult AddOrEdit(int id = 0)
         {
-            if (id == 0)
-                return View(new Item());
-            else
-                return View(_itemsRepo.GetItem(id));
+            return View(_itemsRepo.GetItem(id));
         }
 
         [HttpPost]
         public ActionResult AddOrEdit(Item item)
         {
-            try
-            {
+            //try
+            //{
                 if (item.ItemId == 0)
                 {
                     _itemsRepo.SaveItem(item);
                     return Json(new { success = true, message = "Saved Successfully" }, JsonRequestBehavior.AllowGet);
+                    //return View(item);
                 }
                 else
                 {
                     _itemsRepo.UpdateItem(item);
                     return Json(new { success = true, message = "Updated Successfully" }, JsonRequestBehavior.AllowGet);
                 }
-            }
-            catch (Exception e)
-            {
-                return Json(new { success = false, message = "Error in " + (item.ItemId == 0 ? "saving" : "updation") + "\n" + e.Message }, JsonRequestBehavior.AllowGet);
-            }
+            //}
+            //catch (Exception e)
+            //{
+            //    return Json(new { success = false, message = "Error in " + (item.ItemId == 0 ? "saving" : "updation") + "\n" + e.Message }, JsonRequestBehavior.AllowGet);
+            //}
         }
 
         [HttpPost]

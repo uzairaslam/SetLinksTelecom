@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SetLinksTelecom.DTO;
 using SetLinksTelecom.Models;
 
 namespace SetLinksTelecom.Data
 {
     public interface IItemsRepo
     {
-        IList<Item> GetData();
+        IEnumerable<dtoItem> GetData();
         Item GetItem(int id);
 
         void SaveItem(Item item);

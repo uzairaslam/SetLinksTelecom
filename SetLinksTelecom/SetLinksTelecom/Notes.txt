@@ -1,0 +1,5 @@
+﻿Items:
+	1: Inventory Type
+	2: Product Category
+	3: Inventory Item
+	4: Sub Name

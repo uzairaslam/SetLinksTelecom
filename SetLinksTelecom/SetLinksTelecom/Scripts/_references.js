@@ -16,3 +16,6 @@
 /// <reference path="umd/popper-utils.js" />
 /// <reference path="umd/popper.js" />
 /// <reference path="notify.min.js" />
+/// <reference path="prototype.js" />
+/// <reference path="chosen.proto.min.js" />
+/// <reference path="chosen.jquery.min.js" />

@@ -12,5 +12,7 @@ namespace SetLinksTelecom.Models
 
         [MaxLength(12)]
         public string Name { get; set; }
+
+        public virtual ICollection<ProductCategory> ProductCategories { get; set; }
     }
 }
