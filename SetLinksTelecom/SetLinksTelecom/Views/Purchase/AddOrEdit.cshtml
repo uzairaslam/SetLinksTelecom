@@ -1,0 +1,66 @@
+﻿@model SetLinksTelecom.DTO.dtoPurchase
+@{
+    Layout = null;
+}
+
+@using (Html.BeginForm("AddOrEdit", "Purchase", FormMethod.Post, new { onsubmit = "return SubmitForm(this)" }))
+{
+    @Html.HiddenFor(m => m.PurchaseId)
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.PortalId, new { @class = "control-label" })
+        <br />
+        @Html.DropDownListFor(m => m.PortalId, new SelectList(Model.Portals, "PortalId", "Name"), "Select Portal", new { @class = "ddl form-control" })
+        @Html.ValidationMessageFor(m => m.PortalId)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.InventoryTypeId, new { @class = "control-label" })
+        <br />
+        @Html.DropDownListFor(m => m.InventoryTypeId, new SelectList(Model.InventoryTypes, "InventoryTypeId", "Name"), "Select Inventory Type", new { @class = "ddl form-control" })
+        @Html.ValidationMessageFor(m => m.InventoryTypeId)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.ProductCategoryId, new { @class = "control-label" })
+        <br />
+        @Html.DropDownListFor(m => m.ProductCategoryId, new SelectList(Model.ProductCategories, "ProductCategoryId", "Name"), "Select Product Category", new { @class = "ddl form-control" })
+        @Html.ValidationMessageFor(m => m.ProductCategoryId)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.ItemId, new { @class = "control-label" })
+        <br />
+        @Html.DropDownListFor(m => m.ItemId, new SelectList(Model.Items, "ItemId", "Name"), "Select Item", new { @class = "ddl form-control" })
+        @Html.ValidationMessageFor(m => m.ItemId)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Subname, new { @class = "control-label" })
+        @Html.EditorFor(m => m.Subname, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(m => m.Subname)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Qty, new { @class = "control-label" })
+        @Html.EditorFor(m => m.Qty, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(m => m.Qty)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Comments, new { @class = "control-label" })
+        @Html.TextAreaFor(m => m.Comments, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.PaidAmount, new { @class = "control-label" })
+        @Html.EditorFor(m => m.PaidAmount, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(m => m.PaidAmount)
+    </div>
+
+
+    <div class="form-group">
+        <button type="submit" value="Submit" class="btn btn-primary"><i class="fa fa-save"></i> Submit</button>
+        <button type="reset" value="Reset" class="btn btn-warning"><i class="fa fa-refresh"></i> Reset</button>
+    </div>
+}

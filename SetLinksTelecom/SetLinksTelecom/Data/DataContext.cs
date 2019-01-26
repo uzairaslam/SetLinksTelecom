@@ -21,11 +21,14 @@ namespace SetLinksTelecom.Data
         public DbSet<InventoryType> InventoryTypes { get; set; }
         public DbSet<Item> Items { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }
+        public DbSet<Purchase> Purchases { get; set; }
+        public DbSet<Portal> Portals { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             //base.OnModelCreating(modelBuilder);
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+            modelBuilder.Entity<Purchase>().Property(p => p.PaidAmount).HasPrecision(20, 2);
         }
     }
 }
