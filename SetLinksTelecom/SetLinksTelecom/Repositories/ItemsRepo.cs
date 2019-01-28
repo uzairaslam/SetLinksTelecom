@@ -26,7 +26,7 @@ namespace SetLinksTelecom.Repositories
                     ItemId = i.ItemId,
                     Name = i.Name,
                     ItemCode = i.ItemCode,
-                    Subname = i.Subname,
+                    //Subname = i.Subname,
                     ProductCategoryId = i.ProductCategoryId,
                     ProductCategoryName = i.ProductCategory.Name,
                     InventoryTypeId = i.ProductCategory.InventoryTypeId,
@@ -47,7 +47,7 @@ namespace SetLinksTelecom.Repositories
                         ItemId = i.ItemId,
                         Name = i.Name,
                         ItemCode = i.ItemCode,
-                        Subname = i.Subname,
+                        //Subname = i.Subname,
                         ProductCategoryId = i.ProductCategoryId,
                         ProductCategory = new ProductCategory
                         {

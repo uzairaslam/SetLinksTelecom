@@ -247,6 +247,10 @@
     <Compile Include="Migrations\201901251241345_updatePurchaseTableAddedSubname.Designer.cs">
       <DependentUpon>201901251241345_updatePurchaseTableAddedSubname.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901281529212_RemoveSubnameFromItemTable.cs" />
+    <Compile Include="Migrations\201901281529212_RemoveSubnameFromItemTable.Designer.cs">
+      <DependentUpon>201901281529212_RemoveSubnameFromItemTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Designation.cs" />
     <Compile Include="Models\InventoryType.cs" />
@@ -471,6 +475,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901251241345_updatePurchaseTableAddedSubname.resx">
       <DependentUpon>201901251241345_updatePurchaseTableAddedSubname.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901281529212_RemoveSubnameFromItemTable.resx">
+      <DependentUpon>201901281529212_RemoveSubnameFromItemTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

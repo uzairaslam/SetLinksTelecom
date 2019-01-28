@@ -17,8 +17,8 @@ namespace SetLinksTelecom.Models
         //public string ItemType { get; set; }
         public int ItemCode { get; set; }
 
-        [MinLength(3),MaxLength(50)]
-        public string Subname { get; set; }
+        //[MinLength(3),MaxLength(50)]
+        //public string Subname { get; set; }
         
         [Required]
         [Display(Name = "ProductCategory")]
