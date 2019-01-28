@@ -28,7 +28,8 @@ namespace SetLinksTelecom.Data
         {
             //base.OnModelCreating(modelBuilder);
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-            modelBuilder.Entity<Purchase>().Property(p => p.PaidAmount).HasPrecision(20, 2);
+            modelBuilder.Entity<Purchase>().Property(p => p.Total).HasPrecision(20, 2);
+            modelBuilder.Entity<Purchase>().Property(p => p.Rate).HasPrecision(20, 2);
         }
     }
 }
