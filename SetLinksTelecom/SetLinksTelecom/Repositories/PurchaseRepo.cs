@@ -30,9 +30,9 @@ namespace SetLinksTelecom.Repositories
                     ItemName = i.Name,
                     PurchaseId = p.PurchaseId,
                     Subname = p.Subname,
-                    Comments = p.Comments,
+                    Comments = p.Remarks,
                     Qty = p.Qty,
-                    PaidAmount = p.PaidAmount
+                    PaidAmount = p.Total
                 };
         }
 
@@ -53,8 +53,8 @@ namespace SetLinksTelecom.Repositories
                         ItemId = p.ItemId,
                         Subname = p.Subname,
                         Qty = p.Qty,
-                        PaidAmount = p.PaidAmount,
-                        Comments = p.Comments
+                        PaidAmount = p.Total,
+                        Comments = p.Remarks
                     }).FirstOrDefault();
             }
                 
@@ -71,8 +71,8 @@ namespace SetLinksTelecom.Repositories
             {
                 PurchaseId = dtoPurchase.PurchaseId,
                 ItemId = dtoPurchase.ItemId,
-                PaidAmount = dtoPurchase.PaidAmount,
-                Comments = dtoPurchase.Comments,
+                Total = dtoPurchase.PaidAmount,
+                Remarks = dtoPurchase.Comments,
                 PortalId = dtoPurchase.PortalId,
                 Qty = dtoPurchase.Qty,
                 Subname = dtoPurchase.Subname
@@ -86,8 +86,8 @@ namespace SetLinksTelecom.Repositories
         {
             Purchase purchase = _db.Purchases.FirstOrDefault(p => p.PurchaseId.Equals(dtoPurchase.PurchaseId));
             purchase.ItemId = dtoPurchase.ItemId;
-            purchase.PaidAmount = dtoPurchase.PaidAmount;
-            purchase.Comments = dtoPurchase.Comments;
+            purchase.Total = dtoPurchase.PaidAmount;
+            purchase.Remarks = dtoPurchase.Comments;
             purchase.PortalId = dtoPurchase.PortalId;
             purchase.Qty = dtoPurchase.Qty;
             purchase.Subname = dtoPurchase.Subname;
