@@ -15,9 +15,12 @@
         <th>Inventory Type</th>
         <th>Product Category</th>
         <th>Item</th>
-        <th>Subname</th>
+        <th>Sub Name</th>
         <th>Quantity</th>
-        <th>Paid Amount</th>
+        <th>Rate</th>
+        <th>Total</th>
+        <th>Percentage</th>
+        <th>Date Purchased</th>
         <th></th>
     </tr>
     </thead>
@@ -51,7 +54,10 @@
                     { "data": "ItemName", "name": "ItemName" },
                     { "data": "Subname", "name": "Subname" },
                     { "data": "Qty", "name": "Qty" },
-                    { "data": "PaidAmount", "name": "PaidAmount" },
+                    { "data": "Rate", "name": "Rate" },
+                    { "data": "Total", "name": "Total" },
+                    { "data": "Percentage", "name": "Percentage" },
+                    { "data": "DatePurchasedFormatted", "name": "DatePurchased" },
                     {
                         "data": "PurchaseId", "render": function (data) {
                             return "<a class='btn btn-info btn-sm' onClick=popUpForm('@Url.Action("AddOrEdit", "Purchase")/" +
@@ -90,11 +96,17 @@
                         popUp.dialog('close');
                     }
                 });
+                //$(".date-control").datepicker({
+                //    dateFormat: "dd-mm-yy",
+                //    changeMonth: true,
+                //    changeYear: true
+                //});
             });
+
         }
 
         function SubmitForm(form) {
-            $.validator.unobtrusive.parse(form);
+            //$.validator.unobtrusive.parse(form);
             if ($(form).valid()) {
                 $.ajax({
                     type: "POST",

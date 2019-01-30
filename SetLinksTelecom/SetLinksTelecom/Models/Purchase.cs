@@ -36,19 +36,26 @@ namespace SetLinksTelecom.Models
         [Column("Total", Order = 5)]
         public decimal Total { get; set; }
 
-        [Column("Subname", Order = 6)]
+        [Column(Order = 6)]
+        public decimal Percentage { get; set; }
+
+        [Column("Subname", Order = 7)]
         [MinLength(3), MaxLength(50)]
         public string Subname { get; set; }
 
-        [Column("Remarks", Order = 7)]
+        [Column("Remarks", Order = 8)]
         [MaxLength(150)]
         public string Remarks { get; set; }
 
-        [Column("DatePurchased", Order = 8)]
+        [Column(Order = 9)]
         [Display(Name = "Date Purchased")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime DatePurchased { get; set; }
+        [NotMapped]
+        public string DatePurchasedFormatted { get { return this.DatePurchased.ToString("dd/MM/yyyy"); } }
 
-        [Column("StockOut", Order = 9)]
+        [Column("StockOut", Order = 10)]
         [Display(Name = "Stock Out")]
         public int StockOut { get; set; }
 
