@@ -47,17 +47,26 @@ namespace SetLinksTelecom.DTO
         //public Item Item { get; set; }
         public List<Item> Items { get; set; }
 
-
+        [Display(Name = "Sub Name")]
         [MinLength(3), MaxLength(50)]
         public string Subname { get; set; }
 
-
+        [Display(Name = "Quantity")]
         public int Qty { get; set; }
-        public decimal PaidAmount { get; set; }
+        public decimal Rate { get; set; }
+        public decimal Total { get; set; }
+
+        public decimal Percentage { get; set; }
 
         [MaxLength(150)]
-        public string Comments { get; set; }
+        public string Remarks { get; set; }
 
+        [Display(Name = "Date Purchased")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime DatePurchased { get; set; }
+
+        public int StockOut { get; set; }
     }
 
     public class dtoDisplayPurchase
@@ -68,8 +77,13 @@ namespace SetLinksTelecom.DTO
         public string ItemName { get; set; }
         public int PurchaseId { get; set; }
         public string Subname { get; set; }
-        public string Comments { get; set; }
+        public string Remarks { get; set; }
+        public decimal Rate { get; set; }
         public int Qty { get; set; }
-        public decimal PaidAmount { get; set; }
+        public decimal Total { get; set; }
+        public decimal Percentage { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime DatePurchased { get; set; }
+        public string DatePurchasedFormatted { get { return this.DatePurchased.ToString("dd/MM/yyyy"); } }
     }
 }

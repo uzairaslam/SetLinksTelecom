@@ -30,15 +30,18 @@ namespace SetLinksTelecom.Repositories
                     ItemName = i.Name,
                     PurchaseId = p.PurchaseId,
                     Subname = p.Subname,
-                    Comments = p.Remarks,
+                    Remarks = p.Remarks,
                     Qty = p.Qty,
-                    PaidAmount = p.Total
+                    Total = p.Total,
+                    Percentage = p.Percentage,
+                    Rate = p.Rate
                 };
         }
 
         public dtoPurchase GetPurchase(int id)
         {
             dtoPurchase purchase = new dtoPurchase();
+            purchase.DatePurchased = DateTime.Now;
             if (id != 0)
             {
                 purchase = (from p in _db.Purchases
@@ -53,8 +56,12 @@ namespace SetLinksTelecom.Repositories
                         ItemId = p.ItemId,
                         Subname = p.Subname,
                         Qty = p.Qty,
-                        PaidAmount = p.Total,
-                        Comments = p.Remarks
+                        Total = p.Total,
+                        Remarks = p.Remarks,
+                        Percentage = p.Percentage,
+                        Rate = p.Rate,
+                        StockOut = p.StockOut,
+                        DatePurchased = p.DatePurchased
                     }).FirstOrDefault();
             }
                 
@@ -71,11 +78,15 @@ namespace SetLinksTelecom.Repositories
             {
                 PurchaseId = dtoPurchase.PurchaseId,
                 ItemId = dtoPurchase.ItemId,
-                Total = dtoPurchase.PaidAmount,
-                Remarks = dtoPurchase.Comments,
+                Total = dtoPurchase.Total,
+                Remarks = dtoPurchase.Remarks,
                 PortalId = dtoPurchase.PortalId,
                 Qty = dtoPurchase.Qty,
-                Subname = dtoPurchase.Subname
+                Subname = dtoPurchase.Subname,
+                Percentage = dtoPurchase.Percentage,
+                Rate = dtoPurchase.Rate,
+                StockOut = dtoPurchase.StockOut,
+                DatePurchased = dtoPurchase.DatePurchased
             };
             _db.Purchases.Add(purchase);
             _db.SaveChanges();
@@ -86,11 +97,15 @@ namespace SetLinksTelecom.Repositories
         {
             Purchase purchase = _db.Purchases.FirstOrDefault(p => p.PurchaseId.Equals(dtoPurchase.PurchaseId));
             purchase.ItemId = dtoPurchase.ItemId;
-            purchase.Total = dtoPurchase.PaidAmount;
-            purchase.Remarks = dtoPurchase.Comments;
+            purchase.Total = dtoPurchase.Total;
+            purchase.Remarks = dtoPurchase.Remarks;
             purchase.PortalId = dtoPurchase.PortalId;
             purchase.Qty = dtoPurchase.Qty;
             purchase.Subname = dtoPurchase.Subname;
+            purchase.Percentage = dtoPurchase.Percentage;
+            purchase.Rate = dtoPurchase.Rate;
+            purchase.StockOut = dtoPurchase.StockOut;
+            purchase.DatePurchased = dtoPurchase.DatePurchased;
             _db.Entry(purchase).State = EntityState.Modified;
             _db.SaveChanges();
         }

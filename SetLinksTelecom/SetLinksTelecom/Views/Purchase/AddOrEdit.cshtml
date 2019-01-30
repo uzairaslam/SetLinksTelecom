@@ -48,14 +48,32 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.Comments, new { @class = "control-label" })
-        @Html.TextAreaFor(m => m.Comments, new { @class = "form-control" })
+        @Html.LabelFor(m => m.Rate, new { @class = "control-label" })
+        @Html.EditorFor(m => m.Rate, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(m => m.Rate)
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.PaidAmount, new { @class = "control-label" })
-        @Html.EditorFor(m => m.PaidAmount, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(m => m.PaidAmount)
+        @Html.LabelFor(m => m.Total, new { @class = "control-label" })
+        @Html.EditorFor(m => m.Total, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(m => m.Total)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Percentage, new { @class = "control-label" })
+        @Html.EditorFor(m => m.Percentage, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(m => m.Percentage)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.DatePurchased, new { @class = "control-label" })
+        @Html.EditorFor(m => m.DatePurchased, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Remarks, new { @class = "control-label" })
+        @Html.TextAreaFor(m => m.Remarks, new { @class = "form-control" })
     </div>
 
 

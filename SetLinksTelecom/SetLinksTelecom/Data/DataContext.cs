@@ -23,6 +23,7 @@ namespace SetLinksTelecom.Data
         public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<Purchase> Purchases { get; set; }
         public DbSet<Portal> Portals { get; set; }
+        public DbSet<Stock> Stocks { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -30,6 +31,8 @@ namespace SetLinksTelecom.Data
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Entity<Purchase>().Property(p => p.Total).HasPrecision(20, 2);
             modelBuilder.Entity<Purchase>().Property(p => p.Rate).HasPrecision(20, 2);
+            modelBuilder.Entity<Purchase>().Property(p => p.Percentage).HasPrecision(20, 2);
+            modelBuilder.Entity<Stock>().Property(s => s.AvgRate).HasPrecision(20, 2);
         }
     }
 }
