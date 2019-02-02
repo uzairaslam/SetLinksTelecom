@@ -23,6 +23,11 @@ namespace SetLinksTelecom.Controllers
             return View();
         }
 
+        public ActionResult PurchaseGrid()
+        {
+            return View();
+        }
+
         public ActionResult GetData()
         {
             return Json(new {data = _purchaseRepo.GetData()}, JsonRequestBehavior.AllowGet);

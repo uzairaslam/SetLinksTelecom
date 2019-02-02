@@ -178,14 +178,17 @@
     <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\PurchaseController.cs" />
+    <Compile Include="Controllers\SaleController.cs" />
     <Compile Include="Data\DataContext.cs" />
     <Compile Include="Data\HtmlHelpers.cs" />
     <Compile Include="Data\IDesignationRepo.cs" />
     <Compile Include="Data\IItemsRepo.cs" />
     <Compile Include="Data\IPersonRepo.cs" />
     <Compile Include="Data\IPurchaseRepo.cs" />
+    <Compile Include="Data\ISaleRepo.cs" />
     <Compile Include="DTO\dtoItem.cs" />
     <Compile Include="DTO\dtoPurchase.cs" />
+    <Compile Include="DTO\dtoSale.cs" />
     <Compile Include="GeneralFolder\EnumsRepo.cs" />
     <Compile Include="GeneralFolder\ExtensionMethods.cs" />
     <Compile Include="Global.asax.cs">
@@ -277,6 +280,7 @@
     <Compile Include="Repositories\ItemsRepo.cs" />
     <Compile Include="Repositories\PersonRepo.cs" />
     <Compile Include="Repositories\PurchaseRepo.cs" />
+    <Compile Include="Repositories\SaleRepo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
@@ -434,6 +438,10 @@
     <Content Include="Views\InventoryType\InventoryType.cshtml" />
     <Content Include="Views\Purchase\Index.cshtml" />
     <Content Include="Views\Purchase\AddOrEdit.cshtml" />
+    <Content Include="Views\Sale\AddOrEdit.cshtml" />
+    <Content Include="Views\Purchase\PurchaseGrid.cshtml" />
+    <Content Include="Views\Sale\TangibleSaleIndex.cshtml" />
+    <Content Include="Views\Sale\SaleItemRow.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

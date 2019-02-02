@@ -1,0 +1,93 @@
+﻿@model SetLinksTelecom.DTO.DtoTangibleSale
+
+@{
+    ViewBag.Title = "TangibleSaleIndex";
+}
+
+<h2>Tangible Sale Portal</h2>
+
+@using (Html.BeginForm("AddOrEdit", "Purchase", FormMethod.Post))
+{
+
+    @Html.HiddenFor(m => m.SaleId)
+
+    @Html.HiddenFor(m => m.PersonId)
+
+    <div class="row">
+        <div class="col-2">@Html.LabelFor(m => m.PersonName, new { @class = "control-label" })</div>
+        <div class="col-3">@Html.EditorFor(m => m.PersonName, new { htmlAttributes = new { @class = "form-control" } })</div>
+        <div class="col-1"></div>
+        <div class="col-2">@Html.LabelFor(m => m.Date, new { @class = "control-label" })</div>
+        <div class="col-3">@Html.EditorFor(m => m.Date, new { htmlAttributes = new { @class = "form-control" } })</div>
+        <div class="col-1"></div>
+    </div>
+    <div class="clear-fix">
+        &nbsp;
+    </div>
+    <div class="form-group">
+        <a class="btn btn-success" style="margin-bottom: 10px;" onclick="saleItemRow('@Url.Action("SaleItemRow", "Sale")')"><i class="fa fa-plus"></i> Add Item</a>
+    </div>
+
+    <table id="tangibleItemsSale" class="table table-hover">
+        <thead>
+        <tr>
+            <th>Purchase Id</th>
+            <th>Item Code</th>
+            <th>Item</th>
+            <th>Quantity</th>
+            <th>Rate</th>
+            <th>Sub Total</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+
+    <div class="clear-fix">
+        &nbsp;
+    </div>
+    <div class="form-group">
+        <button type="submit" value="Submit" class="btn btn-primary"><i class="fa fa-save"></i> Submit</button>
+        <button type="reset" value="Reset" class="btn btn-warning"><i class="fa fa-refresh"></i> Reset</button>
+    </div>
+}
+
+<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+
+@section scripts
+{
+
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+        var tangibleItemsSale;
+        $(document).ready(function() {
+            tangibleItemsSale = $('[id$=tangibleItemsSale]').DataTable({
+                "ordering": false,
+                "columnDefs": [
+                    {
+                        "targets": [0],
+                        "visible": false,
+                        "searchable": false
+                    }
+                ]
+            });
+        });
+
+        function saleItemRow(url) {
+            var rowItem = $('<tr />');
+            $.get(url).done(function(response) {
+                rowItem.html(response);
+
+                tangibleItemsSale.row.add(rowItem).draw(true);
+            });
+        }
+
+        function removeItem(row) {
+            var getRow = $(row).closest('tr').get(0);
+            tangibleItemsSale.row(getRow).remove().draw();
+        }
+    </script>
+}
