@@ -1,0 +1,132 @@
+﻿@model SetLinksTelecom.DTO.DtoSale
+@{
+    ViewBag.Title = "AddOrEdit";
+}
+
+<h2>Sale</h2>
+
+@Html.HiddenFor(m => m.PurchaseId)
+<div class="form-group">
+    @Html.LabelFor(m => m.ItemName, new { @class = "control-label" })
+    @Html.EditorFor(m => m.ItemName, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessageFor(m => m.ItemName)
+</div>
+
+
+<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+@section scripts
+{
+
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+        var popUp, dataTable;
+        var focusedRow = null;
+
+        $(document).ready(function() {
+            $('#ItemName').keypress(function(event) {
+
+                var keycode = (event.keyCode ? event.keyCode : event.which);
+                if (keycode == '13') {
+                    //alert('You pressed a "enter" key in textbox');
+                    popUpForm('@Url.Action("PurchaseGrid", "Purchase")');
+                } else {
+                    event.preventDefault();
+                }
+
+            });
+        });
+
+        function popUpForm(url) {
+            //dataTable = null;
+            var formDiv = $('<div />');
+            $.get(url).done(function(response) {
+                formDiv.html(response);
+
+                popUp = formDiv.dialog({
+                    autoOpen: true,
+                    resizable: false,
+                    title: 'Select Items',
+                    draggable: false,
+                    width: $(window).width() - 50,
+                    height: 600,
+                    modal: true,
+                    close: function() {
+                        popUp.dialog('close');
+                    }
+                });
+
+                if ($(popUp).dialog('isOpen')) {
+                    //console.log('hi');
+                    loadDialogContent();
+                }
+            });
+        }
+
+        function loadDialogContent() {
+            //console.log('Hi');
+            //$.get("/Purchase/GetData").done(function (response) {
+            //    console.log(response);
+            //});
+            if (!$.fn.DataTable.isDataTable('#purchaseTable')) {
+                //console.log('hi2');
+                dataTable = $("#purchaseTable").DataTable({
+                    "ajax": {
+                        "url": "/Purchase/GetData",
+                        "type": "Get",
+                        "datatype": "json"
+                    },
+                    "columns": [
+                        { "data": "PortalName", "name": "PortalName" },
+                        { "data": "InventoryType", "name": "InventoryType" },
+                        { "data": "CategoryName", "name": "CategoryName" },
+                        { "data": "ItemName", "name": "ItemName" },
+                        { "data": "Subname", "name": "Subname" },
+                        { "data": "Qty", "name": "Qty" },
+                        { "data": "Rate", "name": "Rate" },
+                        { "data": "Total", "name": "Total" },
+                        { "data": "Percentage", "name": "Percentage" },
+                        { "data": "DatePurchasedFormatted", "name": "DatePurchased" }
+                    ],
+                    "language": {
+                        "emptyTable": "No data found, Please Click on <b>Add New</b> button",
+                        "processing": "Processing... Please wait"
+                    },
+                    keys: true
+                });
+            } else {
+                //console.log(dataTable);
+                //setInterval(function () {
+                //    dataTable.ajax.reload();
+                //}, 30000);
+            }
+            dataTable.draw();
+
+            //bind row event
+            $('#purchaseTable tbody').on('dblclick',
+                'tr',
+                function() {
+                    var data = dataTable.row(this).data();
+                    $('#ItemName').val(data['ItemName']);
+                    $('#PurchaseId').val(data['PurchaseId']);
+                    popUp.dialog('close');
+                    //console.log(data);
+                });
+
+            dataTable.on('keydown', function (ev) {
+                console.log(ev.keyCode);
+                if (focusedRow == null) {
+                    focusedRow = $('tr:nth-child(1)', '#myTable');
+                } else if (ev.keyCode === 38) {
+                    focusedRow.toggleClass('focused');
+                    focusedRow = focusedRow.prev('tr');
+                } else if (ev.keyCode === 40) {
+                    focusedRow.toggleClass('focused');
+                    focusedRow = focusedRow.next('tr');
+                }
+                focusedRow.toggleClass('focused');
+            });
+        }
+    </script>
+}
