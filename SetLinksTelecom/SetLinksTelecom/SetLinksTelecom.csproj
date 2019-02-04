@@ -442,6 +442,7 @@
     <Content Include="Views\Purchase\PurchaseGrid.cshtml" />
     <Content Include="Views\Sale\TangibleSaleIndex.cshtml" />
     <Content Include="Views\Sale\SaleItemRow.cshtml" />
+    <Content Include="Views\Person\PersonGrid.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

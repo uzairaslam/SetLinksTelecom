@@ -4,23 +4,22 @@
     Layout = null;
 }
 
+
 <td>
-    @Html.HiddenFor(m => m.PurchaseId)
+    @Html.HiddenFor(m => m.PurchaseId, new { @class = "PurchaseIdinpt" })
+    @Html.DisplayFor(m => m.ItemCode, new { htmlAttributes = new { @class = "form-control  form-control-sm ItemCode" } })
+</td>
+<td class="ItemName">
+    @Html.DisplayFor(m => m.ItemName, new { htmlAttributes = new { @class = "form-control  form-control-sm" } })
 </td>
 <td>
-    @Html.DisplayFor(m => m.ItemCode, new { htmlAttributes = new { @class = "form-control  form-control-sm" } })
+    @Html.EditorFor(m => m.Qty, new { htmlAttributes = new { @class = "form-control  form-control-sm qtyTxt", @onkeyup = "qtyChanged(this)", @onchange = "qtyChanged(this)" } })
 </td>
-<td>
-    @Html.EditorFor(m => m.ItemName, new { htmlAttributes = new { @class = "form-control  form-control-sm" } })
+<td class="Rate">
+    @Html.DisplayFor(m => m.Rate, new { htmlAttributes = new { @class = "form-control  form-control-sm" } })
 </td>
-<td>
-    @Html.EditorFor(m => m.Qty, new { htmlAttributes = new { @class = "form-control  form-control-sm" } })
-</td>
-<td>
-    @Html.EditorFor(m => m.Rate, new { htmlAttributes = new { @class = "form-control  form-control-sm" } })
-</td>
-<td>
-    @Html.EditorFor(m => m.SubTotal, new { htmlAttributes = new { @class = "form-control  form-control-sm" } })
+<td class="subTotal">
+    @Html.DisplayFor(m => m.SubTotal, new { htmlAttributes = new { @class = "form-control  form-control-sm" } })
 </td>
 <td>
     <a class='btn btn-danger btn-sm' onclick="removeItem(this)"><i class='fa fa-trash'></i></a>

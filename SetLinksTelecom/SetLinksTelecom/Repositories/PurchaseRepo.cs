@@ -116,5 +116,22 @@ namespace SetLinksTelecom.Repositories
             _db.Purchases.Remove(purchase);
             _db.SaveChanges();
         }
+
+        public DtoTangibleItemSale GetSpecificPurchase(int id)
+        {
+            DtoTangibleItemSale purchase = (from p in _db.Purchases
+                join i in _db.Items on p.ItemId equals i.ItemId
+                where p.PurchaseId == id 
+                select new DtoTangibleItemSale
+                {
+                    ItemCode = i.ItemCode,
+                    ItemName = i.Name,
+                    Rate = p.Rate,
+                    PurchaseId = p.PurchaseId,
+                    Qty = 1,
+                    SubTotal = p.Rate
+                }).FirstOrDefault();
+            return purchase;
+        }
     }
 }

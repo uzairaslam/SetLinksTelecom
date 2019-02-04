@@ -31,6 +31,11 @@ namespace SetLinksTelecom.Controllers
             return Json(new { data = persons }, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult PersonGrid()
+        {
+            return View();
+        }
+
         [HttpGet]
         public ActionResult AddOrEdit(int id = 0)
         {
