@@ -17,7 +17,9 @@ namespace SetLinksTelecom.DTO
     public class DtoTangibleSale
     {
         public int SaleId { get; set; }
+        [Required]
         public int PersonId { get; set; }
+        [Required]
         [Display(Name = "Person Name")]
         public string PersonName { get; set; }
 
@@ -25,6 +27,9 @@ namespace SetLinksTelecom.DTO
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Date { get; set; }
+
+        [Display(Name = "Overall Total")]
+        public decimal OverAllTotal { get; set; }
 
         public List<DtoTangibleItemSale> ItemSales { get; set; }
     }
