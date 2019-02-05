@@ -32,6 +32,7 @@ namespace SetLinksTelecom.Data
             modelBuilder.Entity<Purchase>().Property(p => p.Total).HasPrecision(20, 2);
             modelBuilder.Entity<Purchase>().Property(p => p.Rate).HasPrecision(20, 2);
             modelBuilder.Entity<Purchase>().Property(p => p.Percentage).HasPrecision(20, 2);
+            modelBuilder.Entity<Item>().Property(p => p.SaleRate).HasPrecision(20, 2);
             modelBuilder.Entity<Stock>().Property(s => s.AvgRate).HasPrecision(20, 2);
         }
     }

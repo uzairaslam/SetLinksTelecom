@@ -15,8 +15,8 @@
 <td>
     @Html.EditorFor(m => m.Qty, new { htmlAttributes = new { @class = "form-control  form-control-sm qtyTxt", @onkeyup = "qtyChanged(this)", @onchange = "qtyChanged(this)" } })
 </td>
-<td class="Rate">
-    @Html.DisplayFor(m => m.Rate, new { htmlAttributes = new { @class = "form-control  form-control-sm" } })
+<td>
+    @Html.EditorFor(m => m.Rate, new { htmlAttributes = new { @class = "form-control  form-control-sm Rate" } })
 </td>
 <td class="subTotal">
     @Html.DisplayFor(m => m.SubTotal, new { htmlAttributes = new { @class = "form-control  form-control-sm" } })

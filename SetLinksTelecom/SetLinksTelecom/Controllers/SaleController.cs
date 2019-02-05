@@ -55,7 +55,7 @@ namespace SetLinksTelecom.Controllers
         [HttpPost]
         public ActionResult SaveSale(DtoTangibleSale dtoTangibleSale)
         {
-            return RedirectToAction("TangibleSaleIndex");
+            return Json(new { success = true, message = "Saved Successfully" }, JsonRequestBehavior.AllowGet);
         }
     }
 }

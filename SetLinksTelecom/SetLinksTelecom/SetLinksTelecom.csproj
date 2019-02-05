@@ -266,6 +266,10 @@
     <Compile Include="Migrations\201901291331562_addedPercentageInPurchase.Designer.cs">
       <DependentUpon>201901291331562_addedPercentageInPurchase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902050718102_updateItemModel.cs" />
+    <Compile Include="Migrations\201902050718102_updateItemModel.Designer.cs">
+      <DependentUpon>201902050718102_updateItemModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Designation.cs" />
     <Compile Include="Models\InventoryType.cs" />
@@ -509,6 +513,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901291331562_addedPercentageInPurchase.resx">
       <DependentUpon>201901291331562_addedPercentageInPurchase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902050718102_updateItemModel.resx">
+      <DependentUpon>201902050718102_updateItemModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
