@@ -133,5 +133,23 @@ namespace SetLinksTelecom.Repositories
                 }).FirstOrDefault();
             return purchase;
         }
+
+        public DtoInTangibleItemSale GetSpecificInTangiblePurchase(int id)
+        {
+            DtoInTangibleItemSale purchase = (from p in _db.Purchases
+                join i in _db.Items on p.ItemId equals i.ItemId
+                where p.PurchaseId == id
+                select new DtoInTangibleItemSale
+                {
+                    ItemCode = i.ItemCode,
+                    ItemName = i.Name,
+                    Rate = p.Rate,
+                    PurchaseId = p.PurchaseId,
+                    Qty = 1,
+                    SubTotal = p.Rate,
+                    Lines = _db.Lines.ToList()
+                }).FirstOrDefault();
+            return purchase;
+        }
     }
 }

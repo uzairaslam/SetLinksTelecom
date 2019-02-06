@@ -1,10 +1,8 @@
-﻿@model SetLinksTelecom.DTO.DtoTangibleItemSale
+﻿@model SetLinksTelecom.DTO.DtoInTangibleItemSale
 
 @{
     Layout = null;
 }
-
-
 <td>
     @Html.HiddenFor(m => m.PurchaseId, new { @class = "PurchaseIdinpt" })
     @Html.DisplayFor(m => m.ItemCode, new { htmlAttributes = new { @class = "form-control  form-control-sm ItemCode" } })
@@ -20,6 +18,10 @@
 </td>
 <td class="subTotal">
     @Html.DisplayFor(m => m.SubTotal, new { htmlAttributes = new { @class = "form-control  form-control-sm" } })
+</td>
+<td>
+    @Html.DropDownListFor(m => m.LineId, new SelectList(Model.Lines, "LineId", "Name"), "Select Line", new { @class = "ddl form-control LineId" })
+    @Html.ValidationMessageFor(m => m.LineId)
 </td>
 <td>
     <a class='btn btn-danger btn-sm' onclick="removeItem(this)"><i class='fa fa-trash'></i></a>

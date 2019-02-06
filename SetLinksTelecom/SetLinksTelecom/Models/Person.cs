@@ -70,7 +70,5 @@ namespace SetLinksTelecom.Models
 
         [NotMapped]
         public List<Designation> Designations { get; set; }
-
-
     }
 }

@@ -24,6 +24,9 @@ namespace SetLinksTelecom.Data
         public DbSet<Purchase> Purchases { get; set; }
         public DbSet<Portal> Portals { get; set; }
         public DbSet<Stock> Stocks { get; set; }
+        public DbSet<Line> Lines { get; set; }
+        public DbSet<Sale> Sales { get; set; }
+        public DbSet<SaleDetail> SaleDetails { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -34,6 +37,9 @@ namespace SetLinksTelecom.Data
             modelBuilder.Entity<Purchase>().Property(p => p.Percentage).HasPrecision(20, 2);
             modelBuilder.Entity<Item>().Property(p => p.SaleRate).HasPrecision(20, 2);
             modelBuilder.Entity<Stock>().Property(s => s.AvgRate).HasPrecision(20, 2);
+            modelBuilder.Entity<SaleDetail>().Property(s => s.Rate).HasPrecision(20, 2);
+            modelBuilder.Entity<SaleDetail>().Property(s => s.SubTotal).HasPrecision(20, 2);
+            modelBuilder.Entity<Line>().Property(s => s.Percentage).HasPrecision(20, 2);
         }
     }
 }
