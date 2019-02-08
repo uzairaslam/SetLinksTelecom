@@ -4,9 +4,11 @@
 
 <h2>Items</h2>
 
-<div class="container" id="dvAddOrEditItem">
+@*<div class="container" id="dvAddOrEditItem">
     @Html.Action("AddOrEdit")
-</div>
+</div>*@
+
+<a class="btn btn-success" style="margin-bottom: 10px;" onclick="popUpForm('@Url.Action("AddOrEdit", "Item")')"><i class="fa fa-plus"></i> Add New</a>
 <div class="container" id="dvItemsTable">
     <table id="itemsTable" class="table table-hover">
         <thead>
@@ -15,6 +17,7 @@
             <th>Product Category</th>
             <th>Name</th>
             <th>Item Code</th>
+            <th>Sale Rate/Perc</th>
             <th></th>
         </tr>
         </thead>
@@ -52,6 +55,7 @@
                     { "data": "ProductCategoryName", "name": "ProductCategoryName" },
                     { "data": "Name", "name": "Name" },
                     { "data": "ItemCode", "name": "ItemCode" },
+                    { "data": "SaleRate", "name": "SaleRate" },
                     {
                         "data": "ItemId", "render": function (data) {
                             return "<a class='btn btn-info btn-sm' onClick=popUpForm('@Url.Action("AddOrEdit", "Item")/" +
@@ -70,6 +74,28 @@
                 }
             });
         });
+
+        function popUpForm(url) {
+            var formDiv = $('<div />');
+            $.get(url).done(function (response) {
+                formDiv.html(response);
+
+                popUp = formDiv.dialog({
+                    autoOpen: true,
+                    resizable: false,
+                    title: 'Fill Designation Details',
+                    draggable: false,
+                    width: 300,
+                    height: 450,
+                    modal: true,
+                    close: function () {
+                        //popUp.dialog('destroy').close();
+                        popUp.dialog('close');
+                    }
+                });
+            });
+        }
+
 
         function SubmitForm(form) {
             $.validator.unobtrusive.parse(form);

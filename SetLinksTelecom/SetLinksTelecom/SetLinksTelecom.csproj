@@ -176,20 +176,26 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InventoryTypeController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
+    <Compile Include="Controllers\LineController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
+    <Compile Include="Controllers\ProductCategoryController.cs" />
     <Compile Include="Controllers\PurchaseController.cs" />
     <Compile Include="Controllers\SaleController.cs" />
     <Compile Include="Data\DataContext.cs" />
     <Compile Include="Data\HtmlHelpers.cs" />
     <Compile Include="Data\IDesignationRepo.cs" />
+    <Compile Include="Data\IInventoryType.cs" />
     <Compile Include="Data\IItemsRepo.cs" />
     <Compile Include="Data\ILineRepo.cs" />
     <Compile Include="Data\IPersonRepo.cs" />
+    <Compile Include="Data\IProductCategoryRepo.cs" />
     <Compile Include="Data\IPurchaseRepo.cs" />
     <Compile Include="Data\ISaleRepo.cs" />
     <Compile Include="DTO\dtoItem.cs" />
+    <Compile Include="DTO\DtoProductCategory.cs" />
     <Compile Include="DTO\dtoPurchase.cs" />
     <Compile Include="DTO\dtoSale.cs" />
+    <Compile Include="GeneralFolder\CustomValidations.cs" />
     <Compile Include="GeneralFolder\EnumsRepo.cs" />
     <Compile Include="GeneralFolder\ExtensionMethods.cs" />
     <Compile Include="Global.asax.cs">
@@ -291,6 +297,10 @@
     <Compile Include="Migrations\201902061635504_updatedLineModel.Designer.cs">
       <DependentUpon>201902061635504_updatedLineModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902070935493_AddedLinesInPerson.cs" />
+    <Compile Include="Migrations\201902070935493_AddedLinesInPerson.Designer.cs">
+      <DependentUpon>201902070935493_AddedLinesInPerson.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Designation.cs" />
     <Compile Include="Models\InventoryType.cs" />
@@ -305,9 +315,11 @@
     <Compile Include="Models\Stock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\DesignationRepo.cs" />
+    <Compile Include="Repositories\InventoryTypeRepo.cs" />
     <Compile Include="Repositories\ItemsRepo.cs" />
     <Compile Include="Repositories\LineRepo.cs" />
     <Compile Include="Repositories\PersonRepo.cs" />
+    <Compile Include="Repositories\ProductCategoryRepo.cs" />
     <Compile Include="Repositories\PurchaseRepo.cs" />
     <Compile Include="Repositories\SaleRepo.cs" />
   </ItemGroup>
@@ -474,6 +486,11 @@
     <Content Include="Views\Person\PersonGrid.cshtml" />
     <Content Include="Views\Sale\InTangibleSaleIndex.cshtml" />
     <Content Include="Views\Sale\SaleInTangibleItemRow.cshtml" />
+    <Content Include="Views\Line\Index.cshtml" />
+    <Content Include="Views\Line\AddOrEdit.cshtml" />
+    <Content Include="Views\InventoryType\AddOrEdit.cshtml" />
+    <Content Include="Views\ProductCategory\Index.cshtml" />
+    <Content Include="Views\ProductCategory\AddOrEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -558,6 +575,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902061635504_updatedLineModel.resx">
       <DependentUpon>201902061635504_updatedLineModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902070935493_AddedLinesInPerson.resx">
+      <DependentUpon>201902070935493_AddedLinesInPerson.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

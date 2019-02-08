@@ -20,13 +20,14 @@ namespace SetLinksTelecom.Models
         //[MinLength(3),MaxLength(50)]
         //public string Subname { get; set; }
 
-        [Display(Name = "Sale Rate")]
+        [Display(Name = "Sale Rate/Percentage")]
         public decimal SaleRate { get; set; }
 
         [Required]
         [Display(Name = "ProductCategory")]
         public int ProductCategoryId { get; set; }
         [ForeignKey("ProductCategoryId")]
+        [NotMapped]
         public ProductCategory ProductCategory { get; set; }
 
         [NotMapped]

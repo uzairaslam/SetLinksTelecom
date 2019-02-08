@@ -1,50 +1,49 @@
-﻿@model SetLinksTelecom.Models.InventoryType
+﻿
 @{
-    ViewBag.Title = "Inventory Type";
-    //Layout = null;
+    ViewBag.Title = "Lines";
 }
 
-<h2>Inventory Type</h2>
+<h2>Lines</h2>
 
-<a class="btn btn-success" style="margin-bottom: 10px;" onclick="popUpForm('@Url.Action("AddOrEdit", "InventoryType")')"><i class="fa fa-plus"></i> Add New</a>
-<table id="inventoryTypeTable" class="table table-hover">
+<a class="btn btn-success" style="margin-bottom: 10px;" onclick="popUpForm('@Url.Action("AddOrEdit", "Line")')"><i class="fa fa-plus"></i> Add New</a>
+<table id="lineTable" class="table table-hover">
     <thead>
-        <tr>
-            <th>Name</th>
-            <th></th>
-        </tr>
+    <tr>
+        <th>Name</th>
+        <th>Percentage</th>
+        <th></th>
+    </tr>
     </thead>
 </table>
 
 
-
 <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
-
 @section scripts
 {
     <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 
     <script>
-
         var popUp, dataTable;
+
         $(document).ready(function () {
-            dataTable = $("#inventoryTypeTable").DataTable({
+            dataTable = $("#lineTable").DataTable({
                 "ajax": {
-                    "url": "/InventoryType/GetData",
+                    "url": "/Line/GetData",
                     "type": "Get",
                     "datatype": "json"
                 },
                 "columns": [
                     { "data": "Name", "name": "Name" },
+                    { "data": "Percentage", "name": "Percentage" },
                     {
-                        "data": "InventoryTypeId", "render": function (data) {
-                            return "<a class='btn btn-info btn-sm' onClick=popUpForm('@Url.Action("AddOrEdit", "InventoryType")/" +
+                        "data": "LineId", "render": function (data) {
+                            return "<a class='btn btn-info btn-sm' onClick=popUpForm('@Url.Action("AddOrEdit", "Line")/" +
                                 data +
                                 "')><i class='fa fa-pencil'></i> Edit</a><a class='btn btn-danger btn-sm' style='margin-left:5px;' onClick=Delete(" +
                                 data +
                                 ")><i class='fa fa-trash'></i> Delete</a>";
-                        }, "ordering": false,
+                        }, "orderable": false,
                         "searchable": false,
                         "width": "150px"
                     }
@@ -64,13 +63,12 @@
                 popUp = formDiv.dialog({
                     autoOpen: true,
                     resizable: false,
-                    title: 'Fill Inventory Type Details',
+                    title: 'Fill Line Details',
                     draggable: false,
                     width: 250,
-                    height: 270,
+                    height: 300,
                     modal: true,
                     close: function () {
-                        //popUp.dialog('destroy').close();
                         popUp.dialog('close');
                     }
                 });
@@ -117,33 +115,3 @@
 
     </script>
 }
-
-@*<div class="container">
-    @using (Html.BeginForm("AddOrEdit", "Designation", FormMethod.Post, new { onsubmit = "return SubmitInventoryTypeForm(this)" }))
-    {
-        @Html.HiddenFor(m => m.InventoryTypeId)
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.Name, new { @class = "control-label" })
-            @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(m => m.Name)
-        </div>
-
-
-        <div class="form-group">
-            <button type="submit" value="Submit" class="btn btn-primary"><i class="fa fa-save"></i> Submit</button>
-            <button type="reset" value="Reset" class="btn btn-warning"><i class="fa fa-refresh"></i> Reset</button>
-        </div>
-    }
-</div>
-
-<div class="container">
-    <table id="inventoryTypeTable" class="table table-hover">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th></th>
-            </tr>
-        </thead>
-    </table>
-</div>*@

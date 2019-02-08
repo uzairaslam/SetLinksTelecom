@@ -21,6 +21,8 @@ namespace SetLinksTelecom.Repositories
         {
             //return _db.Items.Include(i => i.ProductCategory).Include(pc => pc.ProductCategories.Select(x => x.InventoryType)).ToList();
             return (from i in _db.Items
+                join cat in _db.ProductCategories on i.ProductCategoryId equals cat.ProductCategoryId
+                join type in _db.InventoryTypes on cat.InventoryTypeId equals type.InventoryTypeId 
                 select new dtoItem
                 {
                     ItemId = i.ItemId,
@@ -28,9 +30,10 @@ namespace SetLinksTelecom.Repositories
                     ItemCode = i.ItemCode,
                     //Subname = i.Subname,
                     ProductCategoryId = i.ProductCategoryId,
-                    ProductCategoryName = i.ProductCategory.Name,
-                    InventoryTypeId = i.ProductCategory.InventoryTypeId,
-                    InventoryTypeName = i.ProductCategory.InventoryType.Name
+                    ProductCategoryName = cat.Name,
+                    InventoryTypeId = type.InventoryTypeId,
+                    InventoryTypeName = type.Name,
+                    SaleRate = i.SaleRate
                 }).ToList();
         }
 

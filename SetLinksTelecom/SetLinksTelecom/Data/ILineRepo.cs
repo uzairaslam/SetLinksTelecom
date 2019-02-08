@@ -10,5 +10,8 @@ namespace SetLinksTelecom.Data
     public interface ILineRepo
     {
         IList<Line> GetLines();
+        Line GetLine(int id);
+        void SaveLine(Line line);
+        void UpdateLine(Line line);
     }
 }

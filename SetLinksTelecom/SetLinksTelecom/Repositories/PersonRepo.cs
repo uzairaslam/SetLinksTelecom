@@ -26,6 +26,7 @@ namespace SetLinksTelecom.Repositories
         {
             var person = _db.Persons.FirstOrDefault(d => d.PersonId.Equals(id));
             person.Designations = _db.Designations.ToList();
+            person.Lines = _db.Lines.ToList();
             return person;
         }
 

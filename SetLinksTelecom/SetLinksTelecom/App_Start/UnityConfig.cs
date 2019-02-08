@@ -22,6 +22,8 @@ namespace SetLinksTelecom
             container.RegisterType<IPurchaseRepo, PurchaseRepo>();
             container.RegisterType<ISaleRepo, SaleRepo>();
             container.RegisterType<ILineRepo, LineRepo>();
+            container.RegisterType<IInventoryType, InventoryTypeRepo>();
+            container.RegisterType<IProductCategoryRepo, ProductCategoryRepo>();
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }
     }

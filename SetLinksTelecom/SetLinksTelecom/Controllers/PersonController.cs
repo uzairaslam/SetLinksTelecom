@@ -12,11 +12,13 @@ namespace SetLinksTelecom.Controllers
     {
         private readonly IPersonRepo _personRepo;
         private readonly IDesignationRepo _designationRepo;
+        private readonly ILineRepo _lineRepo;
 
-        public PersonController(IPersonRepo personRepo, IDesignationRepo designationRepo)
+        public PersonController(IPersonRepo personRepo, IDesignationRepo designationRepo, ILineRepo lineRepo)
         {
             _personRepo = personRepo;
             _designationRepo = designationRepo;
+            _lineRepo = lineRepo;
         }
 
         // GET: Person
@@ -43,6 +45,9 @@ namespace SetLinksTelecom.Controllers
             {
                 Person person = new Person();
                 person.Designations = _designationRepo.GetData().ToList();
+                person.Lines = _lineRepo.GetLines().ToList();
+                person.CNICIssueDate = DateTime.Now;
+                person.DOB = DateTime.Now;
                 return View(person);
             }
             else

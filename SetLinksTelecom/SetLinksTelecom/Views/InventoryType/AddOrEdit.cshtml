@@ -1,0 +1,20 @@
+﻿@model SetLinksTelecom.Models.InventoryType
+@{
+    Layout = null;
+}
+
+@using (Html.BeginForm("AddOrEdit", "InventoryType", FormMethod.Post, new { onsubmit = "return SubmitForm(this)" }))
+{
+    @Html.HiddenFor(m => m.InventoryTypeId)
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Name, new { @class = "control-label" })
+        @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(m => m.Name)
+    </div>
+
+    <div class="form-group">
+        <button type="submit" value="Submit" class="btn btn-primary"><i class="fa fa-save"></i> Submit</button>
+        <button type="reset" value="Reset" class="btn btn-warning"><i class="fa fa-refresh"></i> Reset</button>
+    </div>
+}

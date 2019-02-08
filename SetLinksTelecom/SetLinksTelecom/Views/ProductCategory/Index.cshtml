@@ -1,21 +1,21 @@
-﻿@model SetLinksTelecom.Models.InventoryType
+﻿
 @{
-    ViewBag.Title = "Inventory Type";
-    //Layout = null;
+    ViewBag.Title = "Product Category";
 }
 
-<h2>Inventory Type</h2>
 
-<a class="btn btn-success" style="margin-bottom: 10px;" onclick="popUpForm('@Url.Action("AddOrEdit", "InventoryType")')"><i class="fa fa-plus"></i> Add New</a>
-<table id="inventoryTypeTable" class="table table-hover">
+<h2>Product Category</h2>
+
+<a class="btn btn-success" style="margin-bottom: 10px;" onclick="popUpForm('@Url.Action("AddOrEdit", "ProductCategory")')"><i class="fa fa-plus"></i> Add New</a>
+<table id="productCategoryTable" class="table table-hover">
     <thead>
         <tr>
-            <th>Name</th>
+            <th>Inventory Type</th>
+            <th>Product Category</th>
             <th></th>
         </tr>
     </thead>
 </table>
-
 
 
 <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
@@ -26,25 +26,25 @@
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 
     <script>
-
         var popUp, dataTable;
         $(document).ready(function () {
-            dataTable = $("#inventoryTypeTable").DataTable({
+            dataTable = $("#productCategoryTable").DataTable({
                 "ajax": {
-                    "url": "/InventoryType/GetData",
+                    "url": "/ProductCategory/GetData",
                     "type": "Get",
                     "datatype": "json"
                 },
                 "columns": [
-                    { "data": "Name", "name": "Name" },
+                    { "data": "InventoryTypeName", "name": "InventoryTypeName" },
+                    { "data": "ProductCategoryName", "name": "ProductCategoryName" },
                     {
-                        "data": "InventoryTypeId", "render": function (data) {
-                            return "<a class='btn btn-info btn-sm' onClick=popUpForm('@Url.Action("AddOrEdit", "InventoryType")/" +
+                        "data": "ProductCategoryId", "render": function (data) {
+                            return "<a class='btn btn-info btn-sm' onClick=popUpForm('@Url.Action("AddOrEdit", "ProductCategory")/" +
                                 data +
                                 "')><i class='fa fa-pencil'></i> Edit</a><a class='btn btn-danger btn-sm' style='margin-left:5px;' onClick=Delete(" +
                                 data +
                                 ")><i class='fa fa-trash'></i> Delete</a>";
-                        }, "ordering": false,
+                        }, "orderable": false,
                         "searchable": false,
                         "width": "150px"
                     }
@@ -53,6 +53,10 @@
                     "emptyTable": "No data found, Please Click on <b>Add New</b> button",
                     "processing": "Processing... Please wait"
                 }
+                //,
+                //"serverSide": "true",
+                //"order": [0, "asc"],
+                //"processing": "true"
             });
         });
 
@@ -64,10 +68,10 @@
                 popUp = formDiv.dialog({
                     autoOpen: true,
                     resizable: false,
-                    title: 'Fill Inventory Type Details',
+                    title: 'Fill Product Category Details',
                     draggable: false,
-                    width: 250,
-                    height: 270,
+                    width: 270,
+                    height: 290,
                     modal: true,
                     close: function () {
                         //popUp.dialog('destroy').close();
@@ -117,33 +121,3 @@
 
     </script>
 }
-
-@*<div class="container">
-    @using (Html.BeginForm("AddOrEdit", "Designation", FormMethod.Post, new { onsubmit = "return SubmitInventoryTypeForm(this)" }))
-    {
-        @Html.HiddenFor(m => m.InventoryTypeId)
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.Name, new { @class = "control-label" })
-            @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(m => m.Name)
-        </div>
-
-
-        <div class="form-group">
-            <button type="submit" value="Submit" class="btn btn-primary"><i class="fa fa-save"></i> Submit</button>
-            <button type="reset" value="Reset" class="btn btn-warning"><i class="fa fa-refresh"></i> Reset</button>
-        </div>
-    }
-</div>
-
-<div class="container">
-    <table id="inventoryTypeTable" class="table table-hover">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th></th>
-            </tr>
-        </thead>
-    </table>
-</div>*@
