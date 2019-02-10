@@ -44,25 +44,34 @@ namespace SetLinksTelecom.Repositories
             {
                 //item = _db.Items.Include(i => i.ProductCategories.Select(pc => pc.InventoryTypes)).FirstOrDefault(d => d.ItemId.Equals(id));
                 item = (from i in _db.Items
+                    join cat in _db.ProductCategories on i.ProductCategoryId equals cat.ProductCategoryId
+                    join type in _db.InventoryTypes on cat.InventoryTypeId equals type.InventoryTypeId 
                     where i.ItemId == id
-                    select new Item
-                    {
-                        ItemId = i.ItemId,
-                        Name = i.Name,
-                        ItemCode = i.ItemCode,
-                        //Subname = i.Subname,
-                        ProductCategoryId = i.ProductCategoryId,
-                        ProductCategory = new ProductCategory
-                        {
-                            ProductCategoryId = i.ProductCategory.ProductCategoryId,
-                            Name = i.ProductCategory.Name,
-                            InventoryType = new InventoryType()
-                            {
-                                InventoryTypeId = i.ProductCategory.InventoryTypeId,
-                                Name = i.ProductCategory.InventoryType.Name
-                            }
-                        }
-                    }).FirstOrDefault();
+                    select i
+                        //new Item
+                        //    {
+                        //        ItemId =  i.ItemId,
+                        //        Name = i.Name,
+                        //        ItemCode = i.ItemCode,
+                        //        ProductCategoryId = i.ProductCategoryId,
+                        //        SaleRate = i.SaleRate
+                        //        //ItemId = i.ItemId,
+                        //        //Name = i.Name,
+                        //        //ItemCode = i.ItemCode,
+                        //        ////Subname = i.Subname,
+                        //        //ProductCategoryId = i.ProductCategoryId//,
+                        //        ////ProductCategory = new ProductCategory
+                        //        ////{
+                        //        ////    ProductCategoryId = cat.ProductCategoryId,
+                        //        ////    Name = cat.Name,
+                        //        ////    InventoryType = new InventoryType()
+                        //        ////    {
+                        //        ////        InventoryTypeId = type.InventoryTypeId,
+                        //        ////        Name = type.Name
+                        //        ////    }
+                        //        ////}
+                        //    }
+                        ).FirstOrDefault();
             }
             item.ProductCategories = _db.ProductCategories.ToList();
             item.ProductCategory.InventoryTypes = _db.InventoryTypes.ToList();
@@ -71,12 +80,12 @@ namespace SetLinksTelecom.Repositories
 
         public void SaveItem(Item item)
         {
-            ProductCategory productCategory = _db.ProductCategories.Include(pc => pc.InventoryType)
-                .FirstOrDefault(c => c.ProductCategoryId.Equals(item.ProductCategoryId));
-            productCategory.Items.Add(item);
+            //ProductCategory productCategory = _db.ProductCategories.Include(pc => pc.InventoryType)
+            //    .FirstOrDefault(c => c.ProductCategoryId.Equals(item.ProductCategoryId));
+            _db.Items.Add(item);
             //productCategory.it
             //_db.Items.Add(item);
-            _db.Entry(productCategory).State = EntityState.Modified;
+            //_db.Entry(productCategory).State = EntityState.Modified;
             _db.SaveChanges();
         }
 

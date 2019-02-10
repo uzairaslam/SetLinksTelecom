@@ -40,7 +40,7 @@
         
         var popUp, dataTable;
         $(document).ready(function() {
-
+            
             dataTable = $("#purchaseTable").DataTable({
                 "ajax": {
                     "url": "/Purchase/GetData",
@@ -101,33 +101,70 @@
                 //    changeMonth: true,
                 //    changeYear: true
                 //});
+                $('#dvRate').hide();
+                $('#dvPercentage').hide();
+                $('#Total').attr("disabled", "true");
             });
+        }
 
+        function valueChanged() {
+            var Qty = $('#Qty').val();
+            var Rate = $('#Rate').val();
+            var Percentage = $('#Percentage').val();
+            if ($($('#InventoryTypeId').find('option:selected')).text() === 'Tangible') {
+                if (Qty != null && Qty != 0 && Rate != null && Rate != 0) {
+                    var total = Qty * Rate;
+                    $('#Total').val(total);
+                    $('#Total').attr("value", total);
+                    $('#Total').innerHTML = total;
+
+                    console.log($('#Total'));
+                } else {
+                    $('#Total').val(0);
+                    $('#Total').innerText = '0';
+                }
+            } else if ($($('#InventoryTypeId').find('option:selected')).text() === 'Intangible') {
+                if (Qty != null && Qty != 0 && Percentage != null && Percentage != 0) {
+                    var total = Qty - ((Qty * Percentage) / 100);
+                    $('#Total').val(total);
+                    $('#Total').innerText = total;
+                } else {
+                    $('#Total').val(0);
+                    $('#Total').innerText = '0';
+                }
+            } else {
+                $('#Total').val(0);
+                $('#Total').innerText = '0';
+            }
         }
 
         function SubmitForm(form) {
             //$.validator.unobtrusive.parse(form);
             if ($(form).valid()) {
-                $.ajax({
-                    type: "POST",
-                    url: form.action,
-                    data: $(form).serialize(),
-                    success: function (data) {
-                        if (data.success) {
-                            popUp.dialog('close');
+                console.log($(form).serialize());
+                var formData = $(form).serialize();
+                formData.Total = $('#Total').val(total);
+                console.log(formData);
+                //$.ajax({
+                //    type: "POST",
+                //    url: form.action,
+                //    data: $(form).serialize(),
+                //    success: function (data) {
+                //        if (data.success) {
+                //            popUp.dialog('close');
 
-                            dataTable.ajax.reload();
+                //            dataTable.ajax.reload();
 
-                            $.notify(
-                                data.message,
-                                {
-                                    position: "top center",
-                                    className: "success"
-                                }
-                            );
-                        }
-                    }
-                });
+                //            $.notify(
+                //                data.message,
+                //                {
+                //                    position: "top center",
+                //                    className: "success"
+                //                }
+                //            );
+                //        }
+                //    }
+                //});
             } else {
                 $.notify(
                     "Validation Error",
@@ -139,6 +176,25 @@
             }
 
             return false;
+        }
+
+        function inventoryChanged(cmb) {
+            //console.log(cmb);
+            //console.log($($(cmb).find('option:selected')).text());
+
+            if ($($(cmb).find('option:selected')).text() === 'Tangible') {
+                $('#dvRate').show();
+                $('#dvPercentage').hide();
+                $('#lblQty').html('Quantity');
+            } else if ($($(cmb).find('option:selected')).text() === 'Intangible') {
+                $('#dvRate').hide();
+                $('#dvPercentage').show();
+                $('#lblQty').html('Balance');
+            } else {
+                $('#dvRate').hide();
+                $('#dvPercentage').hide();
+                $('#lblQty').html('Quantity');
+            }
         }
 
 

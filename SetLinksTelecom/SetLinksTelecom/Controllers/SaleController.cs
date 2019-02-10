@@ -52,10 +52,10 @@ namespace SetLinksTelecom.Controllers
             return View(_purchaseRepo.GetSpecificPurchase(id));
         }
         [HttpGet]
-        public ActionResult SaleInTangibleItemRow(int id)
+        public ActionResult SaleInTangibleItemRow(int PurchaseId, int PersonId)
         {
             //DtoTangibleItemSale itemSaleRow = new DtoTangibleItemSale();
-            return View(_purchaseRepo.GetSpecificInTangiblePurchase(id));
+            return View(_purchaseRepo.GetSpecificInTangiblePurchase(PurchaseId, PersonId));
         }
 
         [HttpPost]

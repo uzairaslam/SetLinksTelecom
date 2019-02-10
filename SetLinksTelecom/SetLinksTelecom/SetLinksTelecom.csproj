@@ -192,6 +192,7 @@
     <Compile Include="Data\IPurchaseRepo.cs" />
     <Compile Include="Data\ISaleRepo.cs" />
     <Compile Include="DTO\dtoItem.cs" />
+    <Compile Include="DTO\DtoLinesWithNumbers.cs" />
     <Compile Include="DTO\DtoProductCategory.cs" />
     <Compile Include="DTO\dtoPurchase.cs" />
     <Compile Include="DTO\dtoSale.cs" />
@@ -300,6 +301,18 @@
     <Compile Include="Migrations\201902070935493_AddedLinesInPerson.cs" />
     <Compile Include="Migrations\201902070935493_AddedLinesInPerson.Designer.cs">
       <DependentUpon>201902070935493_AddedLinesInPerson.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902101104214_addedCommProfittoSaleDetails.cs" />
+    <Compile Include="Migrations\201902101104214_addedCommProfittoSaleDetails.Designer.cs">
+      <DependentUpon>201902101104214_addedCommProfittoSaleDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902101117311_updatedCommProfittoSaleDetails.cs" />
+    <Compile Include="Migrations\201902101117311_updatedCommProfittoSaleDetails.Designer.cs">
+      <DependentUpon>201902101117311_updatedCommProfittoSaleDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902101123035_updatedDecimalFieldsscaleto4.cs" />
+    <Compile Include="Migrations\201902101123035_updatedDecimalFieldsscaleto4.Designer.cs">
+      <DependentUpon>201902101123035_updatedDecimalFieldsscaleto4.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Designation.cs" />
@@ -578,6 +591,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902070935493_AddedLinesInPerson.resx">
       <DependentUpon>201902070935493_AddedLinesInPerson.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902101104214_addedCommProfittoSaleDetails.resx">
+      <DependentUpon>201902101104214_addedCommProfittoSaleDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902101117311_updatedCommProfittoSaleDetails.resx">
+      <DependentUpon>201902101117311_updatedCommProfittoSaleDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902101123035_updatedDecimalFieldsscaleto4.resx">
+      <DependentUpon>201902101123035_updatedDecimalFieldsscaleto4.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

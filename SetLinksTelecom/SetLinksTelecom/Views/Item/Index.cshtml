@@ -107,6 +107,9 @@
                     success: function (data) {
                         if (data.success) {
 
+                            popUp.dialog('close');
+
+                            dataTable.ajax.reload();
                             $.notify(
                                 data.message,
                                 {

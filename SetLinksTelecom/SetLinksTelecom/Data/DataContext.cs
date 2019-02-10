@@ -32,13 +32,14 @@ namespace SetLinksTelecom.Data
         {
             //base.OnModelCreating(modelBuilder);
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-            modelBuilder.Entity<Purchase>().Property(p => p.Total).HasPrecision(20, 2);
-            modelBuilder.Entity<Purchase>().Property(p => p.Rate).HasPrecision(20, 2);
-            modelBuilder.Entity<Purchase>().Property(p => p.Percentage).HasPrecision(20, 2);
-            modelBuilder.Entity<Item>().Property(p => p.SaleRate).HasPrecision(20, 2);
-            modelBuilder.Entity<Stock>().Property(s => s.AvgRate).HasPrecision(20, 2);
-            modelBuilder.Entity<SaleDetail>().Property(s => s.Rate).HasPrecision(20, 2);
-            modelBuilder.Entity<SaleDetail>().Property(s => s.SubTotal).HasPrecision(20, 2);
+            modelBuilder.Entity<Purchase>().Property(p => p.Total).HasPrecision(20, 4);
+            modelBuilder.Entity<Purchase>().Property(p => p.Rate).HasPrecision(20, 4);
+            modelBuilder.Entity<Purchase>().Property(p => p.Percentage).HasPrecision(20, 4);
+            modelBuilder.Entity<Item>().Property(p => p.SaleRate).HasPrecision(20, 4);
+            modelBuilder.Entity<Stock>().Property(s => s.AvgRate).HasPrecision(20, 4);
+            modelBuilder.Entity<SaleDetail>().Property(s => s.Rate).HasPrecision(20, 4);
+            modelBuilder.Entity<SaleDetail>().Property(s => s.SubTotal).HasPrecision(20, 4);
+            modelBuilder.Entity<SaleDetail>().Property(s => s.CommProfit).HasPrecision(20, 4);
             modelBuilder.Entity<Line>().Property(s => s.Percentage).HasPrecision(20, 2);
         }
     }

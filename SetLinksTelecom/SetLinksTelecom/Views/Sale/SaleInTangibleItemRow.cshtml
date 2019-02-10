@@ -20,7 +20,7 @@
     @Html.DisplayFor(m => m.SubTotal, new { htmlAttributes = new { @class = "form-control  form-control-sm" } })
 </td>
 <td>
-    @Html.DropDownListFor(m => m.LineId, new SelectList(Model.Lines, "LineId", "Name"), "Select Line", new { @class = "ddl form-control LineId" })
+    @Html.DropDownListFor(m => m.LineId, new SelectList(Model.Lines, "LineId", "Number"), "Select Line", new { @class = "ddl form-control LineId" })
     @Html.ValidationMessageFor(m => m.LineId)
 </td>
 <td>

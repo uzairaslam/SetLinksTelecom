@@ -82,7 +82,7 @@ namespace SetLinksTelecom.DTO
     {
         public DtoInTangibleItemSale()
         {
-            Lines=new List<Line>();
+            Lines = new List<DtoLinesWithNumbers>();
         }
         public int PurchaseId { get; set; }
 
@@ -98,6 +98,7 @@ namespace SetLinksTelecom.DTO
         public decimal SubTotal { get; set; }
 
         public int LineId { get; set; }
-        public List<Line> Lines { get; set; }
+        //public List<Line> Lines { get; set; }
+        public List<DtoLinesWithNumbers> Lines { get; set; }
     }
 }

@@ -19,23 +19,60 @@ namespace SetLinksTelecom.Repositories
         }
         public IEnumerable<dtoDisplayPurchase> GetData()
         {
-            return from p in _db.Purchases
-                   join po in _db.Portals on p.PortalId equals po.PortalId
-                join i in _db.Items on p.ItemId equals i.ItemId
+            IEnumerable<dtoDisplayPurchase> purchases = from A in (
+                    (from p in _db.Purchases
+                        join po in _db.Portals on p.PortalId equals po.PortalId
+                        join i in _db.Items on p.ItemId equals i.ItemId
+                        join cat in _db.ProductCategories on i.ProductCategoryId equals cat.ProductCategoryId
+                        select new
+                        {
+                            PortalName = po.Name,
+                            CategoryName = cat.Name,
+                            ItemName = i.Name,
+                            InventoryTypeId = cat.InventoryTypeId,
+                            p.PurchaseId,
+                            Subname = p.Subname,
+                            Remarks = p.Remarks,
+                            Qty = p.Qty,
+                            Total = p.Total,
+                            Percentage = p.Percentage,
+                            Rate = p.Rate
+                        }))
+                join t in _db.InventoryTypes on new {InventoryTypeId = A.InventoryTypeId} equals new
+                    {InventoryTypeId = t.InventoryTypeId}
                 select new dtoDisplayPurchase
                 {
-                    PortalName = po.Name,
-                    InventoryType = i.ProductCategory.InventoryType.Name,
-                    CategoryName = i.ProductCategory.Name,
-                    ItemName = i.Name,
-                    PurchaseId = p.PurchaseId,
-                    Subname = p.Subname,
-                    Remarks = p.Remarks,
-                    Qty = p.Qty,
-                    Total = p.Total,
-                    Percentage = p.Percentage,
-                    Rate = p.Rate
+                    InventoryType = t.Name,
+                    PortalName = A.PortalName,
+                    CategoryName = A.CategoryName,
+                    ItemName = A.ItemName,
+                    //InventoryTypeId = (int?)A.InventoryTypeId,
+                    PurchaseId = A.PurchaseId,
+                    Subname = A.Subname,
+                    Remarks = A.Remarks,
+                    Qty = A.Qty,
+                    Total = A.Total,
+                    Percentage = A.Percentage,
+                    Rate = A.Rate
                 };
+            return purchases;
+            //return from p in _db.Purchases
+            //       join po in _db.Portals on p.PortalId equals po.PortalId
+            //    join i in _db.Items on p.ItemId equals i.ItemId
+            //    select new dtoDisplayPurchase
+            //    {
+            //        PortalName = po.Name,
+            //        InventoryType = i.ProductCategory.InventoryType.Name,
+            //        CategoryName = i.ProductCategory.Name,
+            //        ItemName = i.Name,
+            //        PurchaseId = p.PurchaseId,
+            //        Subname = p.Subname,
+            //        Remarks = p.Remarks,
+            //        Qty = p.Qty,
+            //        Total = p.Total,
+            //        Percentage = p.Percentage,
+            //        Rate = p.Rate
+            //    };
         }
 
         public dtoPurchase GetPurchase(int id)
@@ -134,7 +171,7 @@ namespace SetLinksTelecom.Repositories
             return purchase;
         }
 
-        public DtoInTangibleItemSale GetSpecificInTangiblePurchase(int id)
+        public DtoInTangibleItemSale GetSpecificInTangiblePurchase(int id,int PersonId)
         {
             DtoInTangibleItemSale purchase = (from p in _db.Purchases
                 join i in _db.Items on p.ItemId equals i.ItemId
@@ -147,8 +184,25 @@ namespace SetLinksTelecom.Repositories
                     PurchaseId = p.PurchaseId,
                     Qty = 1,
                     SubTotal = p.Rate,
-                    Lines = _db.Lines.ToList()
+                    //Lines = _db.Lines.ToList()
                 }).FirstOrDefault();
+            Person person = _db.Persons.FirstOrDefault(p => p.PersonId.Equals(PersonId));
+            if (person != null && person.BusinessLineMap != null && person.BusinessLineMap != 0)
+            {
+                purchase.Lines.Add(new DtoLinesWithNumbers
+                {
+                    LineId = (int) person.BusinessLineMap,
+                    Number = person.MobileBusiness
+                });
+            }
+            if (person != null && person.PersonalLineMap != null && person.PersonalLineMap != 0)
+            {
+                purchase.Lines.Add(new DtoLinesWithNumbers
+                {
+                    LineId = (int)person.PersonalLineMap,
+                    Number = person.MobilePersonal
+                });
+            }
             return purchase;
         }
     }

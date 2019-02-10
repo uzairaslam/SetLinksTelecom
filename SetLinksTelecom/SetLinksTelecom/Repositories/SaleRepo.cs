@@ -63,7 +63,8 @@ namespace SetLinksTelecom.Repositories
                     PurchaseId = dt.PurchaseId,
                     Qty = dt.Qty,
                     LineId = dt.LineId,
-                    SubTotal = dt.SubTotal
+                    SubTotal = dt.SubTotal,
+                    CommProfit = (((dt.Rate * dt.Qty) / 100) * dt.Rate)/100
                 });
             });
             _db.Sales.Add(sale);

@@ -15,6 +15,7 @@ namespace SetLinksTelecom.Models
         public decimal SubTotal { get; set; }
         public int LineId { get; set; }
         public int SaleId { get; set; }
+        public decimal CommProfit { get; set; }
 
         [NotMapped]
         [ForeignKey("SaleId")]

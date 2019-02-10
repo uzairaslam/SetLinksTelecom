@@ -6,7 +6,7 @@
 
 <div class="jumbotron">
     <h2>In Tangible Sale Portal</h2>
-    
+
     @using (Html.BeginForm("SaveInTangibleSale", "Sale", FormMethod.Post, new { onsubmit = "return SubmitForm(this)" }))
     {
 
@@ -81,8 +81,8 @@
 
     <script>
         var tangibleItemsSale, purchaseTable;
-        $(document).ready(function() {
-            $('#PersonName').keypress(function(event) {
+        $(document).ready(function () {
+            $('#PersonName').keypress(function (event) {
 
                 var keycode = (event.keyCode ? event.keyCode : event.which);
                 if (keycode == '13') {
@@ -93,15 +93,15 @@
                 return false;
             });
             tangibleItemsSale = $('[id$=tangibleItemsSale]').DataTable({
-                "ordering": false
-                //,
-                //"columnDefs": [
-                //    {
-                //        "targets": [0],
-                //        "visible": false,
-                //        "searchable": false
-                //    }
-                //]
+                "ordering": false,
+                "columnDefs": [
+                    { "width": "60", "targets": 0 },
+                    { "width": "90", "targets": 1 },
+                    { "width": "120", "targets": 2 },
+                    { "width": "120", "targets": 3 },
+                    { "width": "140", "targets": 4 },
+                    { "width": "160", "targets": 5 }
+                ]
             });
         });
 
@@ -146,7 +146,7 @@
                     type: "POST",
                     url: form.action,
                     data: dtoTangibleSale,
-                    success: function(data) {
+                    success: function (data) {
                         if (data.success) {
 
                             resetForm();
@@ -176,35 +176,48 @@
         function resetForm() {
             window.setInterval(function () {
                 window.location = ("@Url.Action("InTangibleSaleIndex", "Sale")");
-            }, 2000);
+            },
+                2000);
         }
 
 
         function popUpForm(url, type) {
             //console.log(type);
-            var formDiv = $('<div class="popDiv" />');
-            $.get(url).done(function(response) {
-                formDiv.html(response);
+            console.log($('#PersonId').val());
 
-                popUp = formDiv.dialog({
-                    autoOpen: true,
-                    resizable: false,
-                    title: 'Select Items',
-                    draggable: false,
-                    width: $(window).width() - 50,
-                    height: 600,
-                    modal: true,
-                    close: function() {
-                        dataTable.destroy();
-                        popUp.dialog('close');
-                        $('.popDiv').remove();
-                    }
+            if ((type === 'Purchase' && typeof $('#PersonId').val() !== 'undefined' && $('#PersonId').val() != 0 && $('#PersonId').val()) || type !== 'Purchase') {
+                var formDiv = $('<div class="popDiv" />');
+                $.get(url).done(function (response) {
+                    formDiv.html(response);
+
+                    popUp = formDiv.dialog({
+                        autoOpen: true,
+                        resizable: false,
+                        title: 'Select Items',
+                        draggable: false,
+                        width: $(window).width() - 50,
+                        height: 600,
+                        modal: true,
+                        close: function () {
+                            dataTable.destroy();
+                            popUp.dialog('close');
+                            $('.popDiv').remove();
+                        }
+                    });
+                    if (type === 'Purchase')
+                        loadDialogContent();
+                    else
+                        loadPersonDialogContent();
                 });
-                if (type === 'Purchase')
-                    loadDialogContent();
-                else
-                    loadPersonDialogContent();
-            });
+            } else {
+                $.notify(
+                    'Select Person First',
+                    {
+                        position: "top center",
+                        className: "error"
+                    }
+                );
+            }
         }
 
 
@@ -239,9 +252,9 @@
             //bind row event
             $('#purchaseTable tbody').on('dblclick',
                 'tr',
-                function() {
+                function () {
                     var data = dataTable.row(this).data();
-                    saleItemRow('@Url.Action("SaleInTangibleItemRow", "Sale")/' + data['PurchaseId']);
+                    saleItemRow('@Url.Action("SaleInTangibleItemRow", "Sale")?PurchaseId=' + data['PurchaseId'] + '&PersonId=' + $('#PersonId').val());
                     popUp.dialog('close');
                 });
         }
@@ -249,11 +262,11 @@
 
         function saleItemRow(url) {
             var rowItem = $('<tr />');
-            $.get(url).done(function(response) {
+            $.get(url).done(function (response) {
                 rowItem.html(response);
 
                 tangibleItemsSale.row.add(rowItem).draw(true);
-                $('.ddl').chosen();
+                //$('.ddl').chosen();
                 changeOverallStatus();
             });
         }
@@ -264,8 +277,9 @@
             var subTotal = row.find('.subTotal').get(0);
             var Rate = row.find('.Rate').val();
             var Qty = row.find('.qtyTxt').val();
+            //console.log(Rate + ' ' + Qty);
             if (Qty != null && Qty != 0 && Rate != null && Rate != 0) {
-                subTotal.innerHTML = parseFloat(Rate) * Qty;
+                subTotal.innerHTML = parseFloat(((parseFloat(Rate) * Qty) / 100)) + parseFloat(Qty);
             } else {
                 subTotal.innerHTML = '0';
             }
@@ -297,7 +311,7 @@
             //bind row event
             $('#personTable tbody').on('dblclick',
                 'tr',
-                function() {
+                function () {
                     var data = dataTable.row(this).data();
                     $('#PersonId').val(data['PersonId']);
                     $('#PersonName').val(data['Name']);
@@ -315,7 +329,7 @@
 
         function changeOverallStatus() {
             var sum = 0;
-            $('.subTotal').each(function() {
+            $('.subTotal').each(function () {
                 sum += parseFloat($(this).text()); // Or this.innerHTML, this.innerText
             });
             $('#OverAllTotal').html(sum);
