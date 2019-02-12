@@ -139,32 +139,35 @@
         }
 
         function SubmitForm(form) {
-            //$.validator.unobtrusive.parse(form);
+            event.preventDefault();
+            $.validator.unobtrusive.parse(form);
             if ($(form).valid()) {
-                console.log($(form).serialize());
-                var formData = $(form).serialize();
-                formData.Total = $('#Total').val(total);
-                console.log(formData);
-                //$.ajax({
-                //    type: "POST",
-                //    url: form.action,
-                //    data: $(form).serialize(),
-                //    success: function (data) {
-                //        if (data.success) {
-                //            popUp.dialog('close');
+                //console.log($(form).serialize());
+                var formData = $(form).serialize() + '&Total=' + $('#Total').val();
+                //formData.Total = $('#Total').val();
+                //console.log(formData);
+                //console.log($('#Total').val());
 
-                //            dataTable.ajax.reload();
+                $.ajax({
+                    type: "POST",
+                    url: form.action,
+                    data: formData,
+                    success: function (data) {
+                        if (data.success) {
+                            popUp.dialog('close');
 
-                //            $.notify(
-                //                data.message,
-                //                {
-                //                    position: "top center",
-                //                    className: "success"
-                //                }
-                //            );
-                //        }
-                //    }
-                //});
+                            dataTable.ajax.reload();
+
+                            $.notify(
+                                data.message,
+                                {
+                                    position: "top center",
+                                    className: "success"
+                                }
+                            );
+                        }
+                    }
+                });
             } else {
                 $.notify(
                     "Validation Error",

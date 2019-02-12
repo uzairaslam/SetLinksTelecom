@@ -122,10 +122,32 @@ namespace SetLinksTelecom.Repositories
                 Subname = dtoPurchase.Subname,
                 Percentage = dtoPurchase.Percentage,
                 Rate = dtoPurchase.Rate,
-                StockOut = dtoPurchase.StockOut,
+                StockOut = dtoPurchase.Qty,
                 DatePurchased = dtoPurchase.DatePurchased
             };
-            _db.Purchases.Add(purchase);
+            int purchaseId = _db.Purchases.Add(purchase).PurchaseId;
+            InventoryType type =
+                _db.InventoryTypes.FirstOrDefault(t => t.InventoryTypeId.Equals(dtoPurchase.InventoryTypeId));
+            Stock stock = _db.Stocks.FirstOrDefault(s => s.ItemId.Equals(dtoPurchase.ItemId));
+            if (stock == null)
+            {
+                stock = new Stock
+                {
+                    ItemId = dtoPurchase.ItemId,
+                    NetQty = dtoPurchase.Qty,
+                    PurchaseId = purchaseId,
+                    AvgRate = type.Name == "Tangible" ? dtoPurchase.Rate : dtoPurchase.Percentage
+                };
+                _db.Stocks.Add(stock);
+            }
+            else
+            {
+                //stock.ItemId = dtoPurchase.ItemId,
+                stock.NetQty = dtoPurchase.Qty + stock.NetQty;
+                stock.PurchaseId = purchaseId;
+                stock.AvgRate = ((type.Name == "Tangible" ? dtoPurchase.Rate : dtoPurchase.Percentage) + stock.AvgRate) / 2;
+                _db.Entry(stock).State = EntityState.Modified;
+            }
             _db.SaveChanges();
 
         }
@@ -133,6 +155,11 @@ namespace SetLinksTelecom.Repositories
         public void UpdatePurchase(dtoPurchase dtoPurchase)
         {
             Purchase purchase = _db.Purchases.FirstOrDefault(p => p.PurchaseId.Equals(dtoPurchase.PurchaseId));
+            Stock stock = _db.Stocks.FirstOrDefault(s => s.ItemId.Equals(dtoPurchase.ItemId));
+            if (stock != null)
+            {
+                //sto
+            }
             purchase.ItemId = dtoPurchase.ItemId;
             purchase.Total = dtoPurchase.Total;
             purchase.Remarks = dtoPurchase.Remarks;
