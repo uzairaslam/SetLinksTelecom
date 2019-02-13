@@ -318,7 +318,12 @@
     <Compile Include="Migrations\201902131420355_AddedAccTypeTable.Designer.cs">
       <DependentUpon>201902131420355_AddedAccTypeTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902131427530_AddedAccHeadTable.cs" />
+    <Compile Include="Migrations\201902131427530_AddedAccHeadTable.Designer.cs">
+      <DependentUpon>201902131427530_AddedAccHeadTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AccHead.cs" />
     <Compile Include="Models\AccType.cs" />
     <Compile Include="Models\Designation.cs" />
     <Compile Include="Models\InventoryType.cs" />
@@ -611,6 +616,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902131420355_AddedAccTypeTable.resx">
       <DependentUpon>201902131420355_AddedAccTypeTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902131427530_AddedAccHeadTable.resx">
+      <DependentUpon>201902131427530_AddedAccHeadTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
