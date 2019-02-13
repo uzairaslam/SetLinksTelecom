@@ -326,6 +326,10 @@
     <Compile Include="Migrations\201902131548517_AddedAccSubHeadTable.Designer.cs">
       <DependentUpon>201902131548517_AddedAccSubHeadTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902131550391_AddedAccAccountTable.cs" />
+    <Compile Include="Migrations\201902131550391_AddedAccAccountTable.Designer.cs">
+      <DependentUpon>201902131550391_AddedAccAccountTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccAccount.cs" />
     <Compile Include="Models\AccHead.cs" />
@@ -628,6 +632,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902131548517_AddedAccSubHeadTable.resx">
       <DependentUpon>201902131548517_AddedAccSubHeadTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902131550391_AddedAccAccountTable.resx">
+      <DependentUpon>201902131550391_AddedAccAccountTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
