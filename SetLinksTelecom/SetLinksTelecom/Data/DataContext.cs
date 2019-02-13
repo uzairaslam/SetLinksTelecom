@@ -31,6 +31,7 @@ namespace SetLinksTelecom.Data
         public DbSet<AccHead> AccHead { get; set; }
         public DbSet<AccSubHead> AccSubHead { get; set; }
         public DbSet<AccAccount> AccAccounts { get; set; }
+        public DbSet<AccVoucher> AccVouchers { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

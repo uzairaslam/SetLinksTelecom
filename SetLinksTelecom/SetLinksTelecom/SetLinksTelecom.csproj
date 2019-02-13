@@ -330,11 +330,16 @@
     <Compile Include="Migrations\201902131550391_AddedAccAccountTable.Designer.cs">
       <DependentUpon>201902131550391_AddedAccAccountTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902131609183_AddedAccVoucherTable.cs" />
+    <Compile Include="Migrations\201902131609183_AddedAccVoucherTable.Designer.cs">
+      <DependentUpon>201902131609183_AddedAccVoucherTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccAccount.cs" />
     <Compile Include="Models\AccHead.cs" />
     <Compile Include="Models\AccSubHead.cs" />
     <Compile Include="Models\AccType.cs" />
+    <Compile Include="Models\AccVoucher.cs" />
     <Compile Include="Models\Designation.cs" />
     <Compile Include="Models\InventoryType.cs" />
     <Compile Include="Models\Item.cs" />
@@ -635,6 +640,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902131550391_AddedAccAccountTable.resx">
       <DependentUpon>201902131550391_AddedAccAccountTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902131609183_AddedAccVoucherTable.resx">
+      <DependentUpon>201902131609183_AddedAccVoucherTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
