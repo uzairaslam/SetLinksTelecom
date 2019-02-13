@@ -27,6 +27,7 @@ namespace SetLinksTelecom.Data
         public DbSet<Line> Lines { get; set; }
         public DbSet<Sale> Sales { get; set; }
         public DbSet<SaleDetail> SaleDetails { get; set; }
+        public DbSet<AccType> AccTypes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
