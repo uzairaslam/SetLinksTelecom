@@ -13,7 +13,10 @@ namespace SetLinksTelecom.Data
         public DataContext()
             : base("name=SetLinksTelecomDBContext")
         {
-            
+
+            //Database.SetInitializer(new DropCreateDatabaseAlways<DataContext>());
+            Database.SetInitializer<DataContext>(new CreateDatabaseIfNotExists<DataContext>());
+
         }
 
         public DbSet<Designation> Designations { get; set; }
@@ -46,6 +49,14 @@ namespace SetLinksTelecom.Data
             modelBuilder.Entity<SaleDetail>().Property(s => s.SubTotal).HasPrecision(20, 4);
             modelBuilder.Entity<SaleDetail>().Property(s => s.CommProfit).HasPrecision(20, 4);
             modelBuilder.Entity<Line>().Property(s => s.Percentage).HasPrecision(20, 2);
+        }
+    }
+
+    public class DBInitializer : CreateDatabaseIfNotExists<DataContext>
+    {
+        protected override void Seed(DataContext context)
+        {
+            base.Seed(context);
         }
     }
 }

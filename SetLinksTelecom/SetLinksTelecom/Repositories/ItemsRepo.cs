@@ -83,6 +83,41 @@ namespace SetLinksTelecom.Repositories
             //ProductCategory productCategory = _db.ProductCategories.Include(pc => pc.InventoryType)
             //    .FirstOrDefault(c => c.ProductCategoryId.Equals(item.ProductCategoryId));
             _db.Items.Add(item);
+            ProductCategory category =
+                _db.ProductCategories.Single(pc => pc.ProductCategoryId.Equals(item.ProductCategoryId));
+            InventoryType type = _db.InventoryTypes.Single(i => i.InventoryTypeId.Equals(category.InventoryTypeId));
+            if (type.Name == "Tangible")
+            {
+                var maxAcc = _db.AccAccounts.Where(acc => acc.HeadCode == 11 && acc.SubHeadCode == 1)
+                    .Max(a => (int?)a.AccCode) ?? 0;
+                maxAcc = ++maxAcc;
+                _db.AccAccounts.Add(new AccAccount
+                {
+                    HeadCode = 11,
+                    SubHeadCode = 01,
+                    OID = 0,
+                    AccCode = maxAcc,
+                    AccMade = 1,
+                    AccName = item.Name,
+                    AccString = "11-01-000" + (maxAcc)
+                });
+            }
+            else
+            {
+                var maxAcc = _db.AccAccounts.Where(acc => acc.HeadCode == 11 && acc.SubHeadCode == 2)
+                    .Max(a => (int?)a.AccCode) ?? 0;
+                maxAcc = ++maxAcc;
+                _db.AccAccounts.Add(new AccAccount
+                {
+                    HeadCode = 11,
+                    SubHeadCode = 02,
+                    OID = 0,
+                    AccCode = maxAcc,
+                    AccMade = 1,
+                    AccName = item.Name,
+                    AccString = "11-02-000" + (maxAcc)
+                });
+            }
             //productCategory.it
             //_db.Items.Add(item);
             //_db.Entry(productCategory).State = EntityState.Modified;

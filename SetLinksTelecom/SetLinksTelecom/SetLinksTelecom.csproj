@@ -22,6 +22,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <TypeScriptToolsVersion>1.8</TypeScriptToolsVersion>
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -178,6 +179,7 @@
     <Compile Include="Controllers\ItemController.cs" />
     <Compile Include="Controllers\LineController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
+    <Compile Include="Controllers\PortalController.cs" />
     <Compile Include="Controllers\ProductCategoryController.cs" />
     <Compile Include="Controllers\PurchaseController.cs" />
     <Compile Include="Controllers\SaleController.cs" />
@@ -333,6 +335,38 @@
     <Compile Include="Migrations\201902131609183_AddedAccVoucherTable.cs" />
     <Compile Include="Migrations\201902131609183_AddedAccVoucherTable.Designer.cs">
       <DependentUpon>201902131609183_AddedAccVoucherTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902131611315_UpdatedAccTypeTable.cs" />
+    <Compile Include="Migrations\201902131611315_UpdatedAccTypeTable.Designer.cs">
+      <DependentUpon>201902131611315_UpdatedAccTypeTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902131617577_UpdatedAccountsTables.cs" />
+    <Compile Include="Migrations\201902131617577_UpdatedAccountsTables.Designer.cs">
+      <DependentUpon>201902131617577_UpdatedAccountsTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902141437039_RemovedForeignKeyFromAccHead.cs" />
+    <Compile Include="Migrations\201902141437039_RemovedForeignKeyFromAccHead.Designer.cs">
+      <DependentUpon>201902141437039_RemovedForeignKeyFromAccHead.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902141604236_LinkBwAccTypeandAccHead.cs" />
+    <Compile Include="Migrations\201902141604236_LinkBwAccTypeandAccHead.Designer.cs">
+      <DependentUpon>201902141604236_LinkBwAccTypeandAccHead.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902151114298_MappingCorrection.cs" />
+    <Compile Include="Migrations\201902151114298_MappingCorrection.Designer.cs">
+      <DependentUpon>201902151114298_MappingCorrection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902151327159_MappingBwHeadAndSubhead.cs" />
+    <Compile Include="Migrations\201902151327159_MappingBwHeadAndSubhead.Designer.cs">
+      <DependentUpon>201902151327159_MappingBwHeadAndSubhead.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902160907142_RemoveAccMadeToAccAccount.cs" />
+    <Compile Include="Migrations\201902160907142_RemoveAccMadeToAccAccount.Designer.cs">
+      <DependentUpon>201902160907142_RemoveAccMadeToAccAccount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902160908062_AddedAccMadeToAccAccount.cs" />
+    <Compile Include="Migrations\201902160908062_AddedAccMadeToAccAccount.Designer.cs">
+      <DependentUpon>201902160908062_AddedAccMadeToAccAccount.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccAccount.cs" />
@@ -532,9 +566,11 @@
     <Content Include="Views\InventoryType\AddOrEdit.cshtml" />
     <Content Include="Views\ProductCategory\Index.cshtml" />
     <Content Include="Views\ProductCategory\AddOrEdit.cshtml" />
+    <Content Include="Views\Shared\_navbar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Portal\" />
     <Folder Include="Views\Profile\" />
   </ItemGroup>
   <ItemGroup>
@@ -643,6 +679,30 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902131609183_AddedAccVoucherTable.resx">
       <DependentUpon>201902131609183_AddedAccVoucherTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902131611315_UpdatedAccTypeTable.resx">
+      <DependentUpon>201902131611315_UpdatedAccTypeTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902131617577_UpdatedAccountsTables.resx">
+      <DependentUpon>201902131617577_UpdatedAccountsTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902141437039_RemovedForeignKeyFromAccHead.resx">
+      <DependentUpon>201902141437039_RemovedForeignKeyFromAccHead.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902141604236_LinkBwAccTypeandAccHead.resx">
+      <DependentUpon>201902141604236_LinkBwAccTypeandAccHead.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902151114298_MappingCorrection.resx">
+      <DependentUpon>201902151114298_MappingCorrection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902151327159_MappingBwHeadAndSubhead.resx">
+      <DependentUpon>201902151327159_MappingBwHeadAndSubhead.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902160907142_RemoveAccMadeToAccAccount.resx">
+      <DependentUpon>201902160907142_RemoveAccMadeToAccAccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902160908062_AddedAccMadeToAccAccount.resx">
+      <DependentUpon>201902160908062_AddedAccMadeToAccAccount.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

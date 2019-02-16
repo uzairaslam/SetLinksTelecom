@@ -33,6 +33,7 @@
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 
     <script>
+        var popUp, dataTable;
         $(document).ready(function() {
             $('.ddl').chosen();
             //$.ajax({
@@ -43,7 +44,7 @@
             //    }
             //});
 
-            var popUp, dataTable;
+            
             dataTable = $("#itemsTable").DataTable({
                 "ajax": {
                     "url": "/Item/GetData",

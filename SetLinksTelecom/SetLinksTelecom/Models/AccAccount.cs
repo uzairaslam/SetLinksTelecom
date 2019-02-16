@@ -9,6 +9,8 @@ namespace SetLinksTelecom.Models
     public class AccAccount
     {
         public int AccAccountId { get; set; }
+
+        public int AccCode { get; set; }
         public int HeadCode { get; set; }
 
         public int SubHeadCode { get; set; }
@@ -20,5 +22,6 @@ namespace SetLinksTelecom.Models
         public string AccName { get; set; }
 
         public int OID { get; set; }
+        public int AccMade { get; set; }
     }
 }
