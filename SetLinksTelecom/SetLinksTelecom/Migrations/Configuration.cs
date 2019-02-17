@@ -90,12 +90,12 @@ namespace SetLinksTelecom.Migrations
                             }
                         },
                         new AccHead {TypeCode = 1, HeadName = "Long Term Deposits", HeadString = "12", HeadCode = 12},
-                        new AccHead {TypeCode = 1, HeadName = "Current Assets", HeadString = "13", HeadCode = 13,
-                            SubHeads = new List<AccSubHead>
-                            {
-                                new AccSubHead {HeadCode = 13,OID = 0,SubHeadCode = 1, SubHeadName = "DO Customers", SubHeadString = "13-01"},
-                                new AccSubHead {HeadCode = 13,OID = 0,SubHeadCode = 2, SubHeadName = "RO Customer", SubHeadString = "13-02"}
-                            }
+                        new AccHead {TypeCode = 1, HeadName = "Current Assets", HeadString = "13", HeadCode = 13
+                            //SubHeads = new List<AccSubHead>
+                            //{
+                            //    new AccSubHead {HeadCode = 13,OID = 0,SubHeadCode = 1, SubHeadName = "DO Customers", SubHeadString = "13-01"},
+                            //    new AccSubHead {HeadCode = 13,OID = 0,SubHeadCode = 2, SubHeadName = "RO Customer", SubHeadString = "13-02"}
+                            //}
                         },
                         new AccHead
                         {

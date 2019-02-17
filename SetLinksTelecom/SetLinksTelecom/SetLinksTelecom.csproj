@@ -368,6 +368,26 @@
     <Compile Include="Migrations\201902160908062_AddedAccMadeToAccAccount.Designer.cs">
       <DependentUpon>201902160908062_AddedAccMadeToAccAccount.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902171108197_AddedAccountStringToDesignation.cs" />
+    <Compile Include="Migrations\201902171108197_AddedAccountStringToDesignation.Designer.cs">
+      <DependentUpon>201902171108197_AddedAccountStringToDesignation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902171122358_AddedAccountStringToPerson.cs" />
+    <Compile Include="Migrations\201902171122358_AddedAccountStringToPerson.Designer.cs">
+      <DependentUpon>201902171122358_AddedAccountStringToPerson.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902171142130_AddedAccountStringToItem.cs" />
+    <Compile Include="Migrations\201902171142130_AddedAccountStringToItem.Designer.cs">
+      <DependentUpon>201902171142130_AddedAccountStringToItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902171204162_AddedAccountStringToPortal.cs" />
+    <Compile Include="Migrations\201902171204162_AddedAccountStringToPortal.Designer.cs">
+      <DependentUpon>201902171204162_AddedAccountStringToPortal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902171205183_PopulateAccStringInPortal.cs" />
+    <Compile Include="Migrations\201902171205183_PopulateAccStringInPortal.Designer.cs">
+      <DependentUpon>201902171205183_PopulateAccStringInPortal.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccAccount.cs" />
     <Compile Include="Models\AccHead.cs" />
@@ -703,6 +723,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902160908062_AddedAccMadeToAccAccount.resx">
       <DependentUpon>201902160908062_AddedAccMadeToAccAccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902171108197_AddedAccountStringToDesignation.resx">
+      <DependentUpon>201902171108197_AddedAccountStringToDesignation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902171122358_AddedAccountStringToPerson.resx">
+      <DependentUpon>201902171122358_AddedAccountStringToPerson.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902171142130_AddedAccountStringToItem.resx">
+      <DependentUpon>201902171142130_AddedAccountStringToItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902171204162_AddedAccountStringToPortal.resx">
+      <DependentUpon>201902171204162_AddedAccountStringToPortal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902171205183_PopulateAccStringInPortal.resx">
+      <DependentUpon>201902171205183_PopulateAccStringInPortal.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

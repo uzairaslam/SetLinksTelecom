@@ -30,6 +30,9 @@ namespace SetLinksTelecom.Models
         [NotMapped]
         public ProductCategory ProductCategory { get; set; }
 
+        [MaxLength(12)]
+        public string AccString { get; set; }
+
         [NotMapped]
         public List<ProductCategory> ProductCategories { get; set; }
 

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using SetLinksTelecom.Data;
 using SetLinksTelecom.DTO;
+using SetLinksTelecom.GeneralFolder;
 using SetLinksTelecom.Models;
 
 namespace SetLinksTelecom.Repositories
@@ -82,7 +83,7 @@ namespace SetLinksTelecom.Repositories
         {
             //ProductCategory productCategory = _db.ProductCategories.Include(pc => pc.InventoryType)
             //    .FirstOrDefault(c => c.ProductCategoryId.Equals(item.ProductCategoryId));
-            _db.Items.Add(item);
+            
             ProductCategory category =
                 _db.ProductCategories.Single(pc => pc.ProductCategoryId.Equals(item.ProductCategoryId));
             InventoryType type = _db.InventoryTypes.Single(i => i.InventoryTypeId.Equals(category.InventoryTypeId));
@@ -99,8 +100,9 @@ namespace SetLinksTelecom.Repositories
                     AccCode = maxAcc,
                     AccMade = 1,
                     AccName = item.Name,
-                    AccString = "11-01-000" + (maxAcc)
+                    AccString = "11-01-" + (maxAcc.ToAccString())
                 });
+                item.AccString = "11-01-" + (maxAcc.ToAccString());
             }
             else
             {
@@ -115,9 +117,11 @@ namespace SetLinksTelecom.Repositories
                     AccCode = maxAcc,
                     AccMade = 1,
                     AccName = item.Name,
-                    AccString = "11-02-000" + (maxAcc)
+                    AccString = "11-02-" + (maxAcc.ToAccString())
                 });
+                item.AccString = "11-02-" + (maxAcc.ToAccString());
             }
+            _db.Items.Add(item);
             //productCategory.it
             //_db.Items.Add(item);
             //_db.Entry(productCategory).State = EntityState.Modified;

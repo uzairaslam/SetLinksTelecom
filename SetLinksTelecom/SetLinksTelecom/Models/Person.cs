@@ -87,6 +87,8 @@ namespace SetLinksTelecom.Models
         public int DesignationId { get; set; }
         [ForeignKey("DesignationId")]
         public Designation Designation { get; set; }
+        [MaxLength(12)]
+        public string AccString { get; set; }
 
         [NotMapped]
         public List<Designation> Designations { get; set; }

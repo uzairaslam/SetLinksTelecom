@@ -14,8 +14,8 @@ namespace SetLinksTelecom.Data
             : base("name=SetLinksTelecomDBContext")
         {
 
-            //Database.SetInitializer(new DropCreateDatabaseAlways<DataContext>());
-            Database.SetInitializer<DataContext>(new CreateDatabaseIfNotExists<DataContext>());
+            //Database.SetInitializer<DataContext>(new DropCreateDatabaseAlways<DataContext>());
+            //Database.SetInitializer<DataContext>(new CreateDatabaseIfNotExists<DataContext>());
 
         }
 
