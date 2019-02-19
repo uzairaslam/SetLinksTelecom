@@ -87,6 +87,14 @@ namespace SetLinksTelecom.Repositories
             ProductCategory category =
                 _db.ProductCategories.Single(pc => pc.ProductCategoryId.Equals(item.ProductCategoryId));
             InventoryType type = _db.InventoryTypes.Single(i => i.InventoryTypeId.Equals(category.InventoryTypeId));
+
+
+            var maxRevAcc = _db.AccAccounts.Where(acc => acc.HeadCode == 41 && acc.SubHeadCode == 1)
+                                .Max(a => (int?)a.AccCode) ?? 0;
+            var maxCosAcc = _db.AccAccounts.Where(acc => acc.HeadCode == 51 && acc.SubHeadCode == 1)
+                                .Max(a => (int?)a.AccCode) ?? 0;
+            maxRevAcc = ++maxRevAcc;
+            maxCosAcc = ++maxCosAcc;
             if (type.Name == "Tangible")
             {
                 var maxAcc = _db.AccAccounts.Where(acc => acc.HeadCode == 11 && acc.SubHeadCode == 1)
@@ -121,10 +129,29 @@ namespace SetLinksTelecom.Repositories
                 });
                 item.AccString = "11-02-" + (maxAcc.ToAccString());
             }
+            _db.AccAccounts.Add(new AccAccount
+            {
+                HeadCode = 41,
+                SubHeadCode = 01,
+                OID = 0,
+                AccCode = maxRevAcc,
+                AccMade = 1,
+                AccName = item.Name,
+                AccString = "41-01-" + maxRevAcc.ToAccString()
+            });
+            _db.AccAccounts.Add(new AccAccount
+            {
+                HeadCode = 51,
+                SubHeadCode = 01,
+                OID = 0,
+                AccCode = maxCosAcc,
+                AccMade = 1,
+                AccName = item.Name,
+                AccString = "51-01-" + maxCosAcc.ToAccString()
+            });
+            item.RevString = "41-01-" + maxRevAcc.ToAccString();
+            item.CosString = "51-01-" + maxCosAcc.ToAccString();
             _db.Items.Add(item);
-            //productCategory.it
-            //_db.Items.Add(item);
-            //_db.Entry(productCategory).State = EntityState.Modified;
             _db.SaveChanges();
         }
 

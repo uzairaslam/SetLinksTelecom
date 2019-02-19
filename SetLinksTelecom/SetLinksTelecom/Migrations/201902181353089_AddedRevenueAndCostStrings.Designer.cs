@@ -7,13 +7,13 @@ namespace SetLinksTelecom.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class PopulateAccStringInPortal : IMigrationMetadata
+    public sealed partial class AddedRevenueAndCostStrings : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(PopulateAccStringInPortal));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddedRevenueAndCostStrings));
         
         string IMigrationMetadata.Id
         {
-            get { return "201902171205183_PopulateAccStringInPortal"; }
+            get { return "201902181353089_AddedRevenueAndCostStrings"; }
         }
         
         string IMigrationMetadata.Source

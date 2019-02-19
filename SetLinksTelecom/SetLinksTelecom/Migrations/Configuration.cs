@@ -25,8 +25,8 @@ namespace SetLinksTelecom.Migrations
             //base.Seed(context);
 
             context.Portals.AddOrUpdate(a => a.Name,
-                new Portal { Name = "Jazz Cash" },
-                new Portal { Name = "Efics" }
+                new Portal { Name = "Jazz Cash", AccString = "22-01-0001" },
+                new Portal { Name = "Efics", AccString = "22-01-0002" }
                 );
             context.AccAccounts.AddOrUpdate(a => a.AccName,
                 new AccAccount
