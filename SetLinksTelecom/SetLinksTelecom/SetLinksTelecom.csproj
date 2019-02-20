@@ -189,6 +189,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AccAccountController.cs" />
     <Compile Include="Controllers\DesignationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InventoryTypeController.cs" />
@@ -198,9 +199,11 @@
     <Compile Include="Controllers\PortalController.cs" />
     <Compile Include="Controllers\ProductCategoryController.cs" />
     <Compile Include="Controllers\PurchaseController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\SaleController.cs" />
     <Compile Include="Data\DataContext.cs" />
     <Compile Include="Data\HtmlHelpers.cs" />
+    <Compile Include="Data\IAccAccount.cs" />
     <Compile Include="Data\IDesignationRepo.cs" />
     <Compile Include="Data\IInventoryType.cs" />
     <Compile Include="Data\IItemsRepo.cs" />
@@ -208,11 +211,14 @@
     <Compile Include="Data\IPersonRepo.cs" />
     <Compile Include="Data\IProductCategoryRepo.cs" />
     <Compile Include="Data\IPurchaseRepo.cs" />
+    <Compile Include="Data\IReports.cs" />
     <Compile Include="Data\ISaleRepo.cs" />
     <Compile Include="DTO\dtoItem.cs" />
+    <Compile Include="DTO\DtoLedger.cs" />
     <Compile Include="DTO\DtoLinesWithNumbers.cs" />
     <Compile Include="DTO\DtoProductCategory.cs" />
     <Compile Include="DTO\dtoPurchase.cs" />
+    <Compile Include="DTO\DtoReportsRepo.cs" />
     <Compile Include="DTO\dtoSale.cs" />
     <Compile Include="GeneralFolder\CustomValidations.cs" />
     <Compile Include="GeneralFolder\EnumsRepo.cs" />
@@ -422,6 +428,12 @@
     <Compile Include="Models\SaleDetail.cs" />
     <Compile Include="Models\Stock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\AllReportsDataset.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AllReportsDataset.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\AccAccountRepo.cs" />
     <Compile Include="Repositories\DesignationRepo.cs" />
     <Compile Include="Repositories\InventoryTypeRepo.cs" />
     <Compile Include="Repositories\ItemsRepo.cs" />
@@ -535,6 +547,17 @@
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\FontAwesome.otf" />
     <None Include="Properties\PublishProfiles\Uzair.pubxml" />
+    <Content Include="Reports\AllReportsDataset.xsc">
+      <DependentUpon>AllReportsDataset.xsd</DependentUpon>
+    </Content>
+    <None Include="Reports\AllReportsDataset.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>AllReportsDataset.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Reports\AllReportsDataset.xss">
+      <DependentUpon>AllReportsDataset.xsd</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
@@ -604,6 +627,9 @@
     <Content Include="Views\ProductCategory\Index.cshtml" />
     <Content Include="Views\ProductCategory\AddOrEdit.cshtml" />
     <Content Include="Views\Shared\_navbar.cshtml" />
+    <Content Include="Views\Reports\Ledger.cshtml" />
+    <Content Include="Views\AccAccount\AccountGrid.cshtml" />
+    <Content Include="Views\Reports\_ReportView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -756,6 +782,7 @@
     <EmbeddedResource Include="Migrations\201902181353089_AddedRevenueAndCostStrings.resx">
       <DependentUpon>201902181353089_AddedRevenueAndCostStrings.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Ledger.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

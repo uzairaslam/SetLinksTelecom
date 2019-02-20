@@ -1,5 +1,6 @@
 using System.Web.Mvc;
 using SetLinksTelecom.Data;
+using SetLinksTelecom.DTO;
 using SetLinksTelecom.Repositories;
 using Unity;
 using Unity.Mvc5;
@@ -24,6 +25,8 @@ namespace SetLinksTelecom
             container.RegisterType<ILineRepo, LineRepo>();
             container.RegisterType<IInventoryType, InventoryTypeRepo>();
             container.RegisterType<IProductCategoryRepo, ProductCategoryRepo>();
+            container.RegisterType<IAccAccount, AccAccountRepo>();
+            container.RegisterType<IReports, DtoReportsRepo>();
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }
     }
