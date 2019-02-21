@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -83,76 +84,140 @@ namespace SetLinksTelecom.Repositories
         {
             //ProductCategory productCategory = _db.ProductCategories.Include(pc => pc.InventoryType)
             //    .FirstOrDefault(c => c.ProductCategoryId.Equals(item.ProductCategoryId));
-            
-            ProductCategory category =
-                _db.ProductCategories.Single(pc => pc.ProductCategoryId.Equals(item.ProductCategoryId));
-            InventoryType type = _db.InventoryTypes.Single(i => i.InventoryTypeId.Equals(category.InventoryTypeId));
+            using (var transaction = _db.Database.BeginTransaction())
+            {
+                ProductCategory category =
+                    _db.ProductCategories.Single(pc => pc.ProductCategoryId.Equals(item.ProductCategoryId));
+                InventoryType type = _db.InventoryTypes.Single(i => i.InventoryTypeId.Equals(category.InventoryTypeId));
 
 
-            var maxRevAcc = _db.AccAccounts.Where(acc => acc.HeadCode == 41 && acc.SubHeadCode == 1)
-                                .Max(a => (int?)a.AccCode) ?? 0;
-            var maxCosAcc = _db.AccAccounts.Where(acc => acc.HeadCode == 51 && acc.SubHeadCode == 1)
-                                .Max(a => (int?)a.AccCode) ?? 0;
-            maxRevAcc = ++maxRevAcc;
-            maxCosAcc = ++maxCosAcc;
-            if (type.Name == "Tangible")
-            {
-                var maxAcc = _db.AccAccounts.Where(acc => acc.HeadCode == 11 && acc.SubHeadCode == 1)
-                    .Max(a => (int?)a.AccCode) ?? 0;
-                maxAcc = ++maxAcc;
-                _db.AccAccounts.Add(new AccAccount
+
+                if (type.Name == "Tangible")
                 {
-                    HeadCode = 11,
-                    SubHeadCode = 01,
-                    OID = 0,
-                    AccCode = maxAcc,
-                    AccMade = 1,
-                    AccName = item.Name,
-                    AccString = "11-01-" + (maxAcc.ToAccString())
-                });
-                item.AccString = "11-01-" + (maxAcc.ToAccString());
-            }
-            else
-            {
-                var maxAcc = _db.AccAccounts.Where(acc => acc.HeadCode == 11 && acc.SubHeadCode == 2)
-                    .Max(a => (int?)a.AccCode) ?? 0;
-                maxAcc = ++maxAcc;
-                _db.AccAccounts.Add(new AccAccount
+                    var maxAcc = _db.AccAccounts.Where(acc => acc.HeadCode == 11 && acc.SubHeadCode == 1)
+                                     .Max(a => (int?) a.AccCode) ?? 0;
+                    ++maxAcc;
+                    var maxRevAcc = _db.AccAccounts.Where(acc => acc.HeadCode == 41 && acc.SubHeadCode == 1)
+                                        .Max(a => (int?) a.AccCode) ?? 0;
+                    var maxCosAcc = _db.AccAccounts.Where(acc => acc.HeadCode == 51 && acc.SubHeadCode == 1)
+                                        .Max(a => (int?) a.AccCode) ?? 0;
+                    ++maxRevAcc;
+                    ++maxCosAcc;
+                    var purDisc = _db.AccAccounts.Where(acc => acc.HeadCode == 42 && acc.SubHeadCode == 1)
+                                      .Max(a => (int?) a.AccCode) ?? 0;
+                    ++purDisc;
+                    var saleComm = _db.AccAccounts.Where(acc => acc.HeadCode == 43 && acc.SubHeadCode == 1)
+                                       .Max(a => (int?) a.AccCode) ?? 0;
+                    ++saleComm;
+
+                    IList<AccAccount> accounts = new List<AccAccount>()
+                    {
+                        //Value
+                        new AccAccount
+                        {
+                            HeadCode = 11, SubHeadCode = 01, OID = 0, AccCode = maxAcc, AccMade = 1,
+                            AccName = item.Name, AccString = "11-01-" + (maxAcc.ToAccString())
+                        },
+                        //Revenue
+                        new AccAccount
+                        {
+                            HeadCode = 41, SubHeadCode = 01, OID = 0, AccCode = maxRevAcc, AccMade = 1,
+                            AccName = item.Name, AccString = "41-01-" + (maxRevAcc.ToAccString())
+                        },
+                        //Cost
+                        new AccAccount
+                        {
+                            HeadCode = 51, SubHeadCode = 01, OID = 0, AccCode = maxCosAcc, AccMade = 1,
+                            AccName = item.Name, AccString = "51-01-" + (maxCosAcc.ToAccString())
+                        },
+                        //Purchase Discount
+                        new AccAccount
+                        {
+                            HeadCode = 42, SubHeadCode = 01, OID = 0, AccCode = purDisc, AccMade = 1,
+                            AccName = item.Name, AccString = "42-01-" + (purDisc.ToAccString())
+                        },
+                        //Sale Commission
+                        new AccAccount
+                        {
+                            HeadCode = 43, SubHeadCode = 01, OID = 0, AccCode = saleComm, AccMade = 1,
+                            AccName = item.Name, AccString = "43-01-" + (saleComm.ToAccString())
+                        }
+                    };
+
+                    //_db.AccAccounts.Add();
+                    _db.AccAccounts.AddRange(accounts);
+                    item.AccString = "11-01-" + (maxAcc.ToAccString());
+                    item.RevString = "41-01-" + maxRevAcc.ToAccString();
+                    item.CosString = "51-01-" + maxCosAcc.ToAccString();
+                    item.PurDiscString = "42-01-" + (purDisc.ToAccString());
+                    item.SaleCommString = "43-01-" + (saleComm.ToAccString());
+                }
+                else
                 {
-                    HeadCode = 11,
-                    SubHeadCode = 02,
-                    OID = 0,
-                    AccCode = maxAcc,
-                    AccMade = 1,
-                    AccName = item.Name,
-                    AccString = "11-02-" + (maxAcc.ToAccString())
-                });
-                item.AccString = "11-02-" + (maxAcc.ToAccString());
+                    var maxAcc = _db.AccAccounts.Where(acc => acc.HeadCode == 11 && acc.SubHeadCode == 2)
+                                     .Max(a => (int?) a.AccCode) ?? 0;
+                    maxAcc = ++maxAcc;
+                    var maxRevAcc = _db.AccAccounts.Where(acc => acc.HeadCode == 41 && acc.SubHeadCode == 2)
+                                        .Max(a => (int?) a.AccCode) ?? 0;
+                    var maxCosAcc = _db.AccAccounts.Where(acc => acc.HeadCode == 51 && acc.SubHeadCode == 2)
+                                        .Max(a => (int?) a.AccCode) ?? 0;
+                    maxRevAcc = ++maxRevAcc;
+                    maxCosAcc = ++maxCosAcc;
+                    var purDisc = _db.AccAccounts.Where(acc => acc.HeadCode == 42 && acc.SubHeadCode == 2)
+                                      .Max(a => (int?) a.AccCode) ?? 0;
+                    ++purDisc;
+                    var saleComm = _db.AccAccounts.Where(acc => acc.HeadCode == 43 && acc.SubHeadCode == 2)
+                                       .Max(a => (int?) a.AccCode) ?? 0;
+                    ++saleComm;
+
+                    IList<AccAccount> accounts = new List<AccAccount>()
+                    {
+                        //Value
+                        new AccAccount
+                        {
+                            HeadCode = 11, SubHeadCode = 02, OID = 0, AccCode = maxAcc, AccMade = 1,
+                            AccName = item.Name, AccString = "11-02-" + (maxAcc.ToAccString())
+                        },
+                        //Revenue
+                        new AccAccount
+                        {
+                            HeadCode = 41, SubHeadCode = 02, OID = 0, AccCode = maxRevAcc, AccMade = 1,
+                            AccName = item.Name, AccString = "41-02-" + (maxRevAcc.ToAccString())
+                        },
+                        //Cost
+                        new AccAccount
+                        {
+                            HeadCode = 51, SubHeadCode = 02, OID = 0, AccCode = maxCosAcc, AccMade = 1,
+                            AccName = item.Name, AccString = "51-02-" + (maxCosAcc.ToAccString())
+                        },
+                        //Purchase Discount
+                        new AccAccount
+                        {
+                            HeadCode = 42, SubHeadCode = 02, OID = 0, AccCode = purDisc, AccMade = 1,
+                            AccName = item.Name, AccString = "42-02-" + (purDisc.ToAccString())
+                        },
+                        //Sale Commission
+                        new AccAccount
+                        {
+                            HeadCode = 43, SubHeadCode = 02, OID = 0, AccCode = saleComm, AccMade = 1,
+                            AccName = item.Name, AccString = "43-02-" + (saleComm.ToAccString())
+                        }
+                    };
+
+                    //_db.AccAccounts.Add();
+                    _db.AccAccounts.AddRange(accounts);
+                    item.AccString = "11-02-" + (maxAcc.ToAccString());
+                    item.RevString = "41-02-" + maxRevAcc.ToAccString();
+                    item.CosString = "51-02-" + maxCosAcc.ToAccString();
+                    item.PurDiscString = "42-02-" + (purDisc.ToAccString());
+                    item.SaleCommString = "43-02-" + (saleComm.ToAccString());
+                }
+
+                _db.Items.Add(item);
+                _db.SaveChanges();
+
+                transaction.Commit();
             }
-            _db.AccAccounts.Add(new AccAccount
-            {
-                HeadCode = 41,
-                SubHeadCode = 01,
-                OID = 0,
-                AccCode = maxRevAcc,
-                AccMade = 1,
-                AccName = item.Name,
-                AccString = "41-01-" + maxRevAcc.ToAccString()
-            });
-            _db.AccAccounts.Add(new AccAccount
-            {
-                HeadCode = 51,
-                SubHeadCode = 01,
-                OID = 0,
-                AccCode = maxCosAcc,
-                AccMade = 1,
-                AccName = item.Name,
-                AccString = "51-01-" + maxCosAcc.ToAccString()
-            });
-            item.RevString = "41-01-" + maxRevAcc.ToAccString();
-            item.CosString = "51-01-" + maxCosAcc.ToAccString();
-            _db.Items.Add(item);
-            _db.SaveChanges();
         }
 
         public void UpdateItem(Item item)

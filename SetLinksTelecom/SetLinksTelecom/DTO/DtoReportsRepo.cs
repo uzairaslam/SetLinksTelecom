@@ -29,11 +29,12 @@ namespace SetLinksTelecom.DTO
                     select new
                     {
                         VoucherDate = v.VDate,
-                        Ref = v.VType + " " + v.VNo,
+                        Ref = v.VType + " - " + v.VNo,
                         Description = v.VDescription,
                         Debit = v.Debit,
                         Credit = v.Credit,
-                        Balance = 0
+                        //v.HeadCode, // if 1 or 5 then debit-credit=balance else credit-debit=balance
+                        Balance = v.HeadCode.ToString().Substring(0,1) == "1" || v.HeadCode.ToString().Substring(0, 1) == "5" ? (v.Debit - v.Credit) : (v.Credit - v.Debit)
                     }).ToList().ToDataTable();
             }
             else
@@ -43,7 +44,7 @@ namespace SetLinksTelecom.DTO
                     select new
                     {
                         VoucherDate = v.VDate,
-                        Ref = v.VType + " " + v.VNo,
+                        Ref = v.VType + " - " + v.VNo,
                         Description = v.VDescription,
                         Debit = v.Debit,
                         Credit = v.Credit,

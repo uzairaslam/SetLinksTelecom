@@ -410,6 +410,14 @@
     <Compile Include="Migrations\201902181353089_AddedRevenueAndCostStrings.Designer.cs">
       <DependentUpon>201902181353089_AddedRevenueAndCostStrings.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902200805149_AddedRemarksInPurchase.cs" />
+    <Compile Include="Migrations\201902200805149_AddedRemarksInPurchase.Designer.cs">
+      <DependentUpon>201902200805149_AddedRemarksInPurchase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902201414261_AddPurchDiscountAndSaleCommissionToItem.cs" />
+    <Compile Include="Migrations\201902201414261_AddPurchDiscountAndSaleCommissionToItem.Designer.cs">
+      <DependentUpon>201902201414261_AddPurchDiscountAndSaleCommissionToItem.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccAccount.cs" />
     <Compile Include="Models\AccHead.cs" />
@@ -781,6 +789,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902181353089_AddedRevenueAndCostStrings.resx">
       <DependentUpon>201902181353089_AddedRevenueAndCostStrings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902200805149_AddedRemarksInPurchase.resx">
+      <DependentUpon>201902200805149_AddedRemarksInPurchase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902201414261_AddPurchDiscountAndSaleCommissionToItem.resx">
+      <DependentUpon>201902201414261_AddPurchDiscountAndSaleCommissionToItem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Ledger.rdlc" />
   </ItemGroup>

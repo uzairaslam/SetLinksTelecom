@@ -31,6 +31,8 @@ namespace SetLinksTelecom.DTO
 
         [Display(Name = "Overall Total")]
         public decimal OverAllTotal { get; set; }
+        [MaxLength(150)]
+        public string Remarks { get; set; }
 
         public List<DtoTangibleItemSale> ItemSales { get; set; }
     }
@@ -73,6 +75,8 @@ namespace SetLinksTelecom.DTO
 
         [Display(Name = "Overall Total")]
         public decimal OverAllTotal { get; set; }
+        [MaxLength(150)]
+        public string Remarks { get; set; }
 
         public List<DtoInTangibleItemSale> ItemSales { get; set; }
     }

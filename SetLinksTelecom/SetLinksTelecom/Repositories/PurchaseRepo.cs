@@ -165,63 +165,120 @@ namespace SetLinksTelecom.Repositories
 
                 #region PurchaseVoucher Entry
 
-                Portal portal = _db.Portals.Single(p => p.PortalId.Equals(purchase.PortalId));
-                var maxVno = _db.AccVouchers.Max(v => (int?) v.VNo) ?? 0;
-                AccAccount acc = _db.AccAccounts.Single(a => a.AccString.Equals(portal.AccString));
-
-                maxVno = ++maxVno;
-                AccVoucher voucher = new AccVoucher
+                if (type.Name == "Tangible")
                 {
-                    VDate = purchase.DatePurchased,
-                    SessionId = 0,
-                    AccString = portal.AccString,
-                    VNo = maxVno,
-                    VType = "JV",
-                    VSrNo = 1,
-                    VDescription = purchase.Remarks,
-                    Debit = 0,
-                    Credit = purchase.Total,
-                    UserCode = 0,
-                    OID = 0,
-                    BID = 0, CID = 0,
-                    HeadCode = acc.HeadCode,
-                    SubHeadCode = acc.SubHeadCode,
-                    AccCode = acc.AccCode,
-                    ChequeNo = "0",
-                    InvNo = purchase.PurchaseId.ToString(),
-                    InvType = "Purchase"
-                };
-                _db.AccVouchers.Add(voucher);
-                _db.SaveChanges();
+                    Portal portal = _db.Portals.Single(p => p.PortalId.Equals(purchase.PortalId));
+                    var maxVno = _db.AccVouchers.Max(v => (int?) v.VNo) ?? 0;
+                    AccAccount acc = _db.AccAccounts.Single(a => a.AccString.Equals(portal.AccString));
 
-                Item item = _db.Items.Single(i => i.ItemId.Equals(purchase.ItemId));
-                acc = new AccAccount();
-                acc = _db.AccAccounts.Single(a => a.AccString.Equals(item.AccString));
-                voucher = new AccVoucher();
-                voucher = new AccVoucher
+                    maxVno = ++maxVno;
+                    AccVoucher voucher = new AccVoucher
+                    {
+                        VDate = purchase.DatePurchased,
+                        SessionId = 0,
+                        AccString = portal.AccString,
+                        VNo = maxVno,
+                        VType = "JV",
+                        VSrNo = 1,
+                        VDescription = purchase.Remarks,
+                        Debit = 0,
+                        Credit = purchase.Total,
+                        UserCode = 0,
+                        OID = 0,
+                        BID = 0, CID = 0,
+                        HeadCode = acc.HeadCode,
+                        SubHeadCode = acc.SubHeadCode,
+                        AccCode = acc.AccCode,
+                        ChequeNo = "0",
+                        InvNo = purchase.PurchaseId.ToString(),
+                        InvType = "Purchase"
+                    };
+                    _db.AccVouchers.Add(voucher);
+                    _db.SaveChanges();
+
+                    Item item = _db.Items.Single(i => i.ItemId.Equals(purchase.ItemId));
+                    acc = new AccAccount();
+                    acc = _db.AccAccounts.Single(a => a.AccString.Equals(item.AccString));
+                    voucher = new AccVoucher();
+                    voucher = new AccVoucher
+                    {
+                        VDate = purchase.DatePurchased,
+                        SessionId = 0,
+                        AccString = item.AccString,
+                        VNo = maxVno,
+                        VType = "JV",
+                        VSrNo = 2,
+                        VDescription = purchase.Remarks,
+                        Debit = purchase.Total,
+                        Credit = 0,
+                        UserCode = 0,
+                        OID = 0,
+                        BID = 0,
+                        CID = 0,
+                        HeadCode = acc.HeadCode,
+                        SubHeadCode = acc.SubHeadCode,
+                        AccCode = acc.AccCode,
+                        ChequeNo = "0",
+                        InvNo = purchase.PurchaseId.ToString(),
+                        InvType = "Purchase"
+                    };
+                    _db.AccVouchers.Add(voucher);
+                    _db.SaveChanges();
+
+                }
+                else
                 {
-                    VDate = purchase.DatePurchased,
-                    SessionId = 0,
-                    AccString = item.AccString,
-                    VNo = maxVno,
-                    VType = "JV",
-                    VSrNo = 2,
-                    VDescription = purchase.Remarks,
-                    Debit = purchase.Total,
-                    Credit = 0,
-                    UserCode = 0,
-                    OID = 0,
-                    BID = 0,
-                    CID = 0,
-                    HeadCode = acc.HeadCode,
-                    SubHeadCode = acc.SubHeadCode,
-                    AccCode = acc.AccCode,
-                    ChequeNo = "0",
-                    InvNo = purchase.PurchaseId.ToString(),
-                    InvType = "Purchase"
-                };
-                _db.AccVouchers.Add(voucher);
-                _db.SaveChanges();
+                    Portal portal = _db.Portals.Single(p => p.PortalId.Equals(purchase.PortalId));
+                    var maxVno = _db.AccVouchers.Max(v => (int?)v.VNo) ?? 0;
+                    AccAccount acc = _db.AccAccounts.Single(a => a.AccString.Equals(portal.AccString));
+
+                    Item item = _db.Items.Single(i => i.ItemId.Equals(dtoPurchase.ItemId));
+                    AccAccount itemAcc = _db.AccAccounts.Single(a => a.AccString.Equals(item.AccString));
+                    AccAccount purchDisc = _db.AccAccounts.Single(a => a.AccString.Equals(item.PurDiscString));
+                    IList<AccVoucher> vouchers = new List<AccVoucher>()
+                    {
+                        //Supplier Credit
+                        new AccVoucher
+                        {
+                            VDate = purchase.DatePurchased, SessionId = 0, AccString = portal.AccString, VNo = maxVno, VType = "JV", VSrNo = 1, VDescription = purchase.Remarks,
+                            Debit = 0, Credit = purchase.Total, UserCode = 0, OID = 0, BID = 0, CID = 0, HeadCode = acc.HeadCode, SubHeadCode = acc.SubHeadCode,
+                            AccCode = acc.AccCode, ChequeNo = "0", InvNo = purchase.PurchaseId.ToString(), InvType = "Purchase"
+                        },
+                        //Item Value
+                        new AccVoucher
+                        {
+                            VDate = purchase.DatePurchased, SessionId = 0, AccString = itemAcc.AccString, VNo = maxVno, VType = "JV", VSrNo = 2,
+                            VDescription = purchase.Remarks, Debit = purchase.Qty, Credit = 0, UserCode = 0, OID = 0, BID = 0, CID = 0, HeadCode = itemAcc.HeadCode,
+                            SubHeadCode = itemAcc.SubHeadCode, AccCode = itemAcc.AccCode, ChequeNo = "0", InvNo = purchase.PurchaseId.ToString(), InvType = "Purchase"
+                        },
+                        //Cash Daily
+                        new AccVoucher
+                        {
+                            VDate = purchase.DatePurchased, SessionId = 0, AccString = "14-02-0001", VNo = maxVno, VType = "JV", VSrNo = 3, VDescription = purchase.Remarks,
+                            Debit = 0, Credit = purchase.Total, UserCode = 0, OID = 0, BID = 0, CID = 0, HeadCode = 14, SubHeadCode = 2,
+                            AccCode = 1, ChequeNo = "0", InvNo = purchase.PurchaseId.ToString(), InvType = "Purchase"
+                        },
+                        //Supplier Debit
+                        new AccVoucher
+                        {
+                            VDate = purchase.DatePurchased, SessionId = 0, AccString = portal.AccString, VNo = maxVno, VType = "JV", VSrNo = 4,
+                            VDescription = purchase.Remarks, Debit = purchase.Total, Credit = 0, UserCode = 0, OID = 0, BID = 0, CID = 0, HeadCode = acc.HeadCode,
+                            SubHeadCode = acc.SubHeadCode, AccCode = acc.AccCode, ChequeNo = "0", InvNo = purchase.PurchaseId.ToString(), InvType = "Purchase"
+                        },
+                        //Purchase Discount
+                        new AccVoucher
+                        {
+                            VDate = purchase.DatePurchased, SessionId = 0, AccString = purchDisc.AccString, VNo = maxVno, VType = "JV", VSrNo = 5,
+                            VDescription = purchase.Remarks, Debit = 0, Credit = purchase.Qty - purchase.Total, UserCode = 0, OID = 0, BID = 0, CID = 0,
+                            HeadCode = purchDisc.HeadCode,
+                            SubHeadCode = purchDisc.SubHeadCode, AccCode = purchDisc.AccCode, ChequeNo = "0", InvNo = purchase.PurchaseId.ToString(), InvType = "Purchase"
+                        }
+                    };
+
+                    _db.AccVouchers.AddRange(vouchers);
+                    _db.SaveChanges();
+                }
+
                 #endregion
 
                 transaction.Commit();

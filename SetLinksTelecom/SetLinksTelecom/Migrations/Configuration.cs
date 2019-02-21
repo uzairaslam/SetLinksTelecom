@@ -48,7 +48,18 @@ namespace SetLinksTelecom.Migrations
                     AccMade = 0,
                     AccName = "Efics",
                     AccString = "22-01-0002"
+                },
+                new AccAccount
+                {
+                    HeadCode = 14,
+                    SubHeadCode = 02,
+                    OID = 0,
+                    AccCode = 1,
+                    AccMade = 0,
+                    AccName = "Business Cash",
+                    AccString = "14-02-0001"
                 }
+
            );
             //context.AccAccounts.Add(new AccAccount
             //{
@@ -150,9 +161,24 @@ namespace SetLinksTelecom.Migrations
                         new AccHead {TypeCode = 4, HeadName = "Project Revenue", HeadString = "41", HeadCode = 41,
                             SubHeads = new List<AccSubHead>
                             {
-                                new AccSubHead {HeadCode = 41,OID = 0,SubHeadCode = 1, SubHeadName = "Stock Sales", SubHeadString = "41-01"}
+                                new AccSubHead {HeadCode = 41,OID = 0,SubHeadCode = 1, SubHeadName = "Tangible Stock Sales", SubHeadString = "41-01"},
+                                new AccSubHead {HeadCode = 41,OID = 0,SubHeadCode = 2, SubHeadName = "InTangible Stock Sales", SubHeadString = "41-02"}
                             }
-                        }
+                        },
+                        new AccHead {TypeCode = 4, HeadName = "Purchase Discount", HeadString = "42", HeadCode = 42,
+                            SubHeads = new List<AccSubHead>
+                            {
+                                new AccSubHead {HeadCode = 42,OID = 0,SubHeadCode = 1, SubHeadName = "Tangible Purchase Discount", SubHeadString = "42-01"},
+                                new AccSubHead {HeadCode = 42,OID = 0,SubHeadCode = 2, SubHeadName = "InTangible Purchase Discount", SubHeadString = "42-02"}
+                            }
+                        },
+                        new AccHead {TypeCode = 4, HeadName = "Project Revenue", HeadString = "43", HeadCode = 43,
+                            SubHeads = new List<AccSubHead>
+                            {
+                                new AccSubHead {HeadCode = 43,OID = 0,SubHeadCode = 1, SubHeadName = "Tangible Sale Commission", SubHeadString = "43-01"},
+                                new AccSubHead {HeadCode = 43,OID = 0,SubHeadCode = 2, SubHeadName = "InTangible Sale Commission", SubHeadString = "43-02"}
+                            }
+                        },
                     }
                 },
                 new AccType
@@ -164,8 +190,10 @@ namespace SetLinksTelecom.Migrations
                         new AccHead {TypeCode = 5, HeadName = "Administrative Expense", HeadString = "51", HeadCode = 51,
                             SubHeads = new List<AccSubHead>
                             {
-                                new AccSubHead {HeadCode = 51,OID = 0,SubHeadCode = 1, SubHeadName = "Direct Stock Purchase Expense", SubHeadString = "51-01"},
-                                new AccSubHead {HeadCode = 51,OID = 0,SubHeadCode = 2, SubHeadName = "Utilities", SubHeadString = "51-02"}
+                                new AccSubHead {HeadCode = 51,OID = 0,SubHeadCode = 1, SubHeadName = "Tangible Cost", SubHeadString = "51-01"},
+                                new AccSubHead {HeadCode = 51,OID = 0,SubHeadCode = 2, SubHeadName = "InTangible Cost", SubHeadString = "51-02"}
+                                //new AccSubHead {HeadCode = 51,OID = 0,SubHeadCode = 1, SubHeadName = "Direct Stock Purchase Expense", SubHeadString = "51-01"},
+                                //new AccSubHead {HeadCode = 51,OID = 0,SubHeadCode = 2, SubHeadName = "Utilities", SubHeadString = "51-02"}
                             }
                         }
                     }

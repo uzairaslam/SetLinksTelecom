@@ -38,6 +38,10 @@ namespace SetLinksTelecom.Models
 
         [MaxLength(12)]
         public string CosString { get; set; }
+        [MaxLength(12)]
+        public string PurDiscString { get; set; }
+        [MaxLength(12)]
+        public string SaleCommString { get; set; }
 
         [NotMapped]
         public List<ProductCategory> ProductCategories { get; set; }

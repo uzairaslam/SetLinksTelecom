@@ -15,6 +15,8 @@ namespace SetLinksTelecom.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Date { get; set; }
         public decimal OverAllTotal { get; set; }
+        [MaxLength(150)]
+        public string Remarks { get; set; }
         public virtual List<SaleDetail> SaleDetails { get; set; }
     }
 }
