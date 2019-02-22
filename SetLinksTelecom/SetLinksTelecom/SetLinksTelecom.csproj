@@ -201,9 +201,11 @@
     <Compile Include="Controllers\PurchaseController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\SaleController.cs" />
+    <Compile Include="Controllers\VoucherController.cs" />
     <Compile Include="Data\DataContext.cs" />
     <Compile Include="Data\HtmlHelpers.cs" />
     <Compile Include="Data\IAccAccount.cs" />
+    <Compile Include="Data\IAccVoucher.cs" />
     <Compile Include="Data\IDesignationRepo.cs" />
     <Compile Include="Data\IInventoryType.cs" />
     <Compile Include="Data\IItemsRepo.cs" />
@@ -220,6 +222,7 @@
     <Compile Include="DTO\dtoPurchase.cs" />
     <Compile Include="DTO\DtoReportsRepo.cs" />
     <Compile Include="DTO\dtoSale.cs" />
+    <Compile Include="DTO\DtoVoucher.cs" />
     <Compile Include="GeneralFolder\CustomValidations.cs" />
     <Compile Include="GeneralFolder\EnumsRepo.cs" />
     <Compile Include="GeneralFolder\ExtensionMethods.cs" />
@@ -418,6 +421,14 @@
     <Compile Include="Migrations\201902201414261_AddPurchDiscountAndSaleCommissionToItem.Designer.cs">
       <DependentUpon>201902201414261_AddPurchDiscountAndSaleCommissionToItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902211151512_ChangesQtyTypeSaleDetails.cs" />
+    <Compile Include="Migrations\201902211151512_ChangesQtyTypeSaleDetails.Designer.cs">
+      <DependentUpon>201902211151512_ChangesQtyTypeSaleDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902211357108_PercisionTo4DebitAndCredit.cs" />
+    <Compile Include="Migrations\201902211357108_PercisionTo4DebitAndCredit.Designer.cs">
+      <DependentUpon>201902211357108_PercisionTo4DebitAndCredit.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccAccount.cs" />
     <Compile Include="Models\AccHead.cs" />
@@ -442,6 +453,7 @@
       <DependentUpon>AllReportsDataset.xsd</DependentUpon>
     </Compile>
     <Compile Include="Repositories\AccAccountRepo.cs" />
+    <Compile Include="Repositories\AccVoucherRepo.cs" />
     <Compile Include="Repositories\DesignationRepo.cs" />
     <Compile Include="Repositories\InventoryTypeRepo.cs" />
     <Compile Include="Repositories\ItemsRepo.cs" />
@@ -638,6 +650,8 @@
     <Content Include="Views\Reports\Ledger.cshtml" />
     <Content Include="Views\AccAccount\AccountGrid.cshtml" />
     <Content Include="Views\Reports\_ReportView.cshtml" />
+    <Content Include="Views\Reports\Voucher.cshtml" />
+    <Content Include="Views\Voucher\VoucherGrid.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -796,7 +810,14 @@
     <EmbeddedResource Include="Migrations\201902201414261_AddPurchDiscountAndSaleCommissionToItem.resx">
       <DependentUpon>201902201414261_AddPurchDiscountAndSaleCommissionToItem.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902211151512_ChangesQtyTypeSaleDetails.resx">
+      <DependentUpon>201902211151512_ChangesQtyTypeSaleDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902211357108_PercisionTo4DebitAndCredit.resx">
+      <DependentUpon>201902211357108_PercisionTo4DebitAndCredit.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\Ledger.rdlc" />
+    <EmbeddedResource Include="Reports\Voucher.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

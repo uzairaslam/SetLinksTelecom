@@ -48,6 +48,9 @@ namespace SetLinksTelecom.Data
             modelBuilder.Entity<SaleDetail>().Property(s => s.Rate).HasPrecision(20, 4);
             modelBuilder.Entity<SaleDetail>().Property(s => s.SubTotal).HasPrecision(20, 4);
             modelBuilder.Entity<SaleDetail>().Property(s => s.CommProfit).HasPrecision(20, 4);
+            modelBuilder.Entity<SaleDetail>().Property(s => s.Qty).HasPrecision(20, 4);
+            modelBuilder.Entity<AccVoucher>().Property(s => s.Debit).HasPrecision(20, 4);
+            modelBuilder.Entity<AccVoucher>().Property(s => s.Credit).HasPrecision(20, 4);
             modelBuilder.Entity<Line>().Property(s => s.Percentage).HasPrecision(20, 2);
         }
     }

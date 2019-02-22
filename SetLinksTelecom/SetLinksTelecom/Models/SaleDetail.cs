@@ -10,7 +10,7 @@ namespace SetLinksTelecom.Models
     {
         public int SaleDetailId { get; set; }
         public int PurchaseId { get; set; }
-        public int Qty { get; set; }
+        public decimal Qty { get; set; }
         public decimal Rate { get; set; }
         public decimal SubTotal { get; set; }
         public int LineId { get; set; }

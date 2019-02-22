@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,9 +8,8 @@ using SetLinksTelecom.Models;
 
 namespace SetLinksTelecom.Data
 {
-    public interface IReports
+    public interface IAccVoucher
     {
-        DataTable GetLedgers(DtoLedger ledger);
-        DataTable GetVouchers(DtoVoucher voucher);
+        List<DtoVoucherDisplay> GetData();
     }
 }

@@ -22,13 +22,13 @@ namespace SetLinksTelecom.DTO
         public bool WithoutDate { get; set; }
     }
 
-    public class DtoLedgerView
-    {
-        public DateTime VoucherDate { get; set; }
-        public string Ref { get; set; }
-        public string Description { get; set; }
-        public decimal Debit { get; set; }
-        public decimal Credit { get; set; }
-        public decimal Balance { get; set; }
-    }
+    //public class DtoLedgerView
+    //{
+    //    public DateTime VoucherDate { get; set; }
+    //    public string Ref { get; set; }
+    //    public string Description { get; set; }
+    //    public decimal Debit { get; set; }
+    //    public decimal Credit { get; set; }
+    //    public decimal Balance { get; set; }
+    //}
 }

@@ -30,9 +30,7 @@ namespace SetLinksTelecom.Controllers
         [HttpGet]
         public ActionResult Ledger()
         {
-            DtoLedger ledger = new DtoLedger();
-            ledger.StartDate = DateTime.Now;
-            ledger.EndDate = DateTime.Now;
+            DtoLedger ledger = new DtoLedger {StartDate = DateTime.Now, EndDate = DateTime.Now};
             return View(ledger);
         }
 
@@ -53,6 +51,35 @@ namespace SetLinksTelecom.Controllers
 
             reportViewer.LocalReport.ReportPath = Request.MapPath(Request.ApplicationPath) + @"Reports\Ledger.rdlc";
             reportViewer.LocalReport.DataSources.Add(new ReportDataSource("Ledger", Ledgers));
+
+            ViewBag.ReportViewer = reportViewer;
+            ViewBag.ReportTitle = "Ledger";
+            return View("_ReportView");
+        }
+
+        [HttpGet]
+        public ActionResult Voucher()
+        {
+            DtoVoucher voucher = new DtoVoucher {StartDate = DateTime.Now, EndDate = DateTime.Now};
+            return View(voucher);
+        }
+        [HttpPost]
+        public ActionResult Voucher(DtoVoucher voucher)
+        {
+            voucher.EndDate = voucher.EndDate.AddDays(1);
+            var vouchers = _repo.GetVouchers(voucher);
+            vouchers.TableName = "Ledger";
+            //return Json(new {data = Ledgers}, JsonRequestBehavior.AllowGet);
+
+            ReportViewer reportViewer = new ReportViewer();
+            reportViewer.ProcessingMode = ProcessingMode.Local;
+            reportViewer.SizeToReportContent = true;
+            reportViewer.Width = Unit.Percentage(900);
+            reportViewer.Height = Unit.Percentage(900);
+
+
+            reportViewer.LocalReport.ReportPath = Request.MapPath(Request.ApplicationPath) + @"Reports\Voucher.rdlc";
+            reportViewer.LocalReport.DataSources.Add(new ReportDataSource("Voucher", vouchers));
 
             ViewBag.ReportViewer = reportViewer;
             ViewBag.ReportTitle = "Ledger";

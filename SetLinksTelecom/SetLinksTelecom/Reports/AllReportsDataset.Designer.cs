@@ -631,11 +631,13 @@ namespace SetLinksTelecom.Reports {
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
         public partial class VoucherDataTable : global::System.Data.TypedTableBase<VoucherRow> {
             
-            private global::System.Data.DataColumn columnVoucherDate;
+            private global::System.Data.DataColumn columnVDate;
             
-            private global::System.Data.DataColumn columnAccountTitle;
+            private global::System.Data.DataColumn columnAccName;
             
-            private global::System.Data.DataColumn columnNarration;
+            private global::System.Data.DataColumn columnVDescription;
+            
+            private global::System.Data.DataColumn columnVSrNo;
             
             private global::System.Data.DataColumn columnDebit;
             
@@ -676,25 +678,33 @@ namespace SetLinksTelecom.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn VoucherDateColumn {
+            public global::System.Data.DataColumn VDateColumn {
                 get {
-                    return this.columnVoucherDate;
+                    return this.columnVDate;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn AccountTitleColumn {
+            public global::System.Data.DataColumn AccNameColumn {
                 get {
-                    return this.columnAccountTitle;
+                    return this.columnAccName;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn NarrationColumn {
+            public global::System.Data.DataColumn VDescriptionColumn {
                 get {
-                    return this.columnNarration;
+                    return this.columnVDescription;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn VSrNoColumn {
+                get {
+                    return this.columnVSrNo;
                 }
             }
             
@@ -751,12 +761,13 @@ namespace SetLinksTelecom.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public VoucherRow AddVoucherRow(string VoucherDate, string AccountTitle, string Narration, string Debit, string Credit) {
+            public VoucherRow AddVoucherRow(string VDate, string AccName, string VDescription, string VSrNo, string Debit, string Credit) {
                 VoucherRow rowVoucherRow = ((VoucherRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
-                        VoucherDate,
-                        AccountTitle,
-                        Narration,
+                        VDate,
+                        AccName,
+                        VDescription,
+                        VSrNo,
                         Debit,
                         Credit};
                 rowVoucherRow.ItemArray = columnValuesArray;
@@ -781,9 +792,10 @@ namespace SetLinksTelecom.Reports {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             internal void InitVars() {
-                this.columnVoucherDate = base.Columns["VoucherDate"];
-                this.columnAccountTitle = base.Columns["AccountTitle"];
-                this.columnNarration = base.Columns["Narration"];
+                this.columnVDate = base.Columns["VDate"];
+                this.columnAccName = base.Columns["AccName"];
+                this.columnVDescription = base.Columns["VDescription"];
+                this.columnVSrNo = base.Columns["VSrNo"];
                 this.columnDebit = base.Columns["Debit"];
                 this.columnCredit = base.Columns["Credit"];
             }
@@ -791,12 +803,14 @@ namespace SetLinksTelecom.Reports {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             private void InitClass() {
-                this.columnVoucherDate = new global::System.Data.DataColumn("VoucherDate", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnVoucherDate);
-                this.columnAccountTitle = new global::System.Data.DataColumn("AccountTitle", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnAccountTitle);
-                this.columnNarration = new global::System.Data.DataColumn("Narration", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnNarration);
+                this.columnVDate = new global::System.Data.DataColumn("VDate", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnVDate);
+                this.columnAccName = new global::System.Data.DataColumn("AccName", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAccName);
+                this.columnVDescription = new global::System.Data.DataColumn("VDescription", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnVDescription);
+                this.columnVSrNo = new global::System.Data.DataColumn("VSrNo", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnVSrNo);
                 this.columnDebit = new global::System.Data.DataColumn("Debit", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnDebit);
                 this.columnCredit = new global::System.Data.DataColumn("Credit", typeof(string), null, global::System.Data.MappingType.Element);
@@ -1126,49 +1140,65 @@ namespace SetLinksTelecom.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string VoucherDate {
+            public string VDate {
                 get {
                     try {
-                        return ((string)(this[this.tableVoucher.VoucherDateColumn]));
+                        return ((string)(this[this.tableVoucher.VDateColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'VoucherDate\' in table \'Voucher\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'VDate\' in table \'Voucher\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableVoucher.VoucherDateColumn] = value;
+                    this[this.tableVoucher.VDateColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string AccountTitle {
+            public string AccName {
                 get {
                     try {
-                        return ((string)(this[this.tableVoucher.AccountTitleColumn]));
+                        return ((string)(this[this.tableVoucher.AccNameColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'AccountTitle\' in table \'Voucher\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'AccName\' in table \'Voucher\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableVoucher.AccountTitleColumn] = value;
+                    this[this.tableVoucher.AccNameColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Narration {
+            public string VDescription {
                 get {
                     try {
-                        return ((string)(this[this.tableVoucher.NarrationColumn]));
+                        return ((string)(this[this.tableVoucher.VDescriptionColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Narration\' in table \'Voucher\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'VDescription\' in table \'Voucher\' is DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableVoucher.NarrationColumn] = value;
+                    this[this.tableVoucher.VDescriptionColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string VSrNo {
+                get {
+                    try {
+                        return ((string)(this[this.tableVoucher.VSrNoColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'VSrNo\' in table \'Voucher\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableVoucher.VSrNoColumn] = value;
                 }
             }
             
@@ -1206,38 +1236,50 @@ namespace SetLinksTelecom.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsVoucherDateNull() {
-                return this.IsNull(this.tableVoucher.VoucherDateColumn);
+            public bool IsVDateNull() {
+                return this.IsNull(this.tableVoucher.VDateColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetVoucherDateNull() {
-                this[this.tableVoucher.VoucherDateColumn] = global::System.Convert.DBNull;
+            public void SetVDateNull() {
+                this[this.tableVoucher.VDateColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsAccountTitleNull() {
-                return this.IsNull(this.tableVoucher.AccountTitleColumn);
+            public bool IsAccNameNull() {
+                return this.IsNull(this.tableVoucher.AccNameColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetAccountTitleNull() {
-                this[this.tableVoucher.AccountTitleColumn] = global::System.Convert.DBNull;
+            public void SetAccNameNull() {
+                this[this.tableVoucher.AccNameColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsNarrationNull() {
-                return this.IsNull(this.tableVoucher.NarrationColumn);
+            public bool IsVDescriptionNull() {
+                return this.IsNull(this.tableVoucher.VDescriptionColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetNarrationNull() {
-                this[this.tableVoucher.NarrationColumn] = global::System.Convert.DBNull;
+            public void SetVDescriptionNull() {
+                this[this.tableVoucher.VDescriptionColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsVSrNoNull() {
+                return this.IsNull(this.tableVoucher.VSrNoColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetVSrNoNull() {
+                this[this.tableVoucher.VSrNoColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

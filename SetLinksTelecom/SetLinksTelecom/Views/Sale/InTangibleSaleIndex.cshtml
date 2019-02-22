@@ -122,11 +122,12 @@
 
                 $.each(pur,
                     function () {
+                        console.log($(this).closest('tr').find('.qtyTxt').val());
                         items.push({
                             PurchaseId: $(this).val(),
                             ItemCode: $(this).closest('td').get(0).innerText,
                             ItemName: $(this).closest('tr').find('.ItemName').get(0).innerText,
-                            Qty: $(this).closest('tr').find('.qtyTxt').val(),
+                            'Qty': $(this).closest('tr').find('.qtyTxt').val(),
                             Rate: $(this).closest('tr').find('.Rate').val(),
                             SubTotal: $(this).closest('tr').find('.subTotal').get(0).innerText,
                             LineId: $(this).closest('tr').find('.LineId').val()

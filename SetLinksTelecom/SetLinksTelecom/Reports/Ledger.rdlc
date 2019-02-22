@@ -255,7 +255,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
+                              <Value>=RowNumber(nothing)</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>

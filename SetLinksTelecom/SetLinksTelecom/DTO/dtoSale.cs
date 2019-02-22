@@ -46,7 +46,7 @@ namespace SetLinksTelecom.DTO
         [Display(Name = "Item")]
         public string ItemName { get; set; }
 
-        public int Qty { get; set; }
+        public decimal Qty { get; set; }
 
         public decimal Rate { get; set; }
 
@@ -95,7 +95,7 @@ namespace SetLinksTelecom.DTO
         [Display(Name = "Item")]
         public string ItemName { get; set; }
 
-        public int Qty { get; set; }
+        public decimal Qty { get; set; }
 
         public decimal Rate { get; set; }
 

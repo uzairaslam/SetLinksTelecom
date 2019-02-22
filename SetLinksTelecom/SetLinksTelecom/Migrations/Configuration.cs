@@ -28,7 +28,7 @@ namespace SetLinksTelecom.Migrations
                 new Portal { Name = "Jazz Cash", AccString = "22-01-0001" },
                 new Portal { Name = "Efics", AccString = "22-01-0002" }
                 );
-            context.AccAccounts.AddOrUpdate(a => a.AccName,
+            context.AccAccounts.AddOrUpdate(a => a.AccString,
                 new AccAccount
                 {
                     HeadCode = 22,

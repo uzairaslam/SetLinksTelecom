@@ -12,7 +12,7 @@
   <xs:element name="AllReportsDataset" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="AllReportsDataset" msprop:Generator_UserDSName="AllReportsDataset">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="Ledger" msprop:Generator_TableClassName="LedgerDataTable" msprop:Generator_TableVarName="tableLedger" msprop:Generator_TablePropName="Ledger" msprop:Generator_RowDeletingName="LedgerRowDeleting" msprop:Generator_RowChangingName="LedgerRowChanging" msprop:Generator_RowEvHandlerName="LedgerRowChangeEventHandler" msprop:Generator_RowDeletedName="LedgerRowDeleted" msprop:Generator_UserTableName="Ledger" msprop:Generator_RowChangedName="LedgerRowChanged" msprop:Generator_RowEvArgName="LedgerRowChangeEvent" msprop:Generator_RowClassName="LedgerRow">
+        <xs:element name="Ledger" msprop:Generator_TableClassName="LedgerDataTable" msprop:Generator_TableVarName="tableLedger" msprop:Generator_RowChangedName="LedgerRowChanged" msprop:Generator_TablePropName="Ledger" msprop:Generator_RowDeletingName="LedgerRowDeleting" msprop:Generator_RowChangingName="LedgerRowChanging" msprop:Generator_RowEvHandlerName="LedgerRowChangeEventHandler" msprop:Generator_RowDeletedName="LedgerRowDeleted" msprop:Generator_RowClassName="LedgerRow" msprop:Generator_UserTableName="Ledger" msprop:Generator_RowEvArgName="LedgerRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="VoucherDate" msprop:Generator_ColumnVarNameInTable="columnVoucherDate" msprop:Generator_ColumnPropNameInRow="VoucherDate" msprop:Generator_ColumnPropNameInTable="VoucherDateColumn" msprop:Generator_UserColumnName="VoucherDate" type="xs:string" minOccurs="0" />
@@ -21,6 +21,18 @@
               <xs:element name="Debit" msprop:Generator_ColumnVarNameInTable="columnDebit" msprop:Generator_ColumnPropNameInRow="Debit" msprop:Generator_ColumnPropNameInTable="DebitColumn" msprop:Generator_UserColumnName="Debit" type="xs:string" minOccurs="0" />
               <xs:element name="Credit" msprop:Generator_ColumnVarNameInTable="columnCredit" msprop:Generator_ColumnPropNameInRow="Credit" msprop:Generator_ColumnPropNameInTable="CreditColumn" msprop:Generator_UserColumnName="Credit" type="xs:string" minOccurs="0" />
               <xs:element name="Balance" msprop:Generator_ColumnVarNameInTable="columnBalance" msprop:Generator_ColumnPropNameInRow="Balance" msprop:Generator_ColumnPropNameInTable="BalanceColumn" msprop:Generator_UserColumnName="Balance" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Voucher" msprop:Generator_TableClassName="VoucherDataTable" msprop:Generator_TableVarName="tableVoucher" msprop:Generator_TablePropName="Voucher" msprop:Generator_RowDeletingName="VoucherRowDeleting" msprop:Generator_RowChangingName="VoucherRowChanging" msprop:Generator_RowEvHandlerName="VoucherRowChangeEventHandler" msprop:Generator_RowDeletedName="VoucherRowDeleted" msprop:Generator_UserTableName="Voucher" msprop:Generator_RowChangedName="VoucherRowChanged" msprop:Generator_RowEvArgName="VoucherRowChangeEvent" msprop:Generator_RowClassName="VoucherRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="VDate" msprop:Generator_ColumnVarNameInTable="columnVDate" msprop:Generator_ColumnPropNameInRow="VDate" msprop:Generator_ColumnPropNameInTable="VDateColumn" msprop:Generator_UserColumnName="VDate" type="xs:string" minOccurs="0" />
+              <xs:element name="AccName" msprop:Generator_ColumnVarNameInTable="columnAccName" msprop:Generator_ColumnPropNameInRow="AccName" msprop:Generator_ColumnPropNameInTable="AccNameColumn" msprop:Generator_UserColumnName="AccName" type="xs:string" minOccurs="0" />
+              <xs:element name="VDescription" msprop:Generator_ColumnVarNameInTable="columnVDescription" msprop:Generator_ColumnPropNameInRow="VDescription" msprop:Generator_ColumnPropNameInTable="VDescriptionColumn" msprop:Generator_UserColumnName="VDescription" type="xs:string" minOccurs="0" />
+              <xs:element name="VSrNo" msprop:Generator_ColumnVarNameInTable="columnVSrNo" msprop:Generator_ColumnPropNameInRow="VSrNo" msprop:Generator_ColumnPropNameInTable="VSrNoColumn" msprop:Generator_UserColumnName="VSrNo" type="xs:string" minOccurs="0" />
+              <xs:element name="Debit" msprop:Generator_ColumnVarNameInTable="columnDebit" msprop:Generator_ColumnPropNameInRow="Debit" msprop:Generator_ColumnPropNameInTable="DebitColumn" msprop:Generator_UserColumnName="Debit" type="xs:string" minOccurs="0" />
+              <xs:element name="Credit" msprop:Generator_ColumnVarNameInTable="columnCredit" msprop:Generator_ColumnPropNameInRow="Credit" msprop:Generator_ColumnPropNameInTable="CreditColumn" msprop:Generator_UserColumnName="Credit" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

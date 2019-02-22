@@ -230,6 +230,7 @@ namespace SetLinksTelecom.Repositories
                 {
                     Portal portal = _db.Portals.Single(p => p.PortalId.Equals(purchase.PortalId));
                     var maxVno = _db.AccVouchers.Max(v => (int?)v.VNo) ?? 0;
+                    ++maxVno;
                     AccAccount acc = _db.AccAccounts.Single(a => a.AccString.Equals(portal.AccString));
 
                     Item item = _db.Items.Single(i => i.ItemId.Equals(dtoPurchase.ItemId));
