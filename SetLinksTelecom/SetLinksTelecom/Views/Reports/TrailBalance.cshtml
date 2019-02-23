@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "TrailBalance";
+}
+
+<h2>TrailBalance</h2>
+
+@using (Html.BeginForm("TrailBalance", "Reports"))
+{ 
+    <div class="form-group">
+        <button type="submit" value="Submit" class="btn btn-primary"><i class="fa fa-save"></i> Print Report</button>
+        @*<button type="reset" value="Reset" class="btn btn-warning"><i class="fa fa-refresh"></i> Reset</button>*@
+    </div>
+}
