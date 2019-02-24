@@ -55,17 +55,6 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item dropdown show">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Reports </a>
-                <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <li class="nav-item @Html.IsActiveLink(actions: "Ledger", controllers: "Reports")">
-                        @Html.ActionLink("Ledger", "Ledger", "Reports", null, new { @class = "dropdown-item" })
-                    </li>
-                    <li class="nav-item @Html.IsActiveLink(actions: "Voucher", controllers: "Reports")">
-                        @Html.ActionLink("Voucher", "Voucher", "Reports", null, new { @class = "dropdown-item" })
-                    </li>
-                </ul>
-            </li>
             <li class="nav-item  @Html.IsActiveLink(actions: "About", controllers: "Home")">
                 @Html.ActionLink("About", "About", "Home", null, new { @class = "nav-link" })
             </li>
