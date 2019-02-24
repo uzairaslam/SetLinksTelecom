@@ -82,7 +82,7 @@ namespace SetLinksTelecom.Controllers
             reportViewer.LocalReport.DataSources.Add(new ReportDataSource("Voucher", vouchers));
 
             ViewBag.ReportViewer = reportViewer;
-            ViewBag.ReportTitle = "Ledger";
+            ViewBag.ReportTitle = "Voucher";
             return View("_ReportView");
         }
     }
