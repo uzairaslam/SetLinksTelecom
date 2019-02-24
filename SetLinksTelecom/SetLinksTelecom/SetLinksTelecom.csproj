@@ -220,7 +220,6 @@
     <Compile Include="DTO\DtoLinesWithNumbers.cs" />
     <Compile Include="DTO\DtoProductCategory.cs" />
     <Compile Include="DTO\dtoPurchase.cs" />
-    <Compile Include="DTO\DtoReportsRepo.cs" />
     <Compile Include="DTO\dtoSale.cs" />
     <Compile Include="DTO\DtoVoucher.cs" />
     <Compile Include="GeneralFolder\CustomValidations.cs" />
@@ -429,6 +428,10 @@
     <Compile Include="Migrations\201902211357108_PercisionTo4DebitAndCredit.Designer.cs">
       <DependentUpon>201902211357108_PercisionTo4DebitAndCredit.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902240720458_UpdatedStockOutProperty.cs" />
+    <Compile Include="Migrations\201902240720458_UpdatedStockOutProperty.Designer.cs">
+      <DependentUpon>201902240720458_UpdatedStockOutProperty.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccAccount.cs" />
     <Compile Include="Models\AccHead.cs" />
@@ -455,6 +458,7 @@
     <Compile Include="Repositories\AccAccountRepo.cs" />
     <Compile Include="Repositories\AccVoucherRepo.cs" />
     <Compile Include="Repositories\DesignationRepo.cs" />
+    <Compile Include="Repositories\ReportsRepo.cs" />
     <Compile Include="Repositories\InventoryTypeRepo.cs" />
     <Compile Include="Repositories\ItemsRepo.cs" />
     <Compile Include="Repositories\LineRepo.cs" />
@@ -816,6 +820,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902211357108_PercisionTo4DebitAndCredit.resx">
       <DependentUpon>201902211357108_PercisionTo4DebitAndCredit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902240720458_UpdatedStockOutProperty.resx">
+      <DependentUpon>201902240720458_UpdatedStockOutProperty.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Ledger.rdlc" />
     <EmbeddedResource Include="Reports\MyReport.rdlc" />

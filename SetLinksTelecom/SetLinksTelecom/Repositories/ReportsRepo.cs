@@ -1,20 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Web;
-using SetLinksTelecom.Data;
-using SetLinksTelecom.GeneralFolder;
-using SetLinksTelecom.Models;
 using System.Data.Entity.SqlServer;
+using System.Linq;
+using SetLinksTelecom.Data;
+using SetLinksTelecom.DTO;
+using SetLinksTelecom.GeneralFolder;
 
-namespace SetLinksTelecom.DTO
+namespace SetLinksTelecom.Repositories
 {
-    public class DtoReportsRepo : IReports
+    public class ReportsRepo : IReports
     {
         private readonly DataContext _db;
 
-        public DtoReportsRepo(DataContext db)
+        public ReportsRepo(DataContext db)
         {
             _db = db;
         }

@@ -66,7 +66,7 @@ namespace SetLinksTelecom.DTO
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime DatePurchased { get; set; }
 
-        public int StockOut { get; set; }
+        public decimal StockOut { get; set; }
     }
 
     public class dtoDisplayPurchase

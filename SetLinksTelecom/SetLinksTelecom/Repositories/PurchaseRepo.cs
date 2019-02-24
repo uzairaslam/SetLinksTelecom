@@ -114,7 +114,8 @@ namespace SetLinksTelecom.Repositories
             using (var transaction = _db.Database.BeginTransaction())
             {
                 #region Save In PurchaseTable
-
+                InventoryType type =
+                    _db.InventoryTypes.FirstOrDefault(t => t.InventoryTypeId.Equals(dtoPurchase.InventoryTypeId));
                 Purchase purchase = new Purchase
                 {
                     //PurchaseId = dtoPurchase.PurchaseId,
@@ -126,7 +127,7 @@ namespace SetLinksTelecom.Repositories
                     Subname = dtoPurchase.Subname,
                     Percentage = dtoPurchase.Percentage,
                     Rate = dtoPurchase.Rate,
-                    StockOut = dtoPurchase.Qty,
+                    StockOut = type.Name == "Tangible" ? dtoPurchase.Qty : dtoPurchase.Total,
                     DatePurchased = dtoPurchase.DatePurchased
                 };
                 _db.Purchases.Add(purchase);
@@ -137,8 +138,7 @@ namespace SetLinksTelecom.Repositories
                 #region Save In Stock
 
                 int purchaseId = purchase.PurchaseId;
-                InventoryType type =
-                    _db.InventoryTypes.FirstOrDefault(t => t.InventoryTypeId.Equals(dtoPurchase.InventoryTypeId));
+                
                 Stock stock = _db.Stocks.FirstOrDefault(s => s.ItemId.Equals(dtoPurchase.ItemId));
                 if (stock == null)
                 {

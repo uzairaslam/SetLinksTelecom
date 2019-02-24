@@ -57,7 +57,7 @@ namespace SetLinksTelecom.Models
 
         [Column("StockOut", Order = 10)]
         [Display(Name = "Stock Out")]
-        public int StockOut { get; set; }
+        public decimal StockOut { get; set; }
 
 
         public Purchase()
