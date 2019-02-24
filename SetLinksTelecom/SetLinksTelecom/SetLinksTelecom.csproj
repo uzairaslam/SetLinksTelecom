@@ -652,6 +652,7 @@
     <Content Include="Views\Reports\_ReportView.cshtml" />
     <Content Include="Views\Reports\Voucher.cshtml" />
     <Content Include="Views\Voucher\VoucherGrid.cshtml" />
+    <Content Include="Views\Reports\TrailBalance.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -817,6 +818,8 @@
       <DependentUpon>201902211357108_PercisionTo4DebitAndCredit.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Ledger.rdlc" />
+    <EmbeddedResource Include="Reports\MyReport.rdlc" />
+    <EmbeddedResource Include="Reports\TrailBalance.rdlc" />
     <EmbeddedResource Include="Reports\Voucher.rdlc" />
   </ItemGroup>
   <PropertyGroup>

@@ -63,6 +63,7 @@ namespace SetLinksTelecom.Controllers
             DtoVoucher voucher = new DtoVoucher {StartDate = DateTime.Now, EndDate = DateTime.Now};
             return View(voucher);
         }
+
         [HttpPost]
         public ActionResult Voucher(DtoVoucher voucher)
         {
@@ -83,6 +84,29 @@ namespace SetLinksTelecom.Controllers
 
             ViewBag.ReportViewer = reportViewer;
             ViewBag.ReportTitle = "Ledger";
+            return View("_ReportView");
+        }
+
+        [HttpGet]
+        public ActionResult TrailBalance()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult TrailBalance(int i=0)
+        {
+            DataTable TrailBal = _repo.GetTrailBalance();
+            TrailBal.TableName = "DSTrailBalance";
+            ReportViewer reportViewer = new ReportViewer();
+            reportViewer.ProcessingMode = ProcessingMode.Local;
+            reportViewer.SizeToReportContent = true;
+            reportViewer.Width = Unit.Percentage(900);
+            reportViewer.Height = Unit.Percentage(900);
+            reportViewer.LocalReport.ReportPath = Request.MapPath(Request.ApplicationPath) + @"Reports\TrailBalance.rdlc";
+            reportViewer.LocalReport.DataSources.Add(new ReportDataSource("DSTrailBalance", TrailBal));
+            ViewBag.ReportViewer = reportViewer;
+            ViewBag.ReportTitle = "Trail Balance";
             return View("_ReportView");
         }
     }
