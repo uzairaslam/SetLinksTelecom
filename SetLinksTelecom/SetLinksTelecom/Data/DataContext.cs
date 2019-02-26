@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 using System.Web;
+using SetLinksTelecom.GeneralFolder;
 using SetLinksTelecom.Models;
 
 namespace SetLinksTelecom.Data
@@ -53,6 +55,7 @@ namespace SetLinksTelecom.Data
             modelBuilder.Entity<AccVoucher>().Property(s => s.Debit).HasPrecision(20, 4);
             modelBuilder.Entity<AccVoucher>().Property(s => s.Credit).HasPrecision(20, 4);
             modelBuilder.Entity<Line>().Property(s => s.Percentage).HasPrecision(20, 2);
+            modelBuilder.Configurations.Add(new PersonMapping());
         }
     }
 

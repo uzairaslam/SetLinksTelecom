@@ -15,7 +15,7 @@ namespace SetLinksTelecom.Models
         public string AccString { get; set; }
 
         public int VNo { get; set; }
-        [MaxLength(2)]
+        [MaxLength(3)]
         public string VType { get; set; }
 
         public int VSrNo { get; set; }

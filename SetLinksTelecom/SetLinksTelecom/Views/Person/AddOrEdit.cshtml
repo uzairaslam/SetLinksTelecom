@@ -53,7 +53,7 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.DesignationId, new { @class = "control-label" })
                 @Html.DropDownListFor(m => m.DesignationId, new SelectList(Model.Designations, "Id", "Name"), "Select Designation", new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.FatherName)
+                @Html.ValidationMessageFor(m => m.DesignationId)
             </div>
         </div>
     </div>
