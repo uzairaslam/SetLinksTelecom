@@ -218,6 +218,7 @@
     <Compile Include="DTO\dtoItem.cs" />
     <Compile Include="DTO\DtoLedger.cs" />
     <Compile Include="DTO\DtoLinesWithNumbers.cs" />
+    <Compile Include="DTO\DtoPersonMapping.cs" />
     <Compile Include="DTO\DtoProductCategory.cs" />
     <Compile Include="DTO\dtoPurchase.cs" />
     <Compile Include="DTO\dtoSale.cs" />
@@ -225,6 +226,7 @@
     <Compile Include="GeneralFolder\CustomValidations.cs" />
     <Compile Include="GeneralFolder\EnumsRepo.cs" />
     <Compile Include="GeneralFolder\ExtensionMethods.cs" />
+    <Compile Include="GeneralFolder\ModelsCofigs.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -431,6 +433,14 @@
     <Compile Include="Migrations\201902240720458_UpdatedStockOutProperty.cs" />
     <Compile Include="Migrations\201902240720458_UpdatedStockOutProperty.Designer.cs">
       <DependentUpon>201902240720458_UpdatedStockOutProperty.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902251355230_PersonSelfReference.cs" />
+    <Compile Include="Migrations\201902251355230_PersonSelfReference.Designer.cs">
+      <DependentUpon>201902251355230_PersonSelfReference.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902251358359_ChangeLengthVtype.cs" />
+    <Compile Include="Migrations\201902251358359_ChangeLengthVtype.Designer.cs">
+      <DependentUpon>201902251358359_ChangeLengthVtype.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccAccount.cs" />
@@ -657,6 +667,7 @@
     <Content Include="Views\Reports\Voucher.cshtml" />
     <Content Include="Views\Voucher\VoucherGrid.cshtml" />
     <Content Include="Views\Reports\TrailBalance.cshtml" />
+    <Content Include="Views\Person\PersonMapping.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -823,6 +834,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902240720458_UpdatedStockOutProperty.resx">
       <DependentUpon>201902240720458_UpdatedStockOutProperty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902251355230_PersonSelfReference.resx">
+      <DependentUpon>201902251355230_PersonSelfReference.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902251358359_ChangeLengthVtype.resx">
+      <DependentUpon>201902251358359_ChangeLengthVtype.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Ledger.rdlc" />
     <EmbeddedResource Include="Reports\MyReport.rdlc" />

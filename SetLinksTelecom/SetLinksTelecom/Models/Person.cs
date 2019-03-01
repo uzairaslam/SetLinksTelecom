@@ -90,6 +90,11 @@ namespace SetLinksTelecom.Models
         [MaxLength(12)]
         public string AccString { get; set; }
 
+        public int? BossId { get; set; }
+        public virtual Person Boss { get; set; }
+        public virtual List<Person> Workers { get; set; }
+
+
         [NotMapped]
         public List<Designation> Designations { get; set; }
 
