@@ -19,7 +19,8 @@ namespace SetLinksTelecom.Models
         [Display(Name = "Inventory Type")]
         public int InventoryTypeId { get; set; }
         [ForeignKey("InventoryTypeId")]
-        public InventoryType InventoryType { get; set; }
+        [NotMapped]
+        public virtual InventoryType InventoryType { get; set; }
         [NotMapped]
         public List<InventoryType> InventoryTypes { get; set; }
 

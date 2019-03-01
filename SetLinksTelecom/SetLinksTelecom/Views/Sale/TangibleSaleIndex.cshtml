@@ -20,11 +20,15 @@
                 @Html.EditorFor(m => m.PersonName, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(m => m.PersonName)
             </div>
-        <div class="col-1"></div>
-        <div class="col-2"><h5>@Html.LabelFor(m => m.Date, new { @class = "control-label" })</h5></div>
-        <div class="col-3">@Html.EditorFor(m => m.Date, new { htmlAttributes = new { @class = "form-control" } })</div>
-        <div class="col-1"></div>
-    </div>
+            <div class="col-1"></div>
+            <div class="col-2"><h5>@Html.LabelFor(m => m.Date, new { @class = "control-label" })</h5></div>
+            <div class="col-3">@Html.EditorFor(m => m.Date, new { htmlAttributes = new { @class = "form-control" } })</div>
+            <div class="col-1"></div>
+        </div>
+        <div class="form-group" id="dvRemarks">
+            @Html.LabelFor(m => m.Remarks, new { @class = "control-label" })
+            @Html.TextAreaFor(m => m.Remarks, new { @class = "form-control", @id = "Remarks" })
+        </div>
         <div class="clear-fix">
             &nbsp;
         </div>
@@ -80,8 +84,8 @@
 
     <script>
         var tangibleItemsSale, purchaseTable;
-        $(document).ready(function () {
-            $('#PersonName').keypress(function (event) {
+        $(document).ready(function() {
+            $('#PersonName').keypress(function(event) {
 
                 var keycode = (event.keyCode ? event.keyCode : event.which);
                 if (keycode == '13') {
@@ -108,46 +112,47 @@
             event.preventDefault();
             $.validator.unobtrusive.parse(form);
 
-            var pur = $('.PurchaseIdinpt');
-
-            var items = [];
-
-            $.each(pur, function () {
-                items.push({
-                    PurchaseId: $(this).val(),
-                    ItemCode: $(this).closest('td').get(0).innerText,
-                    ItemName: $(this).closest('tr').find('.ItemName').get(0).innerText,
-                    Qty: $(this).closest('tr').find('.qtyTxt').val(),
-                    Rate: $(this).closest('tr').find('.Rate').get(0).innerText,
-                    subTotal: $(this).closest('tr').find('.subTotal').get(0).innerText
-                });
-            });
-
-            console.log(items);
-
-
-            var dtoTangibleSale = {
-                SaleId: 0,
-                PersonId: $('#PersonId').val(),
-                PersonName: $('#PersonName').val(),
-                Date: $('#Date').val(),
-                OverAllTotal: $('#OverAllTotal').html(),
-                ItemSales: items
-            }
-            console.log(dtoTangibleSale);
-
 
             if ($(form).valid()) {
+
+                var pur = $('.PurchaseIdinpt');
+
+                var items = [];
+
+                $.each(pur,
+                    function () {
+                        items.push({
+                            PurchaseId: $(this).val(),
+                            ItemCode: $(this).closest('td').get(0).innerText,
+                            ItemName: $(this).closest('tr').find('.ItemName').get(0).innerText,
+                            Qty: $(this).closest('tr').find('.qtyTxt').val(),
+                            Rate: $(this).closest('tr').find('.Rate').val(),
+                            SubTotal: $(this).closest('tr').find('.subTotal').get(0).innerText
+                        });
+                    });
+
+                //console.log(items);
+
+
+                var dtoTangibleSale = {
+                    SaleId: 0,
+                    PersonId: $('#PersonId').val(),
+                    PersonName: $('#PersonName').val(),
+                    Date: $('#Date').val(),
+                    Remarks: $('#Remarks').val(),
+                    OverAllTotal: $('#OverAllTotal').html(),
+                    ItemSales: items
+                }
+                //console.log(dtoTangibleSale);
+
                 $.ajax({
                     type: "POST",
                     url: form.action,
                     data: dtoTangibleSale,
-                    success: function (data) {
+                    success: function(data) {
                         if (data.success) {
-                            popUp.dialog('close');
 
-                            dataTable.ajax.reload();
-
+                            resetForm();
                             $.notify(
                                 data.message,
                                 {
@@ -155,6 +160,7 @@
                                     className: "success"
                                 }
                             );
+
                         }
                     }
                 });
@@ -170,11 +176,17 @@
             return false;
         }
 
+        function resetForm() {
+            window.setInterval(function () {
+                window.location = ("@Url.Action("TangibleSaleIndex", "Sale")");
+            }, 2000);
+        }
+
 
         function popUpForm(url, type) {
             //console.log(type);
             var formDiv = $('<div class="popDiv" />');
-            $.get(url).done(function (response) {
+            $.get(url).done(function(response) {
                 formDiv.html(response);
 
                 popUp = formDiv.dialog({
@@ -185,7 +197,7 @@
                     width: $(window).width() - 50,
                     height: 600,
                     modal: true,
-                    close: function () {
+                    close: function() {
                         dataTable.destroy();
                         popUp.dialog('close');
                         $('.popDiv').remove();
@@ -230,7 +242,7 @@
             //bind row event
             $('#purchaseTable tbody').on('dblclick',
                 'tr',
-                function () {
+                function() {
                     var data = dataTable.row(this).data();
                     saleItemRow('@Url.Action("SaleItemRow", "Sale")/' + data['PurchaseId']);
                     popUp.dialog('close');
@@ -240,7 +252,7 @@
 
         function saleItemRow(url) {
             var rowItem = $('<tr />');
-            $.get(url).done(function (response) {
+            $.get(url).done(function(response) {
                 rowItem.html(response);
 
                 tangibleItemsSale.row.add(rowItem).draw(true);
@@ -249,11 +261,13 @@
         }
 
         function qtyChanged(txt) {
-            var qtyTd = $(txt).closest('td').get(0);
-            var rateTd = $(qtyTd).next('td').get(0);
-            var subTotal = $(rateTd).next('td').get(0);
-            if ($(txt).val() != null && $(txt).val() != 0) {
-                subTotal.innerHTML = parseFloat(rateTd.innerHTML) * $(txt).val();
+
+            var row = $($(txt).closest('tr').get(0));
+            var subTotal = row.find('.subTotal').get(0);
+            var Rate = row.find('.Rate').val();
+            var Qty = row.find('.qtyTxt').val();
+            if (Qty != null && Qty != 0 && Rate != null && Rate != 0) {
+                subTotal.innerHTML = parseFloat(Rate) * Qty;
             } else {
                 subTotal.innerHTML = '0';
             }
@@ -285,7 +299,7 @@
             //bind row event
             $('#personTable tbody').on('dblclick',
                 'tr',
-                function () {
+                function() {
                     var data = dataTable.row(this).data();
                     $('#PersonId').val(data['PersonId']);
                     $('#PersonName').val(data['Name']);
@@ -295,6 +309,7 @@
 
 
         function removeItem(row) {
+            //$("#tangibleItemsSale").find("tr:gt(0)").remove();
             var getRow = $(row).closest('tr').get(0);
             tangibleItemsSale.row(getRow).remove().draw();
             changeOverallStatus();
@@ -302,7 +317,7 @@
 
         function changeOverallStatus() {
             var sum = 0;
-            $('.subTotal').each(function () {
+            $('.subTotal').each(function() {
                 sum += parseFloat($(this).text()); // Or this.innerHTML, this.innerText
             });
             $('#OverAllTotal').html(sum);

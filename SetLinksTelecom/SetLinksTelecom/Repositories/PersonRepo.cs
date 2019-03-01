@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using SetLinksTelecom.Data;
+using SetLinksTelecom.GeneralFolder;
 using SetLinksTelecom.Models;
 
 namespace SetLinksTelecom.Repositories
@@ -17,20 +18,45 @@ namespace SetLinksTelecom.Repositories
             _db = db;
         }
 
-        public IList<Person> GetData()
+        public IList<Person> GetData(int BossId = 0, int DesignationId = 0, string withoutBoss = "")
         {
-            return _db.Persons.Include(p => p.Designation).ToList();
+            if (withoutBoss != String.Empty)
+                return _db.Persons.Where(p => p.BossId == 0).Include(p => p.Designation).ToList();
+            if (BossId != 0)
+                return _db.Persons.Where(p => p.BossId == BossId).Include(p => p.Designation).ToList();
+            else if (DesignationId != 0)
+                return _db.Persons.Where(p => p.DesignationId == DesignationId).Include(p => p.Designation).ToList();
+            else
+                return _db.Persons.Include(p => p.Designation).ToList();
         }
 
         public Person GetPerson(int id)
         {
             var person = _db.Persons.FirstOrDefault(d => d.PersonId.Equals(id));
             person.Designations = _db.Designations.ToList();
+            person.Lines = _db.Lines.ToList();
             return person;
         }
 
         public void SavePerson(Person person)
         {
+            Designation designation = _db.Designations.Single(d => d.Id.Equals(person.DesignationId));
+            var head = _db.AccHead.Single(h => h.HeadCode.Equals(13));
+            var subhead = head.SubHeads.Single(s => s.SubHeadString == designation.AccString);
+            var maxAcc = _db.AccAccounts.Where(acc => acc.HeadCode == head.HeadCode && acc.SubHeadCode == subhead.SubHeadCode)
+                             .Max(a => (int?)a.AccCode) ?? 0;
+            maxAcc = ++maxAcc;
+            _db.AccAccounts.Add(new AccAccount
+            {
+                HeadCode = 13,
+                SubHeadCode = subhead.SubHeadCode,
+                OID = 0,
+                AccCode = maxAcc,
+                AccMade = 1,
+                AccName = person.Name,
+                AccString = subhead.SubHeadString + "-" + (maxAcc.ToAccString())
+            });
+            person.AccString = subhead.SubHeadString + "-" + (maxAcc.ToAccString());
             _db.Persons.Add(person);
             _db.SaveChanges();
         }

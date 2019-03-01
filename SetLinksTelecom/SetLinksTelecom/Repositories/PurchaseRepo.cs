@@ -19,23 +19,60 @@ namespace SetLinksTelecom.Repositories
         }
         public IEnumerable<dtoDisplayPurchase> GetData()
         {
-            return from p in _db.Purchases
-                   join po in _db.Portals on p.PortalId equals po.PortalId
-                join i in _db.Items on p.ItemId equals i.ItemId
+            IEnumerable<dtoDisplayPurchase> purchases = from A in (
+                    (from p in _db.Purchases
+                        join po in _db.Portals on p.PortalId equals po.PortalId
+                        join i in _db.Items on p.ItemId equals i.ItemId
+                        join cat in _db.ProductCategories on i.ProductCategoryId equals cat.ProductCategoryId
+                        select new
+                        {
+                            PortalName = po.Name,
+                            CategoryName = cat.Name,
+                            ItemName = i.Name,
+                            InventoryTypeId = cat.InventoryTypeId,
+                            p.PurchaseId,
+                            Subname = p.Subname,
+                            Remarks = p.Remarks,
+                            Qty = p.Qty,
+                            Total = p.Total,
+                            Percentage = p.Percentage,
+                            Rate = p.Rate
+                        }))
+                join t in _db.InventoryTypes on new {InventoryTypeId = A.InventoryTypeId} equals new
+                    {InventoryTypeId = t.InventoryTypeId}
                 select new dtoDisplayPurchase
                 {
-                    PortalName = po.Name,
-                    InventoryType = i.ProductCategory.InventoryType.Name,
-                    CategoryName = i.ProductCategory.Name,
-                    ItemName = i.Name,
-                    PurchaseId = p.PurchaseId,
-                    Subname = p.Subname,
-                    Remarks = p.Remarks,
-                    Qty = p.Qty,
-                    Total = p.Total,
-                    Percentage = p.Percentage,
-                    Rate = p.Rate
+                    InventoryType = t.Name,
+                    PortalName = A.PortalName,
+                    CategoryName = A.CategoryName,
+                    ItemName = A.ItemName,
+                    //InventoryTypeId = (int?)A.InventoryTypeId,
+                    PurchaseId = A.PurchaseId,
+                    Subname = A.Subname,
+                    Remarks = A.Remarks,
+                    Qty = A.Qty,
+                    Total = A.Total,
+                    Percentage = A.Percentage,
+                    Rate = A.Rate
                 };
+            return purchases;
+            //return from p in _db.Purchases
+            //       join po in _db.Portals on p.PortalId equals po.PortalId
+            //    join i in _db.Items on p.ItemId equals i.ItemId
+            //    select new dtoDisplayPurchase
+            //    {
+            //        PortalName = po.Name,
+            //        InventoryType = i.ProductCategory.InventoryType.Name,
+            //        CategoryName = i.ProductCategory.Name,
+            //        ItemName = i.Name,
+            //        PurchaseId = p.PurchaseId,
+            //        Subname = p.Subname,
+            //        Remarks = p.Remarks,
+            //        Qty = p.Qty,
+            //        Total = p.Total,
+            //        Percentage = p.Percentage,
+            //        Rate = p.Rate
+            //    };
         }
 
         public dtoPurchase GetPurchase(int id)
@@ -74,28 +111,189 @@ namespace SetLinksTelecom.Repositories
 
         public void SavePurchase(dtoPurchase dtoPurchase)
         {
-            Purchase purchase = new Purchase
+            using (var transaction = _db.Database.BeginTransaction())
             {
-                PurchaseId = dtoPurchase.PurchaseId,
-                ItemId = dtoPurchase.ItemId,
-                Total = dtoPurchase.Total,
-                Remarks = dtoPurchase.Remarks,
-                PortalId = dtoPurchase.PortalId,
-                Qty = dtoPurchase.Qty,
-                Subname = dtoPurchase.Subname,
-                Percentage = dtoPurchase.Percentage,
-                Rate = dtoPurchase.Rate,
-                StockOut = dtoPurchase.StockOut,
-                DatePurchased = dtoPurchase.DatePurchased
-            };
-            _db.Purchases.Add(purchase);
-            _db.SaveChanges();
+                #region Save In PurchaseTable
+                InventoryType type =
+                    _db.InventoryTypes.FirstOrDefault(t => t.InventoryTypeId.Equals(dtoPurchase.InventoryTypeId));
+                Purchase purchase = new Purchase
+                {
+                    //PurchaseId = dtoPurchase.PurchaseId,
+                    ItemId = dtoPurchase.ItemId,
+                    Total = dtoPurchase.Total,
+                    Remarks = dtoPurchase.Remarks,
+                    PortalId = dtoPurchase.PortalId,
+                    Qty = dtoPurchase.Qty,
+                    Subname = dtoPurchase.Subname,
+                    Percentage = dtoPurchase.Percentage,
+                    Rate = dtoPurchase.Rate,
+                    StockOut = type.Name == "Tangible" ? dtoPurchase.Qty : dtoPurchase.Total,
+                    DatePurchased = dtoPurchase.DatePurchased
+                };
+                _db.Purchases.Add(purchase);
+                _db.SaveChanges();
 
+                #endregion
+
+                #region Save In Stock
+
+                int purchaseId = purchase.PurchaseId;
+                
+                Stock stock = _db.Stocks.FirstOrDefault(s => s.ItemId.Equals(dtoPurchase.ItemId));
+                if (stock == null)
+                {
+                    stock = new Stock
+                    {
+                        ItemId = dtoPurchase.ItemId,
+                        NetQty = dtoPurchase.Qty,
+                        PurchaseId = purchaseId,
+                        AvgRate = type.Name == "Tangible" ? dtoPurchase.Rate : dtoPurchase.Percentage
+                    };
+                    _db.Stocks.Add(stock);
+                }
+                else
+                {
+                    //stock.ItemId = dtoPurchase.ItemId,
+                    stock.NetQty = dtoPurchase.Qty + stock.NetQty;
+                    stock.PurchaseId = purchaseId;
+                    stock.AvgRate = ((type.Name == "Tangible" ? dtoPurchase.Rate : dtoPurchase.Percentage) + stock.AvgRate) / 2;
+                    _db.Entry(stock).State = EntityState.Modified;
+                }
+                _db.SaveChanges();
+
+                #endregion
+
+                #region PurchaseVoucher Entry
+
+                if (type.Name == "Tangible")
+                {
+                    Portal portal = _db.Portals.Single(p => p.PortalId.Equals(purchase.PortalId));
+                    var maxVno = _db.AccVouchers.Max(v => (int?) v.VNo) ?? 0;
+                    AccAccount acc = _db.AccAccounts.Single(a => a.AccString.Equals(portal.AccString));
+
+                    maxVno = ++maxVno;
+                    AccVoucher voucher = new AccVoucher
+                    {
+                        VDate = purchase.DatePurchased,
+                        SessionId = 0,
+                        AccString = portal.AccString,
+                        VNo = maxVno,
+                        VType = "JV",
+                        VSrNo = 1,
+                        VDescription = purchase.Remarks,
+                        Debit = 0,
+                        Credit = purchase.Total,
+                        UserCode = 0,
+                        OID = 0,
+                        BID = 0, CID = 0,
+                        HeadCode = acc.HeadCode,
+                        SubHeadCode = acc.SubHeadCode,
+                        AccCode = acc.AccCode,
+                        ChequeNo = "0",
+                        InvNo = purchase.PurchaseId.ToString(),
+                        InvType = "Purchase"
+                    };
+                    _db.AccVouchers.Add(voucher);
+                    _db.SaveChanges();
+
+                    Item item = _db.Items.Single(i => i.ItemId.Equals(purchase.ItemId));
+                    acc = new AccAccount();
+                    acc = _db.AccAccounts.Single(a => a.AccString.Equals(item.AccString));
+                    voucher = new AccVoucher();
+                    voucher = new AccVoucher
+                    {
+                        VDate = purchase.DatePurchased,
+                        SessionId = 0,
+                        AccString = item.AccString,
+                        VNo = maxVno,
+                        VType = "JV",
+                        VSrNo = 2,
+                        VDescription = purchase.Remarks,
+                        Debit = purchase.Total,
+                        Credit = 0,
+                        UserCode = 0,
+                        OID = 0,
+                        BID = 0,
+                        CID = 0,
+                        HeadCode = acc.HeadCode,
+                        SubHeadCode = acc.SubHeadCode,
+                        AccCode = acc.AccCode,
+                        ChequeNo = "0",
+                        InvNo = purchase.PurchaseId.ToString(),
+                        InvType = "Purchase"
+                    };
+                    _db.AccVouchers.Add(voucher);
+                    _db.SaveChanges();
+
+                }
+                else
+                {
+                    Portal portal = _db.Portals.Single(p => p.PortalId.Equals(purchase.PortalId));
+                    var maxVno = _db.AccVouchers.Max(v => (int?)v.VNo) ?? 0;
+                    ++maxVno;
+                    AccAccount acc = _db.AccAccounts.Single(a => a.AccString.Equals(portal.AccString));
+
+                    Item item = _db.Items.Single(i => i.ItemId.Equals(dtoPurchase.ItemId));
+                    AccAccount itemAcc = _db.AccAccounts.Single(a => a.AccString.Equals(item.AccString));
+                    AccAccount purchDisc = _db.AccAccounts.Single(a => a.AccString.Equals(item.PurDiscString));
+                    IList<AccVoucher> vouchers = new List<AccVoucher>()
+                    {
+                        //Supplier Credit
+                        new AccVoucher
+                        {
+                            VDate = purchase.DatePurchased, SessionId = 0, AccString = portal.AccString, VNo = maxVno, VType = "JV", VSrNo = 1, VDescription = purchase.Remarks,
+                            Debit = 0, Credit = purchase.Total, UserCode = 0, OID = 0, BID = 0, CID = 0, HeadCode = acc.HeadCode, SubHeadCode = acc.SubHeadCode,
+                            AccCode = acc.AccCode, ChequeNo = "0", InvNo = purchase.PurchaseId.ToString(), InvType = "Purchase"
+                        },
+                        //Item Value
+                        new AccVoucher
+                        {
+                            VDate = purchase.DatePurchased, SessionId = 0, AccString = itemAcc.AccString, VNo = maxVno, VType = "JV", VSrNo = 2,
+                            VDescription = purchase.Remarks, Debit = purchase.Qty, Credit = 0, UserCode = 0, OID = 0, BID = 0, CID = 0, HeadCode = itemAcc.HeadCode,
+                            SubHeadCode = itemAcc.SubHeadCode, AccCode = itemAcc.AccCode, ChequeNo = "0", InvNo = purchase.PurchaseId.ToString(), InvType = "Purchase"
+                        },
+                        //Cash Daily
+                        new AccVoucher
+                        {
+                            VDate = purchase.DatePurchased, SessionId = 0, AccString = "14-02-0001", VNo = maxVno, VType = "JV", VSrNo = 3, VDescription = purchase.Remarks,
+                            Debit = 0, Credit = purchase.Total, UserCode = 0, OID = 0, BID = 0, CID = 0, HeadCode = 14, SubHeadCode = 2,
+                            AccCode = 1, ChequeNo = "0", InvNo = purchase.PurchaseId.ToString(), InvType = "Purchase"
+                        },
+                        //Supplier Debit
+                        new AccVoucher
+                        {
+                            VDate = purchase.DatePurchased, SessionId = 0, AccString = portal.AccString, VNo = maxVno, VType = "JV", VSrNo = 4,
+                            VDescription = purchase.Remarks, Debit = purchase.Total, Credit = 0, UserCode = 0, OID = 0, BID = 0, CID = 0, HeadCode = acc.HeadCode,
+                            SubHeadCode = acc.SubHeadCode, AccCode = acc.AccCode, ChequeNo = "0", InvNo = purchase.PurchaseId.ToString(), InvType = "Purchase"
+                        },
+                        //Purchase Discount
+                        new AccVoucher
+                        {
+                            VDate = purchase.DatePurchased, SessionId = 0, AccString = purchDisc.AccString, VNo = maxVno, VType = "JV", VSrNo = 5,
+                            VDescription = purchase.Remarks, Debit = 0, Credit = purchase.Qty - purchase.Total, UserCode = 0, OID = 0, BID = 0, CID = 0,
+                            HeadCode = purchDisc.HeadCode,
+                            SubHeadCode = purchDisc.SubHeadCode, AccCode = purchDisc.AccCode, ChequeNo = "0", InvNo = purchase.PurchaseId.ToString(), InvType = "Purchase"
+                        }
+                    };
+
+                    _db.AccVouchers.AddRange(vouchers);
+                    _db.SaveChanges();
+                }
+
+                #endregion
+
+                transaction.Commit();
+            }
         }
 
         public void UpdatePurchase(dtoPurchase dtoPurchase)
         {
             Purchase purchase = _db.Purchases.FirstOrDefault(p => p.PurchaseId.Equals(dtoPurchase.PurchaseId));
+            Stock stock = _db.Stocks.FirstOrDefault(s => s.ItemId.Equals(dtoPurchase.ItemId));
+            if (stock != null)
+            {
+                //sto
+            }
             purchase.ItemId = dtoPurchase.ItemId;
             purchase.Total = dtoPurchase.Total;
             purchase.Remarks = dtoPurchase.Remarks;
@@ -126,11 +324,46 @@ namespace SetLinksTelecom.Repositories
                 {
                     ItemCode = i.ItemCode,
                     ItemName = i.Name,
-                    Rate = p.Rate,
+                    Rate = i.SaleRate,
                     PurchaseId = p.PurchaseId,
                     Qty = 1,
-                    SubTotal = p.Rate
+                    SubTotal = i.SaleRate
                 }).FirstOrDefault();
+            return purchase;
+        }
+
+        public DtoInTangibleItemSale GetSpecificInTangiblePurchase(int id,int PersonId)
+        {
+            DtoInTangibleItemSale purchase = (from p in _db.Purchases
+                join i in _db.Items on p.ItemId equals i.ItemId
+                where p.PurchaseId == id
+                select new DtoInTangibleItemSale
+                {
+                    ItemCode = i.ItemCode,
+                    ItemName = i.Name,
+                    Rate = i.SaleRate,
+                    PurchaseId = p.PurchaseId,
+                    Qty = 1,
+                    SubTotal = i.SaleRate,
+                    //Lines = _db.Lines.ToList()
+                }).FirstOrDefault();
+            Person person = _db.Persons.FirstOrDefault(p => p.PersonId.Equals(PersonId));
+            if (person != null && person.BusinessLineMap != null && person.BusinessLineMap != 0)
+            {
+                purchase.Lines.Add(new DtoLinesWithNumbers
+                {
+                    LineId = (int) person.BusinessLineMap,
+                    Number = person.MobileBusiness
+                });
+            }
+            if (person != null && person.PersonalLineMap != null && person.PersonalLineMap != 0)
+            {
+                purchase.Lines.Add(new DtoLinesWithNumbers
+                {
+                    LineId = (int)person.PersonalLineMap,
+                    Number = person.MobilePersonal
+                });
+            }
             return purchase;
         }
     }

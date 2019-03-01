@@ -1,0 +1,197 @@
+﻿@model SetLinksTelecom.DTO.DtoPersonMapping
+@{
+    ViewBag.Title = "PersonMapping";
+}
+
+<h2>Mapping</h2>
+
+<a class="btn btn-success" style="margin-bottom: 10px;" onclick="popUpForm('@Url.Action("AddOrEdit", "Person", new { withoutBoss = "with"})')"><i class="fa fa-plus"></i> Add Follower</a>
+<div class="form-group">
+    @Html.LabelFor(m => m.DesignationId, new { @class = "control-label" })
+    @Html.DropDownListFor(m => m.DesignationId, new SelectList(Model.Designations, "Id", "Name"), "Select Designation", new { @class = "form-control", @onchange="clearPersonAndGrid()" })
+    @Html.ValidationMessageFor(m => m.DesignationId)
+</div>
+
+@Html.HiddenFor(m => m.PersonId)
+<div class="form-group">
+    @Html.LabelFor(m => m.PersonName, new { @class = "control-label" })
+    @Html.EditorFor(m => m.PersonName, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessageFor(m => m.PersonName)
+</div>
+
+
+<table id="workersTable" class="table table-hover">
+    <thead>
+    <tr>
+        <th></th>
+        <th>Name</th>
+        <th>Father Name</th>
+        <th>Gender</th>
+        <th>CNIC</th>
+        <th>DOB</th>
+        <th>Designation</th>
+        <th></th>
+    </tr>
+    </thead>
+</table>
+
+<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+
+
+@section scripts
+{
+
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+
+    <script>
+        var popUp, dataTable, followersDT;
+        $(document).ready(function () {
+            $('#PersonName').keypress(function (event) {
+                //console.log($('#DesignationId').val());
+                if ($('#DesignationId').val() !== '') {
+                    var keycode = (event.keyCode ? event.keyCode : event.which);
+                    if (keycode == '13') {
+                        popUpForm('@Url.Action("PersonGrid", "Person")', "Person");
+                    } else {
+                        event.preventDefault();
+                    }
+                    return false;
+                } else {
+                    $.notify(
+                        "Select Designation First",
+                        {
+                            position: "top center",
+                            className: "error"
+                        }
+                    );
+                }
+            });
+
+            followersDT = $('#workersTable').DataTable({
+                "data": [],
+                "columns": [
+                    {
+                        "className": 'details-control',
+                        "orderable": false,
+                        "searchable": false,
+                        "data": null,
+                        "defaultContent": ''
+                    },
+                    { "data": "Name" },
+                    { "data": "FatherName" },
+                    { "data": "Gender" },
+                    { "data": "CNIC" },
+                    { "data": "DOBFormatted" },
+                    { "data": "Designation.Name" },
+                    {
+                        "data": "PersonId",
+                        "render": function(data) {
+                            return "<a class='btn btn-danger btn-sm' style='margin-left:5px;' onClick=Delete(" +
+                                data +
+                                ")><i class='fa fa-trash'></i> Delete</a>";
+                        },
+                        "orderable": false,
+                        "searchable": false,
+                        "width": "150px"
+                    }
+                ],
+                rowCallback: function (row, data) { },
+                info: false,
+                retrieve: true,
+                "order": [[1, 'asc']],
+                "language": {
+                    "emptyTable": "No data found, Please Click on <b>Add New</b> button",
+                    "processing": "Processing... Please wait"
+                }
+            });
+
+        });
+
+        function popUpForm(url, type) {
+            //console.log(type);
+            var formDiv = $('<div class="popDiv" />');
+            $.get(url).done(function (response) {
+                formDiv.html(response);
+
+                popUp = formDiv.dialog({
+                    autoOpen: true,
+                    resizable: false,
+                    title: 'Select Items',
+                    draggable: false,
+                    width: $(window).width() - 50,
+                    height: 600,
+                    modal: true,
+                    close: function () {
+                        dataTable.destroy();
+                        popUp.dialog('close');
+                        $('.popDiv').remove();
+                    }
+                });
+                //DesignationId
+                loadPersonDialogContent('?DesignationId=' + $('#DesignationId').val());
+                
+            });
+        }
+
+        function loadPersonDialogContent(params) {
+            var url = '@Url.Action("GetData", "Person")'+params;
+            //console.log(url);
+            dataTable = $("#personTable").DataTable({
+                "ajax": {
+                    "url": url,
+                    "type": "Get",
+                    "datatype": "json"
+                },
+                "columns": [
+                    { "data": "Name", "name": "Name" },
+                    { "data": "FatherName", "name": "FatherName" },
+                    { "data": "Gender", "name": "Gender" },
+                    { "data": "CNIC", "name": "CNIC" },
+                    { "data": "DOB", "name": "DOB" },
+                    { "data": "Designation", "name": "Designation" }
+                ],
+                "language": {
+                    "emptyTable": "No data found",
+                    "processing": "Processing... Please wait"
+                },
+                keys: true
+            });
+
+            //bind row event
+            $('#personTable tbody').on('dblclick',
+                'tr',
+                function () {
+                    var data = dataTable.row(this).data();
+                    $('#PersonId').val(data['PersonId']);
+                    $('#PersonName').val(data['Name']);
+                    popUp.dialog('close');
+                    //console.log($('#PersonId').val());
+                    loadWorkers('?BossId=' + $('#PersonId').val());
+                });
+        }
+
+        function clearPersonAndGrid() {
+            $('#PersonId').val('');
+            $('#PersonName').val('');
+            followersDT.clear().draw();
+        }
+
+        function loadWorkers(params) {
+            var url = '@Url.Action("GetData", "Person")' + params;
+            //console.log(url);
+            $.ajax({
+                url: url,
+                type: "get"
+            }).done(function(result) {
+                followersDT.clear().draw();
+                followersDT.rows.add(result).draw();
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+                // needs to implement if it fails
+                alert('Error in loading data');
+            });
+        }
+    </script>
+
+}

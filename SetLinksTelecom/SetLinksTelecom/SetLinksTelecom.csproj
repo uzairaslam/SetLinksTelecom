@@ -55,6 +55,22 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.ReportViewer.Common, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Report.Viewer.11.0.0.0\lib\net\Microsoft.ReportViewer.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Report.Viewer.11.0.0.0\lib\net\Microsoft.ReportViewer.ProcessingObjectModel.DLL</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Report.Viewer.11.0.0.0\lib\net\Microsoft.ReportViewer.WebForms.DLL</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ReportViewerForMvc, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ReportViewerForMvc.1.1.1\lib\net45\ReportViewerForMvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -174,25 +190,44 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\BVSController.cs" />
+    <Compile Include="Controllers\AccAccountController.cs" />
     <Compile Include="Controllers\DesignationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InventoryTypeController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
+    <Compile Include="Controllers\LineController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
+    <Compile Include="Controllers\PortalController.cs" />
+    <Compile Include="Controllers\ProductCategoryController.cs" />
     <Compile Include="Controllers\PurchaseController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\SaleController.cs" />
+    <Compile Include="Controllers\VoucherController.cs" />
     <Compile Include="Data\DataContext.cs" />
     <Compile Include="Data\HtmlHelpers.cs" />
+    <Compile Include="Data\IAccAccount.cs" />
+    <Compile Include="Data\IAccVoucher.cs" />
     <Compile Include="Data\IDesignationRepo.cs" />
+    <Compile Include="Data\IInventoryType.cs" />
     <Compile Include="Data\IItemsRepo.cs" />
+    <Compile Include="Data\ILineRepo.cs" />
     <Compile Include="Data\IPersonRepo.cs" />
+    <Compile Include="Data\IProductCategoryRepo.cs" />
     <Compile Include="Data\IPurchaseRepo.cs" />
+    <Compile Include="Data\IReports.cs" />
     <Compile Include="Data\ISaleRepo.cs" />
     <Compile Include="DTO\dtoItem.cs" />
+    <Compile Include="DTO\DtoLedger.cs" />
+    <Compile Include="DTO\DtoLinesWithNumbers.cs" />
+    <Compile Include="DTO\DtoPersonMapping.cs" />
+    <Compile Include="DTO\DtoProductCategory.cs" />
     <Compile Include="DTO\dtoPurchase.cs" />
     <Compile Include="DTO\dtoSale.cs" />
+    <Compile Include="DTO\DtoVoucher.cs" />
+    <Compile Include="GeneralFolder\CustomValidations.cs" />
     <Compile Include="GeneralFolder\EnumsRepo.cs" />
     <Compile Include="GeneralFolder\ExtensionMethods.cs" />
+    <Compile Include="GeneralFolder\ModelsCofigs.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -268,20 +303,179 @@
     <Compile Include="Migrations\201901291331562_addedPercentageInPurchase.Designer.cs">
       <DependentUpon>201901291331562_addedPercentageInPurchase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902050718102_updateItemModel.cs" />
+    <Compile Include="Migrations\201902050718102_updateItemModel.Designer.cs">
+      <DependentUpon>201902050718102_updateItemModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902050805236_addedLineModel.cs" />
+    <Compile Include="Migrations\201902050805236_addedLineModel.Designer.cs">
+      <DependentUpon>201902050805236_addedLineModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902051050435_addedLinesincontext.cs" />
+    <Compile Include="Migrations\201902051050435_addedLinesincontext.Designer.cs">
+      <DependentUpon>201902051050435_addedLinesincontext.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902061317274_AddedSaleandSaleDetailsModel.cs" />
+    <Compile Include="Migrations\201902061317274_AddedSaleandSaleDetailsModel.Designer.cs">
+      <DependentUpon>201902061317274_AddedSaleandSaleDetailsModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902061338215_updatedSaleDetailModel.cs" />
+    <Compile Include="Migrations\201902061338215_updatedSaleDetailModel.Designer.cs">
+      <DependentUpon>201902061338215_updatedSaleDetailModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902061635504_updatedLineModel.cs" />
+    <Compile Include="Migrations\201902061635504_updatedLineModel.Designer.cs">
+      <DependentUpon>201902061635504_updatedLineModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902070935493_AddedLinesInPerson.cs" />
+    <Compile Include="Migrations\201902070935493_AddedLinesInPerson.Designer.cs">
+      <DependentUpon>201902070935493_AddedLinesInPerson.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902101104214_addedCommProfittoSaleDetails.cs" />
+    <Compile Include="Migrations\201902101104214_addedCommProfittoSaleDetails.Designer.cs">
+      <DependentUpon>201902101104214_addedCommProfittoSaleDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902101117311_updatedCommProfittoSaleDetails.cs" />
+    <Compile Include="Migrations\201902101117311_updatedCommProfittoSaleDetails.Designer.cs">
+      <DependentUpon>201902101117311_updatedCommProfittoSaleDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902101123035_updatedDecimalFieldsscaleto4.cs" />
+    <Compile Include="Migrations\201902101123035_updatedDecimalFieldsscaleto4.Designer.cs">
+      <DependentUpon>201902101123035_updatedDecimalFieldsscaleto4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902131420355_AddedAccTypeTable.cs" />
+    <Compile Include="Migrations\201902131420355_AddedAccTypeTable.Designer.cs">
+      <DependentUpon>201902131420355_AddedAccTypeTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902131427530_AddedAccHeadTable.cs" />
+    <Compile Include="Migrations\201902131427530_AddedAccHeadTable.Designer.cs">
+      <DependentUpon>201902131427530_AddedAccHeadTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902131548517_AddedAccSubHeadTable.cs" />
+    <Compile Include="Migrations\201902131548517_AddedAccSubHeadTable.Designer.cs">
+      <DependentUpon>201902131548517_AddedAccSubHeadTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902131550391_AddedAccAccountTable.cs" />
+    <Compile Include="Migrations\201902131550391_AddedAccAccountTable.Designer.cs">
+      <DependentUpon>201902131550391_AddedAccAccountTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902131609183_AddedAccVoucherTable.cs" />
+    <Compile Include="Migrations\201902131609183_AddedAccVoucherTable.Designer.cs">
+      <DependentUpon>201902131609183_AddedAccVoucherTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902131611315_UpdatedAccTypeTable.cs" />
+    <Compile Include="Migrations\201902131611315_UpdatedAccTypeTable.Designer.cs">
+      <DependentUpon>201902131611315_UpdatedAccTypeTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902131617577_UpdatedAccountsTables.cs" />
+    <Compile Include="Migrations\201902131617577_UpdatedAccountsTables.Designer.cs">
+      <DependentUpon>201902131617577_UpdatedAccountsTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902141437039_RemovedForeignKeyFromAccHead.cs" />
+    <Compile Include="Migrations\201902141437039_RemovedForeignKeyFromAccHead.Designer.cs">
+      <DependentUpon>201902141437039_RemovedForeignKeyFromAccHead.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902141604236_LinkBwAccTypeandAccHead.cs" />
+    <Compile Include="Migrations\201902141604236_LinkBwAccTypeandAccHead.Designer.cs">
+      <DependentUpon>201902141604236_LinkBwAccTypeandAccHead.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902151114298_MappingCorrection.cs" />
+    <Compile Include="Migrations\201902151114298_MappingCorrection.Designer.cs">
+      <DependentUpon>201902151114298_MappingCorrection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902151327159_MappingBwHeadAndSubhead.cs" />
+    <Compile Include="Migrations\201902151327159_MappingBwHeadAndSubhead.Designer.cs">
+      <DependentUpon>201902151327159_MappingBwHeadAndSubhead.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902160907142_RemoveAccMadeToAccAccount.cs" />
+    <Compile Include="Migrations\201902160907142_RemoveAccMadeToAccAccount.Designer.cs">
+      <DependentUpon>201902160907142_RemoveAccMadeToAccAccount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902160908062_AddedAccMadeToAccAccount.cs" />
+    <Compile Include="Migrations\201902160908062_AddedAccMadeToAccAccount.Designer.cs">
+      <DependentUpon>201902160908062_AddedAccMadeToAccAccount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902171108197_AddedAccountStringToDesignation.cs" />
+    <Compile Include="Migrations\201902171108197_AddedAccountStringToDesignation.Designer.cs">
+      <DependentUpon>201902171108197_AddedAccountStringToDesignation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902171122358_AddedAccountStringToPerson.cs" />
+    <Compile Include="Migrations\201902171122358_AddedAccountStringToPerson.Designer.cs">
+      <DependentUpon>201902171122358_AddedAccountStringToPerson.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902171142130_AddedAccountStringToItem.cs" />
+    <Compile Include="Migrations\201902171142130_AddedAccountStringToItem.Designer.cs">
+      <DependentUpon>201902171142130_AddedAccountStringToItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902171204162_AddedAccountStringToPortal.cs" />
+    <Compile Include="Migrations\201902171204162_AddedAccountStringToPortal.Designer.cs">
+      <DependentUpon>201902171204162_AddedAccountStringToPortal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902181353089_AddedRevenueAndCostStrings.cs" />
+    <Compile Include="Migrations\201902181353089_AddedRevenueAndCostStrings.Designer.cs">
+      <DependentUpon>201902181353089_AddedRevenueAndCostStrings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902200805149_AddedRemarksInPurchase.cs" />
+    <Compile Include="Migrations\201902200805149_AddedRemarksInPurchase.Designer.cs">
+      <DependentUpon>201902200805149_AddedRemarksInPurchase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902201414261_AddPurchDiscountAndSaleCommissionToItem.cs" />
+    <Compile Include="Migrations\201902201414261_AddPurchDiscountAndSaleCommissionToItem.Designer.cs">
+      <DependentUpon>201902201414261_AddPurchDiscountAndSaleCommissionToItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902211151512_ChangesQtyTypeSaleDetails.cs" />
+    <Compile Include="Migrations\201902211151512_ChangesQtyTypeSaleDetails.Designer.cs">
+      <DependentUpon>201902211151512_ChangesQtyTypeSaleDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902211357108_PercisionTo4DebitAndCredit.cs" />
+    <Compile Include="Migrations\201902211357108_PercisionTo4DebitAndCredit.Designer.cs">
+      <DependentUpon>201902211357108_PercisionTo4DebitAndCredit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902240720458_UpdatedStockOutProperty.cs" />
+    <Compile Include="Migrations\201902240720458_UpdatedStockOutProperty.Designer.cs">
+      <DependentUpon>201902240720458_UpdatedStockOutProperty.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902251355230_PersonSelfReference.cs" />
+    <Compile Include="Migrations\201902251355230_PersonSelfReference.Designer.cs">
+      <DependentUpon>201902251355230_PersonSelfReference.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902251358359_ChangeLengthVtype.cs" />
+    <Compile Include="Migrations\201902251358359_ChangeLengthVtype.Designer.cs">
+      <DependentUpon>201902251358359_ChangeLengthVtype.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BvsService.cs" />
+    <Compile Include="Models\AccAccount.cs" />
+    <Compile Include="Models\AccHead.cs" />
+    <Compile Include="Models\AccSubHead.cs" />
+    <Compile Include="Models\AccType.cs" />
+    <Compile Include="Models\AccVoucher.cs" />
     <Compile Include="Models\Designation.cs" />
     <Compile Include="Models\InventoryType.cs" />
     <Compile Include="Models\Item.cs" />
+    <Compile Include="Models\Line.cs" />
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\Portal.cs" />
     <Compile Include="Models\ProductCategory.cs" />
     <Compile Include="Models\Purchase.cs" />
+    <Compile Include="Models\Sale.cs" />
+    <Compile Include="Models\SaleDetail.cs" />
     <Compile Include="Models\Stock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\AllReportsDataset.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AllReportsDataset.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Repositories\AccAccountRepo.cs" />
+    <Compile Include="Repositories\AccVoucherRepo.cs" />
     <Compile Include="Repositories\DesignationRepo.cs" />
+    <Compile Include="Repositories\ReportsRepo.cs" />
+    <Compile Include="Repositories\InventoryTypeRepo.cs" />
     <Compile Include="Repositories\ItemsRepo.cs" />
+    <Compile Include="Repositories\LineRepo.cs" />
     <Compile Include="Repositories\PersonRepo.cs" />
+    <Compile Include="Repositories\ProductCategoryRepo.cs" />
     <Compile Include="Repositories\PurchaseRepo.cs" />
     <Compile Include="Repositories\SaleRepo.cs" />
   </ItemGroup>
@@ -348,6 +542,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Notes.txt" />
+    <Content Include="ReportViewerWebForm.aspx" />
     <Content Include="resources\details_close.png" />
     <Content Include="resources\details_open.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -387,6 +582,18 @@
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\FontAwesome.otf" />
+    <None Include="Properties\PublishProfiles\Uzair.pubxml" />
+    <Content Include="Reports\AllReportsDataset.xsc">
+      <DependentUpon>AllReportsDataset.xsd</DependentUpon>
+    </Content>
+    <None Include="Reports\AllReportsDataset.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>AllReportsDataset.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Reports\AllReportsDataset.xss">
+      <DependentUpon>AllReportsDataset.xsd</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
@@ -409,7 +616,9 @@
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -446,10 +655,26 @@
     <Content Include="Views\Sale\TangibleSaleIndex.cshtml" />
     <Content Include="Views\Sale\SaleItemRow.cshtml" />
     <Content Include="Views\Person\PersonGrid.cshtml" />
+    <Content Include="Views\Sale\InTangibleSaleIndex.cshtml" />
+    <Content Include="Views\Sale\SaleInTangibleItemRow.cshtml" />
+    <Content Include="Views\Line\Index.cshtml" />
+    <Content Include="Views\Line\AddOrEdit.cshtml" />
+    <Content Include="Views\InventoryType\AddOrEdit.cshtml" />
+    <Content Include="Views\ProductCategory\Index.cshtml" />
+    <Content Include="Views\ProductCategory\AddOrEdit.cshtml" />
+    <Content Include="Views\Shared\_navbar.cshtml" />
+    <Content Include="Views\Reports\Ledger.cshtml" />
+    <Content Include="Views\AccAccount\AccountGrid.cshtml" />
+    <Content Include="Views\Reports\_ReportView.cshtml" />
+    <Content Include="Views\Reports\Voucher.cshtml" />
+    <Content Include="Views\Voucher\VoucherGrid.cshtml" />
+    <Content Include="Views\Reports\TrailBalance.cshtml" />
+    <Content Include="Views\Person\PersonMapping.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\BVS\" />
+    <Folder Include="Views\Portal\" />
     <Folder Include="Views\Profile\" />
   </ItemGroup>
   <ItemGroup>
@@ -514,6 +739,115 @@
     <EmbeddedResource Include="Migrations\201901291331562_addedPercentageInPurchase.resx">
       <DependentUpon>201901291331562_addedPercentageInPurchase.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902050718102_updateItemModel.resx">
+      <DependentUpon>201902050718102_updateItemModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902050805236_addedLineModel.resx">
+      <DependentUpon>201902050805236_addedLineModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902051050435_addedLinesincontext.resx">
+      <DependentUpon>201902051050435_addedLinesincontext.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902061317274_AddedSaleandSaleDetailsModel.resx">
+      <DependentUpon>201902061317274_AddedSaleandSaleDetailsModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902061338215_updatedSaleDetailModel.resx">
+      <DependentUpon>201902061338215_updatedSaleDetailModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902061635504_updatedLineModel.resx">
+      <DependentUpon>201902061635504_updatedLineModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902070935493_AddedLinesInPerson.resx">
+      <DependentUpon>201902070935493_AddedLinesInPerson.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902101104214_addedCommProfittoSaleDetails.resx">
+      <DependentUpon>201902101104214_addedCommProfittoSaleDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902101117311_updatedCommProfittoSaleDetails.resx">
+      <DependentUpon>201902101117311_updatedCommProfittoSaleDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902101123035_updatedDecimalFieldsscaleto4.resx">
+      <DependentUpon>201902101123035_updatedDecimalFieldsscaleto4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902131420355_AddedAccTypeTable.resx">
+      <DependentUpon>201902131420355_AddedAccTypeTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902131427530_AddedAccHeadTable.resx">
+      <DependentUpon>201902131427530_AddedAccHeadTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902131548517_AddedAccSubHeadTable.resx">
+      <DependentUpon>201902131548517_AddedAccSubHeadTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902131550391_AddedAccAccountTable.resx">
+      <DependentUpon>201902131550391_AddedAccAccountTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902131609183_AddedAccVoucherTable.resx">
+      <DependentUpon>201902131609183_AddedAccVoucherTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902131611315_UpdatedAccTypeTable.resx">
+      <DependentUpon>201902131611315_UpdatedAccTypeTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902131617577_UpdatedAccountsTables.resx">
+      <DependentUpon>201902131617577_UpdatedAccountsTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902141437039_RemovedForeignKeyFromAccHead.resx">
+      <DependentUpon>201902141437039_RemovedForeignKeyFromAccHead.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902141604236_LinkBwAccTypeandAccHead.resx">
+      <DependentUpon>201902141604236_LinkBwAccTypeandAccHead.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902151114298_MappingCorrection.resx">
+      <DependentUpon>201902151114298_MappingCorrection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902151327159_MappingBwHeadAndSubhead.resx">
+      <DependentUpon>201902151327159_MappingBwHeadAndSubhead.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902160907142_RemoveAccMadeToAccAccount.resx">
+      <DependentUpon>201902160907142_RemoveAccMadeToAccAccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902160908062_AddedAccMadeToAccAccount.resx">
+      <DependentUpon>201902160908062_AddedAccMadeToAccAccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902171108197_AddedAccountStringToDesignation.resx">
+      <DependentUpon>201902171108197_AddedAccountStringToDesignation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902171122358_AddedAccountStringToPerson.resx">
+      <DependentUpon>201902171122358_AddedAccountStringToPerson.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902171142130_AddedAccountStringToItem.resx">
+      <DependentUpon>201902171142130_AddedAccountStringToItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902171204162_AddedAccountStringToPortal.resx">
+      <DependentUpon>201902171204162_AddedAccountStringToPortal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902181353089_AddedRevenueAndCostStrings.resx">
+      <DependentUpon>201902181353089_AddedRevenueAndCostStrings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902200805149_AddedRemarksInPurchase.resx">
+      <DependentUpon>201902200805149_AddedRemarksInPurchase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902201414261_AddPurchDiscountAndSaleCommissionToItem.resx">
+      <DependentUpon>201902201414261_AddPurchDiscountAndSaleCommissionToItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902211151512_ChangesQtyTypeSaleDetails.resx">
+      <DependentUpon>201902211151512_ChangesQtyTypeSaleDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902211357108_PercisionTo4DebitAndCredit.resx">
+      <DependentUpon>201902211357108_PercisionTo4DebitAndCredit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902240720458_UpdatedStockOutProperty.resx">
+      <DependentUpon>201902240720458_UpdatedStockOutProperty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902251355230_PersonSelfReference.resx">
+      <DependentUpon>201902251355230_PersonSelfReference.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902251358359_ChangeLengthVtype.resx">
+      <DependentUpon>201902251358359_ChangeLengthVtype.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\Ledger.rdlc" />
+    <EmbeddedResource Include="Reports\MyReport.rdlc" />
+    <EmbeddedResource Include="Reports\TrailBalance.rdlc" />
+    <EmbeddedResource Include="Reports\Voucher.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

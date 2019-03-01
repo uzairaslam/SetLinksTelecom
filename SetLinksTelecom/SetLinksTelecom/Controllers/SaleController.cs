@@ -51,11 +51,33 @@ namespace SetLinksTelecom.Controllers
             //DtoTangibleItemSale itemSaleRow = new DtoTangibleItemSale();
             return View(_purchaseRepo.GetSpecificPurchase(id));
         }
+        [HttpGet]
+        public ActionResult SaleInTangibleItemRow(int PurchaseId, int PersonId)
+        {
+            //DtoTangibleItemSale itemSaleRow = new DtoTangibleItemSale();
+            return View(_purchaseRepo.GetSpecificInTangiblePurchase(PurchaseId, PersonId));
+        }
 
         [HttpPost]
         public ActionResult SaveSale(DtoTangibleSale dtoTangibleSale)
         {
-            return RedirectToAction("TangibleSaleIndex");
+            _saleRepo.SaveTangibleSale(dtoTangibleSale);
+            return Json(new { success = true, message = "Saved Successfully" }, JsonRequestBehavior.AllowGet);
         }
+        [HttpPost]
+        public ActionResult SaveInTangibleSale(DtoInTangibleSale dtoInTangibleSale)
+        {
+            _saleRepo.SaveInTangibleSale(dtoInTangibleSale);
+            return Json(new { success = true, message = "Saved Successfully" }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult InTangibleSaleIndex()
+        {
+            DtoInTangibleSale dtoInTangibleSale = new DtoInTangibleSale();
+            dtoInTangibleSale.Date = DateTime.Now;
+            return View(dtoInTangibleSale);
+        }
+
     }
 }

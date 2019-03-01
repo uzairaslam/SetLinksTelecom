@@ -14,6 +14,8 @@ namespace SetLinksTelecom.Models
         public string Name { get; set; }
         [MaxLength(50)]
         public string Url { get; set; }
+        [MaxLength(12)]
+        public string AccString { get; set; }
 
         public virtual ICollection<Purchase> Purchases { get; set; }
     }

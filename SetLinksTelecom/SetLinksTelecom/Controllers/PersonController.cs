@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using SetLinksTelecom.Data;
+using SetLinksTelecom.DTO;
 using SetLinksTelecom.Models;
 
 namespace SetLinksTelecom.Controllers
@@ -12,11 +13,13 @@ namespace SetLinksTelecom.Controllers
     {
         private readonly IPersonRepo _personRepo;
         private readonly IDesignationRepo _designationRepo;
+        private readonly ILineRepo _lineRepo;
 
-        public PersonController(IPersonRepo personRepo, IDesignationRepo designationRepo)
+        public PersonController(IPersonRepo personRepo, IDesignationRepo designationRepo, ILineRepo lineRepo)
         {
             _personRepo = personRepo;
             _designationRepo = designationRepo;
+            _lineRepo = lineRepo;
         }
 
         // GET: Person
@@ -25,9 +28,9 @@ namespace SetLinksTelecom.Controllers
             return View();
         }
 
-        public ActionResult GetData()
+        public ActionResult GetData(int BossId = 0, int DesignationId = 0, string withoutBoss = "")
         {
-            var persons = _personRepo.GetData();
+            IList<Person> persons = _personRepo.GetData(BossId, DesignationId);
             return Json(new { data = persons }, JsonRequestBehavior.AllowGet);
         }
 
@@ -43,6 +46,9 @@ namespace SetLinksTelecom.Controllers
             {
                 Person person = new Person();
                 person.Designations = _designationRepo.GetData().ToList();
+                person.Lines = _lineRepo.GetLines().ToList();
+                person.CNICIssueDate = DateTime.Now;
+                person.DOB = DateTime.Now;
                 return View(person);
             }
             else
@@ -85,6 +91,14 @@ namespace SetLinksTelecom.Controllers
             {
                 return Json(new { success = false, message = "Error in deletion" + "\n" + e.Message }, JsonRequestBehavior.AllowGet);
             }
+        }
+
+        [HttpGet]
+        public ActionResult PersonMapping()
+        {
+            DtoPersonMapping mapping = new DtoPersonMapping();
+            mapping.Designations = _designationRepo.GetData().ToList();
+            return View(mapping);
         }
     }
 }

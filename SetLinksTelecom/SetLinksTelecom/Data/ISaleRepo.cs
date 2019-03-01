@@ -10,5 +10,7 @@ namespace SetLinksTelecom.Data
     public interface ISaleRepo
     {
         DtoSale GetSale(int id);
+        void SaveTangibleSale(DtoTangibleSale dtoTangibleSale);
+        void SaveInTangibleSale(DtoInTangibleSale dtoInTangibleSale);
     }
 }
