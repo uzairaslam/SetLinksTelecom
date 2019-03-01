@@ -18,9 +18,11 @@ namespace SetLinksTelecom.Repositories
             _db = db;
         }
 
-        public IList<Person> GetData(int BossId = 0, int DesignationId = 0)
+        public IList<Person> GetData(int BossId = 0, int DesignationId = 0, string withoutBoss = "")
         {
-            if(BossId != 0)
+            if (withoutBoss != String.Empty)
+                return _db.Persons.Where(p => p.BossId == 0).Include(p => p.Designation).ToList();
+            if (BossId != 0)
                 return _db.Persons.Where(p => p.BossId == BossId).Include(p => p.Designation).ToList();
             else if (DesignationId != 0)
                 return _db.Persons.Where(p => p.DesignationId == DesignationId).Include(p => p.Designation).ToList();

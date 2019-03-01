@@ -28,7 +28,7 @@ namespace SetLinksTelecom.Controllers
             return View();
         }
 
-        public ActionResult GetData(int BossId = 0, int DesignationId = 0)
+        public ActionResult GetData(int BossId = 0, int DesignationId = 0, string withoutBoss = "")
         {
             IList<Person> persons = _personRepo.GetData(BossId, DesignationId);
             return Json(new { data = persons }, JsonRequestBehavior.AllowGet);

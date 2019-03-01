@@ -9,7 +9,7 @@ namespace SetLinksTelecom.Data
 {
     public interface IPersonRepo
     {
-        IList<Person> GetData(int BossId = 0, int DesignationId = 0);
+        IList<Person> GetData(int BossId = 0, int DesignationId = 0, string withoutBoss = "");
         Person GetPerson(int id);
         void SavePerson(Person person);
         void UpdatePerson(Person person);
