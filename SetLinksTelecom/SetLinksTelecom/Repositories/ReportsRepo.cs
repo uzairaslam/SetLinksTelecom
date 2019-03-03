@@ -5,6 +5,7 @@ using System.Linq;
 using SetLinksTelecom.Data;
 using SetLinksTelecom.DTO;
 using SetLinksTelecom.GeneralFolder;
+using System.Linq.Expressions;
 
 namespace SetLinksTelecom.Repositories
 {
@@ -16,6 +17,144 @@ namespace SetLinksTelecom.Repositories
         {
             _db = db;
         }
+
+        public DataTable GetBalanceSheet() //DtoTrailBalance TrailBalance
+        {
+            DataTable DTBalanceSheet = new DataTable();
+            DataTable DTAssetLib = new DataTable();
+            DataTable DTRevExp = new DataTable();
+
+            DTAssetLib = (
+                                  from QAA in _db.AccAccounts
+                                  join ASH in _db.AccSubHead
+                                        on new { QAA.HeadCode, QAA.SubHeadCode }
+                                    equals new { ASH.HeadCode, ASH.SubHeadCode }
+                                  join AH in _db.AccHead on ASH.HeadCode equals AH.HeadCode
+                                  join AT in _db.AccTypes on AH.TypeCode equals AT.TypeCode
+                                  join QAV in _db.AccVouchers
+                                        on new { ASH.HeadCode, ASH.SubHeadCode, QAA.AccCode }
+                                    equals new { QAV.HeadCode, QAV.SubHeadCode, QAV.AccCode } into QAV_join
+                                  from QAV in QAV_join.DefaultIfEmpty()
+                                  where
+                                    AH.TypeCode == 1
+                                  group new { AT, ASH, AH, QAA, QAV } by new
+                                  {
+                                      AT.TypeName,
+                                      ASH.HeadCode,
+                                      ASH.SubHeadCode,
+                                      ASH.SubHeadString,
+                                      ASH.SubHeadName,
+                                      AH.HeadName,
+                                      QAA.AccString,
+                                      QAA.AccName
+                                  } into g
+                                  select new
+                                  {
+                                      HeadCode = (int)g.Key.HeadCode,
+                                      SubHeadCode = (int)g.Key.SubHeadCode,
+                                      g.Key.SubHeadString,
+                                      g.Key.SubHeadName,
+                                      g.Key.HeadName,
+                                      g.Key.AccString,
+                                      g.Key.AccName,
+                                      Balance = (decimal)(g.Sum(p => ((Decimal?)p.QAV.Debit ?? (Decimal?)0)) - g.Sum(p => ((Decimal?)p.QAV.Credit ?? (Decimal?)0))),
+                                      g.Key.TypeName
+                                  }
+                              ).Concat
+                              (
+                                  from QAA in _db.AccAccounts
+                                  join ASH in _db.AccSubHead
+                                        on new { QAA.HeadCode, QAA.SubHeadCode }
+                                    equals new { ASH.HeadCode, ASH.SubHeadCode }
+                                  join AH in _db.AccHead on ASH.HeadCode equals AH.HeadCode
+                                  join AT in _db.AccTypes on AH.TypeCode equals AT.TypeCode
+                                  join QAV in _db.AccVouchers
+                                        on new { ASH.HeadCode, ASH.SubHeadCode, QAA.AccCode }
+                                    equals new { QAV.HeadCode, QAV.SubHeadCode, QAV.AccCode } into QAV_join
+                                  from QAV in QAV_join.DefaultIfEmpty()
+                                  where
+                                    AH.TypeCode == 2 ||
+                                    AH.TypeCode == 3
+                                  group new { AT, ASH, AH, QAA, QAV } by new
+                                  {
+                                      AT.TypeName,
+                                      ASH.HeadCode,
+                                      ASH.SubHeadCode,
+                                      ASH.SubHeadString,
+                                      ASH.SubHeadName,
+                                      AH.HeadName,
+                                      QAA.AccString,
+                                      QAA.AccName
+                                  } into g
+                                  select new 
+                                  {
+                                      HeadCode = (int)g.Key.HeadCode,
+                                      SubHeadCode = (int)g.Key.SubHeadCode,
+                                      SubHeadString = g.Key.SubHeadString,
+                                      SubHeadName = g.Key.SubHeadName,
+                                      HeadName = g.Key.HeadName,
+                                      AccString = g.Key.AccString,
+                                      AccName = g.Key.AccName,
+                                      Balance = (decimal)(g.Sum(p => ((Decimal?)p.QAV.Credit ?? (Decimal?)0)) - g.Sum(p => ((Decimal?)p.QAV.Debit ?? (Decimal?)0))),
+                                      TypeName = g.Key.TypeName
+                                  }
+                              ).ToList().ToDataTable();
+            DTRevExp = (
+                              from QAV in _db.AccAccounts
+                              select new 
+                              {
+                                  HeadCode = (int)0,
+                                  SubHeadCode = (int)0,
+                                   SubHeadString = "00-00",
+                                   SubHeadName = "Earned Profit/Loss",
+                                   HeadName = "Earned Profit/Loss",
+                                   AccString = "00-00-0000",
+                                   AccName = "Earned Profit/Loss",
+                                  Balance = ((decimal)((from QAV1 in
+                                                                            (from QAV1 in _db.AccVouchers
+                                                                             join AH in _db.AccHead on QAV1.HeadCode equals AH.HeadCode
+                                                                             join AT in _db.AccTypes on AH.TypeCode equals AT.TypeCode
+                                                                             where
+                                                                              AH.TypeCode == 4
+                                                                             select new
+                                                                             {
+                                                                                 Debit = ((decimal?)QAV1.Debit ?? (decimal?)0),
+                                                                                 Credit = ((decimal?)QAV1.Credit ?? (decimal?)0),
+                                                                                 Dummy ="x"
+                                                                             })
+                                                                        group QAV1 by new { QAV1.Dummy } into k
+                                                                        select new
+                                                                        {
+                                                                            Balance = (decimal)(k.Sum(p => ((Decimal?)p.Credit ?? (Decimal?)0)) - k.Sum(p => ((Decimal?)p.Debit ?? (Decimal?)0)))
+                                                                        }
+                                  ).AsEnumerable().Select(x=>x.Balance).FirstOrDefault())
+                                - (decimal)((from QAV1 in
+                                                         (from QAV1 in _db.AccVouchers
+                                                          join AH in _db.AccHead on QAV1.HeadCode equals AH.HeadCode
+                                                          join AT in _db.AccTypes on AH.TypeCode equals AT.TypeCode
+                                                          where
+                                                           AH.TypeCode == 5
+                                                          select new
+                                                          {
+                                                              Debit = ((decimal?)QAV1.Debit ?? (decimal?)0),
+                                                              Credit = ((decimal?)QAV1.Credit ?? (decimal?)0),
+                                                              Dummy = "x"
+                                                          })
+                                                     group QAV1 by new { QAV1.Dummy } into k
+                                                     select new
+                                                     {
+                                                         Balance = (decimal)(k.Sum(p => ((Decimal?)p.Debit ?? (Decimal?)0)) - k.Sum(p => ((Decimal?)p.Credit ?? (Decimal?)0)))
+                                                     }
+                                  ).AsEnumerable().Select(y=>y.Balance).FirstOrDefault())),
+                                  TypeName = "RESERVE & FUNDS"
+                              }).Take(1).ToList().ToDataTable();
+
+            DTBalanceSheet = DTAssetLib.Copy();
+            DTBalanceSheet.Merge(DTRevExp);
+            return DTBalanceSheet;
+        }
+
+       
 
         public DataTable GetTrailBalance() //DtoTrailBalance TrailBalance
         {
@@ -130,7 +269,16 @@ namespace SetLinksTelecom.Repositories
                                 v.VDescription,
                                 v.VSrNo,
                                 v.Debit,
-                                v.Credit
+                                v.Credit,
+                                v.VNo,
+                                v.VType,
+                                v.UserCode,
+                                v.InvNo,
+                                v.InvType,
+                                DCType =
+                                        (Decimal)((Decimal?)v.Debit ?? (Decimal?)0) > 0 ? "Debit Details" :
+                                        (Decimal)((Decimal?)v.Credit ?? (Decimal?)0) > 0 ? "Credit Details" : null 
+                               
                             }).ToList().ToDataTable();
             }
             else
@@ -146,11 +294,22 @@ namespace SetLinksTelecom.Repositories
                         v.VDescription,
                         v.VSrNo,
                         v.Debit,
-                        v.Credit
+                        v.Credit,
+                        v.VNo,
+                        v.VType,
+                        v.UserCode,
+                        v.InvNo,
+                        v.InvType,
+                        DCType =
+                                        (Decimal)((Decimal?)v.Debit ?? (Decimal?)0) > 0 ? "Debit Details" :
+                                        (Decimal)((Decimal?)v.Credit ?? (Decimal?)0) > 0 ? "Credit Details" : null 
                     }).ToList().ToDataTable();
             }
 
             return Vouchers;
         }
+
+       
+
     }
 }

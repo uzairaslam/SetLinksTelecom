@@ -31,6 +31,11 @@ namespace SetLinksTelecom.DTO
         public string ChequeNo { get; set; }
         public string InvType { get; set; }
         public int VNo { get; set; }
+        public int UserCode { get; set; }
+        public string VSrNo { get; set; }
+        public double Debit { get; set; }
+        public double Credit { get; set; }
+        public string DCType { get; set; }
     }
 
     public class DtoTrailBalance
@@ -49,4 +54,19 @@ namespace SetLinksTelecom.DTO
         public string Status { get; set; }
         public string TypeName { get; set; }
     }
+
+    public class DtoBalanceSheet
+    { 
+         public int HeadCode { get; set; }
+         public int SubHeadCode { get; set; }     
+         public string SubHeadString { get; set; }   
+         public string SubHeadName { get; set; }     
+         public string HeadName { get; set; }        
+         public string AccString { get; set; }       
+         public string AccName { get; set; }         
+         public decimal Balance { get; set; }
+         public string TypeName { get; set; }        
+          
+    }
+
 }

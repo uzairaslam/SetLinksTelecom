@@ -458,6 +458,7 @@
     <Compile Include="Repositories\AccAccountRepo.cs" />
     <Compile Include="Repositories\AccVoucherRepo.cs" />
     <Compile Include="Repositories\DesignationRepo.cs" />
+    <Compile Include="Repositories\NumberToWords.cs" />
     <Compile Include="Repositories\ReportsRepo.cs" />
     <Compile Include="Repositories\InventoryTypeRepo.cs" />
     <Compile Include="Repositories\ItemsRepo.cs" />
@@ -657,6 +658,7 @@
     <Content Include="Views\Reports\Voucher.cshtml" />
     <Content Include="Views\Voucher\VoucherGrid.cshtml" />
     <Content Include="Views\Reports\TrailBalance.cshtml" />
+    <Content Include="Views\Reports\BalanceSheet.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -824,6 +826,7 @@
     <EmbeddedResource Include="Migrations\201902240720458_UpdatedStockOutProperty.resx">
       <DependentUpon>201902240720458_UpdatedStockOutProperty.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reports\BalanceSheet.rdlc" />
     <EmbeddedResource Include="Reports\Ledger.rdlc" />
     <EmbeddedResource Include="Reports\MyReport.rdlc" />
     <EmbeddedResource Include="Reports\TrailBalance.rdlc" />
