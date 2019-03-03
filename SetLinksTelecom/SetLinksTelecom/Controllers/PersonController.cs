@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using SetLinksTelecom.Data;
+using SetLinksTelecom.DTO;
 using SetLinksTelecom.Models;
 
 namespace SetLinksTelecom.Controllers
@@ -27,9 +28,9 @@ namespace SetLinksTelecom.Controllers
             return View();
         }
 
-        public ActionResult GetData()
+        public ActionResult GetData(int BossId = 0, int DesignationId = 0, string withoutBoss = "")
         {
-            var persons = _personRepo.GetData();
+            IList<Person> persons = _personRepo.GetData(BossId, DesignationId);
             return Json(new { data = persons }, JsonRequestBehavior.AllowGet);
         }
 
@@ -90,6 +91,14 @@ namespace SetLinksTelecom.Controllers
             {
                 return Json(new { success = false, message = "Error in deletion" + "\n" + e.Message }, JsonRequestBehavior.AllowGet);
             }
+        }
+
+        [HttpGet]
+        public ActionResult PersonMapping()
+        {
+            DtoPersonMapping mapping = new DtoPersonMapping();
+            mapping.Designations = _designationRepo.GetData().ToList();
+            return View(mapping);
         }
     }
 }
