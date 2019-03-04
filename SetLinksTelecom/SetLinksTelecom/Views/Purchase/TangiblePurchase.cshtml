@@ -1,0 +1,217 @@
+﻿@model SetLinksTelecom.DTO.DtoTangiblePurchase
+
+@{
+    ViewBag.Title = "TangiblePurchase";
+}
+
+<h2>Tangible Purchase</h2>
+
+@using (Html.BeginForm("TangiblePurchase", "Purchase", FormMethod.Post, new { onsubmit = "return SubmitForm(this)" }))
+{
+    @Html.HiddenFor(m => m.PurchaseId)
+
+
+    <div class="row">
+        <div class="col">
+            <div class="form-group" id="dvDatePurchased">
+                @Html.LabelFor(m => m.DatePurchased, new { @class = "control-label" })
+                @Html.EditorFor(m => m.DatePurchased, new { htmlAttributes = new { @class = "form-control", @id = "DatePurchased" } })
+            </div>
+
+            <div class="form-group" id="dvPortal">
+                @Html.LabelFor(m => m.PortalId, new { @class = "control-label" })
+                <br />
+                @Html.DropDownListFor(m => m.PortalId, new SelectList(Model.Portals, "PortalId", "Name"), "Select Portal", new { @class = "ddl form-control", @id = "PortalId" })
+                @Html.ValidationMessageFor(m => m.PortalId)
+            </div>
+
+            <div class="form-group" id="dvItem">
+                @Html.LabelFor(m => m.ItemId, new { @class = "control-label" })
+                <br />
+                @Html.DropDownListFor(m => m.ItemId, new SelectList(Model.Items, "ItemId", "Name"), "Select Item", new { @class = "ddl form-control", @id = "ItemId" })
+                @Html.ValidationMessageFor(m => m.ItemId)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Subname, new { @class = "control-label" })
+                @Html.EditorFor(m => m.Subname, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.Subname)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Rate, new { @class = "control-label" })
+                @Html.EditorFor(m => m.Rate, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Total, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.Total, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Total)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Remarks, new { @class = "control-label" })
+                @Html.TextAreaFor(m => m.Remarks, new { @class = "form-control", @id = "Remarks" })
+            </div>
+
+            <div class="form-group">
+                <button type="submit" value="Submit" class="btn btn-primary"><i class="fa fa-save"></i> Submit</button>
+            </div>
+
+        </div>
+        <div class="col">
+            <h4> Add Number</h4>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group" id="dvPercentage">
+                        @Html.Label("Number", new { @class = "control-label" })
+                        @Html.Editor("Number", new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group" style="position: absolute; bottom: 0;">
+                        <button type="submit" class="btn btn-primary" onclick="return addNumber();"><i class="fa fa-plus"></i> Add</button>
+                    </div>
+                </div>
+            </div>
+            <table id="tanPurTable" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Number</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+}
+
+
+
+@section scripts
+{
+    <script>
+        String.prototype.replaceAll = function(search, replacement) {
+            var target = this;
+            return target.split(search).join(replacement);
+        };
+    </script>
+
+    <script id="rowNumberTable" type="text/template">
+        <tr class="rowNumberClass">
+            <td>{Number}</td>
+            <td><a class='btn btn-danger btn-sm' style='margin-left:5px;' onClick="Delete(this);"><i class='fa fa-trash'></i> Delete</a></td>
+        </tr>
+    </script>
+    @*<script>
+            //$('#rowNumberTable').html()
+        </script>*@
+
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+
+    <script>
+        $(document).ready(function() {
+            $('#Total').attr("disabled", "true");
+        });
+
+        function addNumber() {
+            var number = $('#Number').val();
+            var rowNumberTable = $('#rowNumberTable').html();
+            $('#tanPurTable').find('tbody').append(rowNumberTable.replaceAll('{Number}', number));
+            $('#Number').val('');
+            valueChanged();
+            $('#Number').focus();
+            return false;
+        }
+
+        function Delete(my) {
+            $(my).closest('tr').remove();
+            valueChanged();
+        }
+
+        function valueChanged() {
+            var Qty = $('#tanPurTable tbody tr').length;
+            var Rate = $('#Rate').val();
+            var total = Qty * Rate;
+            $('#Total').val(total);
+
+        }
+
+
+        function SubmitForm(form) {
+            event.preventDefault();
+            $.validator.unobtrusive.parse(form);
+
+
+            if ($(form).valid()) {
+
+
+                var Numbers = [];
+
+                var index = 0;
+                var pur = $('.rowNumberClass');
+                $.each(pur,
+                    function () {
+                        //console.log($(this));
+                        Numbers[index] = $($(this).get(0)).find('td').get(0).innerHTML;
+                        ++index;
+                        //console.log(this);
+                        //console.log($($(this).get(0)).find('td').get(0).innerHTML);
+                        //Numbers.push({
+                        //    value: $($(this).get(0)).find('td').get(0).innerHTML
+                        //});
+                    });
+
+                var dtoTangiblePurchase = {
+                    PurchaseId: 0,
+                    PortalId: $('#PortalId').val(),
+                    ItemId: $('#ItemId').val(),
+                    Subname: $('#Subname').val(),
+                    Rate: $('#Rate').val(),
+                    DatePurchased: $('#DatePurchased').val(),
+                    Remarks: $('#Remarks').val(),
+                    Total: $('#Total').val(),
+                    Numbers: Numbers//{ 'Numbers': Numbers }
+                }
+                console.log(dtoTangiblePurchase);
+
+                $.ajax({
+                    type: "POST",
+                    url: form.action,
+                    data: dtoTangiblePurchase,
+                    success: function(data) {
+                        if (data.success) {
+
+                            //resetForm();
+                            $.notify(
+                                data.message,
+                                {
+                                    position: "top center",
+                                    className: "success"
+                                }
+                            );
+
+                        }
+                    }
+                });
+
+
+            } else {
+                $.notify(
+                    "Validation Error",
+                    {
+                        position: "top center",
+                        className: "error"
+                    }
+                );
+            }
+
+            return false;
+        }
+    </script>
+}
+

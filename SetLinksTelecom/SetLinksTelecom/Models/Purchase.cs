@@ -12,6 +12,10 @@ namespace SetLinksTelecom.Models
         [Column("PurchaseId",Order = 0)]
         public int PurchaseId { get; set; }
 
+        public int Pid { get; set; }
+        [MaxLength(50)]
+        public string Number { get; set; }
+
         [Column("PortalId", Order = 1)]
         [Display(Name = "Portal")]
         public int PortalId { get; set; }

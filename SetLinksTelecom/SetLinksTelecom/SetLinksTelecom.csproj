@@ -448,6 +448,10 @@
     <Compile Include="Migrations\201903011140125_AddedBvsServiceTable.Designer.cs">
       <DependentUpon>201903011140125_AddedBvsServiceTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903021351518_AddedPidAndNumberPurchase.cs" />
+    <Compile Include="Migrations\201903021351518_AddedPidAndNumberPurchase.Designer.cs">
+      <DependentUpon>201903021351518_AddedPidAndNumberPurchase.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BvsService.cs" />
     <Compile Include="Models\AccAccount.cs" />
@@ -678,6 +682,7 @@
     <Content Include="Views\Person\PersonMapping.cshtml" />
     <Content Include="Views\BVS\Index.cshtml" />
     <Content Include="Views\BVS\AddOrEdit.cshtml" />
+    <Content Include="Views\Purchase\TangiblePurchase.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -853,6 +858,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903011140125_AddedBvsServiceTable.resx">
       <DependentUpon>201903011140125_AddedBvsServiceTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903021351518_AddedPidAndNumberPurchase.resx">
+      <DependentUpon>201903021351518_AddedPidAndNumberPurchase.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\Ledger.rdlc" />
     <EmbeddedResource Include="Reports\MyReport.rdlc" />

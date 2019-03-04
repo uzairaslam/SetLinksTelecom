@@ -75,5 +75,17 @@ namespace SetLinksTelecom.Controllers
             }
         }
 
+
+        [HttpGet]
+        public ActionResult TangiblePurchase(int id =0)
+        {
+            return View(_purchaseRepo.GetTangiblePurchase(id));
+        }
+        [HttpPost]
+        public ActionResult TangiblePurchase(DtoTangiblePurchase purchase)
+        {
+            _purchaseRepo.SaveTangiblePurchase(purchase);
+            return Json(new { success = true, message = "Saved Successfully" }, JsonRequestBehavior.AllowGet);
+        }
     }
 }
