@@ -109,5 +109,28 @@ namespace SetLinksTelecom.Controllers
             ViewBag.ReportTitle = "Trail Balance";
             return View("_ReportView");
         }
+
+        [HttpGet]
+        public ActionResult BalanceSheet()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult BalanceSheet(int i = 0)
+        {
+            DataTable BalSheet = _repo.GetBalanceSheet();
+            BalSheet.TableName = "DSBalanceSheet";
+            ReportViewer reportViewer = new ReportViewer();
+            reportViewer.ProcessingMode = ProcessingMode.Local;
+            reportViewer.SizeToReportContent = true;
+            reportViewer.Width = Unit.Percentage(900);
+            reportViewer.Height = Unit.Percentage(900);
+            reportViewer.LocalReport.ReportPath = Request.MapPath(Request.ApplicationPath) + @"Reports\BalanceSheet.rdlc";
+            reportViewer.LocalReport.DataSources.Add(new ReportDataSource("DSBalanceSheet", BalSheet));
+            ViewBag.ReportViewer = reportViewer;
+            ViewBag.ReportTitle = "Balance Sheet";
+            return View("_ReportView");
+        }
     }
 }

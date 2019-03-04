@@ -480,6 +480,7 @@
     <Compile Include="Repositories\AccVoucherRepo.cs" />
     <Compile Include="Repositories\BvsRepo.cs" />
     <Compile Include="Repositories\DesignationRepo.cs" />
+    <Compile Include="Repositories\NumberToWords.cs" />
     <Compile Include="Repositories\ReportsRepo.cs" />
     <Compile Include="Repositories\InventoryTypeRepo.cs" />
     <Compile Include="Repositories\ItemsRepo.cs" />
@@ -679,6 +680,7 @@
     <Content Include="Views\Reports\Voucher.cshtml" />
     <Content Include="Views\Voucher\VoucherGrid.cshtml" />
     <Content Include="Views\Reports\TrailBalance.cshtml" />
+    <Content Include="Views\Reports\BalanceSheet.cshtml" />
     <Content Include="Views\Person\PersonMapping.cshtml" />
     <Content Include="Views\BVS\Index.cshtml" />
     <Content Include="Views\BVS\AddOrEdit.cshtml" />
@@ -850,6 +852,7 @@
     <EmbeddedResource Include="Migrations\201902240720458_UpdatedStockOutProperty.resx">
       <DependentUpon>201902240720458_UpdatedStockOutProperty.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reports\BalanceSheet.rdlc" />
     <EmbeddedResource Include="Migrations\201902251355230_PersonSelfReference.resx">
       <DependentUpon>201902251355230_PersonSelfReference.cs</DependentUpon>
     </EmbeddedResource>
