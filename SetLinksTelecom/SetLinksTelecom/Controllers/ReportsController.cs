@@ -132,5 +132,28 @@ namespace SetLinksTelecom.Controllers
             ViewBag.ReportTitle = "Balance Sheet";
             return View("_ReportView");
         }
+
+        [HttpGet]
+        public ActionResult CustomLedger()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CustomLedger(DtoCustomLedger CLdr)
+        {
+            DataTable CusLdr = _repo.GetCustomLedger(CLdr);
+            CusLdr.TableName = "DS_CustomLedger";
+            ReportViewer reportViewer = new ReportViewer();
+            reportViewer.ProcessingMode = ProcessingMode.Local;
+            reportViewer.SizeToReportContent = true;
+            reportViewer.Width = Unit.Percentage(900);
+            reportViewer.Height = Unit.Percentage(900);
+            reportViewer.LocalReport.ReportPath = Request.MapPath(Request.ApplicationPath) + @"Reports\CustomLedger.rdlc";
+            reportViewer.LocalReport.DataSources.Add(new ReportDataSource("DS_CustomLedger", CusLdr));
+            ViewBag.ReportViewer = reportViewer;
+            ViewBag.ReportTitle = "Customer Ledger";
+            return View("_ReportView");
+        }
     }
 }

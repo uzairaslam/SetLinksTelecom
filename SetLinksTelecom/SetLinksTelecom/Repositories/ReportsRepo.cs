@@ -18,6 +18,182 @@ namespace SetLinksTelecom.Repositories
             _db = db;
         }
 
+        public DataTable GetCustomLedger(DtoCustomLedger CLdr)
+        {
+            DataTable DT = new DataTable();
+            DT = (from Main in
+                             ((from MainLDR in
+                                   ((from AVOO in
+                                         ((from AVO in
+                                               ((from AV in _db.AccVouchers
+                                                 where
+                                                 ((
+                                                     from AAV in _db.AccVouchers
+                                                     where AAV.AccString == CLdr.AccString
+                                                     select new { AAV.VNo }
+                                                     ).Distinct()).Contains(new { VNo = AV.VNo })
+                                                 select new
+                                                 {
+                                                     AV.VDate,
+                                                     AV.VNo,
+                                                     AV.AccString,
+                                                     AV.Debit,
+                                                     AV.Credit,
+                                                     AV.HeadCode,
+                                                     AV.SubHeadCode,
+                                                     AV.AccCode
+                                                 }
+                                                   ))
+                                           where (
+                                               (AVO.HeadCode == 41 ||
+                                               AVO.HeadCode == 44 ||
+                                               AVO.HeadCode == 43 ||
+                                               AVO.HeadCode == 14) 
+                                               //||
+                                               //AVO.HeadCode == 13
+                                               )
+                                           select new
+                                           {
+                                               AVO.VDate,
+                                               AVO.AccString,
+                                               AVO.Debit,
+                                               AVO.Credit,
+                                               AVO.HeadCode,
+                                               AVO.SubHeadCode,
+                                               AVO.AccCode
+                                           }) //AVO
+                                             )
+                                     join AA in _db.AccAccounts on AVOO.AccString equals AA.AccString
+                                     join AH in _db.AccHead on AVOO.HeadCode equals AH.HeadCode
+                                     join AT in _db.AccTypes on AH.TypeCode equals AT.TypeCode
+                                     group new { AA, AVOO, AT } by new
+                                     {
+                                         AVOO.VDate,
+                                         AVOO.AccString,
+                                         AA.AccName,
+                                         AT.TypeCode
+                                     } into g
+                                     where (g.Key.VDate >= CLdr.StartDate && g.Key.VDate <= CLdr.EndDate)
+                                     select new
+                                     {
+                                         VDate = (DateTime?)g.Key.VDate,
+                                         g.Key.AccString,
+                                         g.Key.AccName,
+                                         SDebit = (decimal?)g.Sum(p => p.AVOO.Debit),
+                                         SCredit = (decimal?)g.Sum(p => p.AVOO.Credit),
+                                         SBalance =
+                                         g.Key.TypeCode == 1 ||
+                                         g.Key.TypeCode == 5 ? (g.Sum(p => ((Decimal?)p.AVOO.Debit ?? (Decimal?)0)) - g.Sum(p => ((Decimal?)p.AVOO.Credit ?? (Decimal?)0))) : (g.Sum(p => ((Decimal?)p.AVOO.Credit ?? (Decimal?)0)) - g.Sum(p => ((Decimal?)p.AVOO.Debit ?? (Decimal?)0)))
+                                     }
+                                       ))
+                               select new
+                               {
+                                   MainLDR.VDate,
+                                   MainLDR.AccString,
+                                   MainLDR.AccName,
+                                   MainLDR.SDebit,
+                                   MainLDR.SCredit,
+                                   MainLDR.SBalance
+                               }
+                                 ))
+                         join Opening in
+                             (from O in
+                                  (
+                                      (from AV in _db.AccVouchers
+                                       where
+                                         AV.AccString == CLdr.AccString
+                                       group AV by new
+                                       {
+                                           AV.VDate
+                                       } into g
+                                       select new
+                                       {
+                                           VVDate = g.Key.VDate,
+                                           Balance = (decimal?)(g.Sum(p => p.Debit) - g.Sum(p => p.Credit))
+                                       }))
+                              select new
+                              {
+                                  O.VVDate,
+                                  O.Balance,
+                                  OBalance = (decimal?)
+                                    (from OC in
+                                         (
+                                             (from AV in _db.AccVouchers
+                                              where
+                                                AV.AccString == CLdr.AccString
+                                              group AV by new
+                                              {
+                                                  AV.VDate
+                                              } into g
+                                              select new
+                                              {
+                                                  VVDate = g.Key.VDate,
+                                                  Balance = (decimal?)(g.Sum(p => p.Debit) - g.Sum(p => p.Credit))
+                                              }))
+                                     where
+                                       OC.VVDate <= (DateTime)O.VVDate
+                                     select new
+                                     {
+                                         OC.Balance
+                                     }).Sum(p => p.Balance)-O.Balance
+                              }) on Main.VDate equals Opening.VVDate into Opn
+                         from Op in Opn.DefaultIfEmpty()
+                         join Closing in
+                             (from C in
+                                  (
+                                      (from AV in _db.AccVouchers
+                                       where
+                                         AV.AccString == CLdr.AccString
+                                       group AV by new
+                                       {
+                                           AV.VDate
+                                       } into g
+                                       select new
+                                       {
+                                           VVDate = g.Key.VDate,
+                                           Balance = (decimal?)(g.Sum(p => p.Debit) - g.Sum(p => p.Credit))
+                                       }))
+                              select new
+                              {
+                                  C.VVDate,
+                                  C.Balance,
+                                  CBalance = (decimal?)
+                                    (from CC in
+                                         (
+                                             (from AV in _db.AccVouchers
+                                              where
+                                                AV.AccString == CLdr.AccString
+                                              group AV by new
+                                              {
+                                                  AV.VDate
+                                              } into g
+                                              select new
+                                              {
+                                                  VVDate = g.Key.VDate,
+                                                  Balance = (decimal?)(g.Sum(p => p.Debit) - g.Sum(p => p.Credit))
+                                              }))
+                                     where
+                                       CC.VVDate <= (DateTime)C.VVDate
+                                     select new
+                                     {
+                                         CC.Balance
+                                     }).Sum(p => p.Balance)
+                              }) on Main.VDate equals Closing.VVDate into CLO
+                         from CL in CLO.DefaultIfEmpty()
+                         select new
+                         {
+                             Main.VDate,
+                             Main.AccString,
+                             Main.AccName,
+                             Main.SDebit,
+                             Main.SCredit,
+                             Main.SBalance,
+                             Op.OBalance,
+                             CL.CBalance
+                         }).ToList().ToDataTable();
+            return DT;
+        }
+
         public DataTable GetBalanceSheet() //DtoTrailBalance TrailBalance
         {
             DataTable DTBalanceSheet = new DataTable();
