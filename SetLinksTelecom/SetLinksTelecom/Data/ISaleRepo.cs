@@ -12,5 +12,7 @@ namespace SetLinksTelecom.Data
         DtoSale GetSale(int id);
         void SaveTangibleSale(DtoTangibleSale dtoTangibleSale);
         void SaveInTangibleSale(DtoInTangibleSale dtoInTangibleSale);
+        IList<DtoSaleReturnView> GetDataForReturn();
+        DtoTangibleSaleDetailItem GetSpecificSaleDetailItem(int id);
     }
 }

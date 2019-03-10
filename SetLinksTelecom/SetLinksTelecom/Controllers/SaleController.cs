@@ -52,6 +52,12 @@ namespace SetLinksTelecom.Controllers
             return View(_purchaseRepo.GetSpecificPurchase(id));
         }
         [HttpGet]
+        public ActionResult SaleReturnItemRow(int id)
+        {
+            //DtoTangibleItemSale itemSaleRow = new DtoTangibleItemSale();
+            return View(_saleRepo.GetSpecificSaleDetailItem(id));
+        }
+        [HttpGet]
         public ActionResult SaleInTangibleItemRow(int PurchaseId, int PersonId)
         {
             //DtoTangibleItemSale itemSaleRow = new DtoTangibleItemSale();

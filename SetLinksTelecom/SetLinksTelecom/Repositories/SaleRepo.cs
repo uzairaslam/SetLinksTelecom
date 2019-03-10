@@ -424,5 +424,69 @@ namespace SetLinksTelecom.Repositories
                 transaction.Commit();
             }
         }
+
+        public IList<DtoSaleReturnView> GetDataForReturn()
+        {
+            var sale = (from sd in _db.SaleDetails
+                join s in _db.Sales on sd.SaleId equals  s.SaleId
+                join p in _db.Purchases on sd.PurchaseId equals p.PurchaseId
+                join po in _db.Portals on p.PortalId equals po.PortalId
+                join i in _db.Items on p.ItemId equals i.ItemId
+                join cat in _db.ProductCategories on i.ProductCategoryId equals cat.ProductCategoryId
+                join ty in _db.InventoryTypes on cat.InventoryTypeId equals ty.InventoryTypeId
+                select new DtoSaleReturnView
+                {
+                    PortalName = po.Name,
+                    InventoryType = ty.Name,
+                    CategoryName = cat.Name,
+                    ItemId = i.ItemId,
+                    ItemName = i.Name,
+                    DatePurchased = p.DatePurchased,
+                    DateSold = s.Date,
+                    PurchaseId = p.PurchaseId,
+                    PortalId = po.PortalId,
+                    SaleDetailId = sd.SaleDetailId
+                }).ToList();
+
+            return sale;
+
+            //var salesrEturn = (from sd in _db.SaleDetails
+            //    join p in _db.Purchases on sd.PurchaseId equals p.PurchaseId
+            //    join i in _db.Items on p.ItemId equals i.ItemId
+            //    select new DtoSaleReturnView
+            //    {
+            //        PortalName = p.Portal.Name,
+            //        InventoryType = i.ProductCategory.InventoryType.Name,
+            //        CategoryName = i.ProductCategory.Name,
+            //        ItemId = i.ItemId,
+            //        ItemName = i.Name,
+            //        DatePurchased = p.DatePurchased,
+            //        DateSold = sd.Sale.Date,
+            //        PurchaseId = p.PurchaseId,
+            //        PortalId = p.Portal.PortalId,
+            //        SaleDetailId = sd.SaleDetailId
+            //    }).ToList();
+            //return salesrEturn;
+        }
+
+        public DtoTangibleSaleDetailItem GetSpecificSaleDetailItem(int id)
+        {
+            DtoTangibleSaleDetailItem purchase = (from sd in _db.SaleDetails
+                join p in _db.Purchases on sd.PurchaseId equals p.PurchaseId
+                join i in _db.Items on p.ItemId equals i.ItemId
+                where sd.SaleDetailId == id
+                select new DtoTangibleSaleDetailItem
+                {
+                    SaleDetailId = sd.SaleDetailId,
+                    ItemCode = i.ItemCode,
+                    ItemName = i.Name,
+                    Rate = i.SaleRate,
+                    //PurchaseId = p.PurchaseId,
+                    Qty = 1,
+                    SubTotal = i.SaleRate
+                }).FirstOrDefault();
+            return purchase;
+        }
+
     }
 }

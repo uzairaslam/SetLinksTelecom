@@ -42,6 +42,8 @@ namespace SetLinksTelecom.Models
         public string PurDiscString { get; set; }
         [MaxLength(12)]
         public string SaleCommString { get; set; }
+        [MaxLength(12)]
+        public string CRevString { get; set; }
 
         [NotMapped]
         public List<ProductCategory> ProductCategories { get; set; }

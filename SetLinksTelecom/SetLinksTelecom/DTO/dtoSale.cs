@@ -105,4 +105,37 @@ namespace SetLinksTelecom.DTO
         //public List<Line> Lines { get; set; }
         public List<DtoLinesWithNumbers> Lines { get; set; }
     }
+
+
+    public class DtoSaleReturnView
+    {
+        public int PurchaseId { get; set; }
+        public int SaleDetailId { get; set; }
+        public int PortalId { get; set; }
+        public string PortalName { get; set; }
+        public string InventoryType { get; set; }
+        public string CategoryName { get; set; }
+        public int ItemId { get; set; }
+        public string ItemName { get; set; }
+        //public decimal Qty { get; set; }
+        public DateTime DatePurchased { get; set; }
+        public DateTime DateSold { get; set; }
+    }
+
+    public class DtoTangibleSaleDetailItem
+    {
+        public int SaleDetailId { get; set; }
+
+        public int ItemCode { get; set; }
+
+        [Display(Name = "Item")]
+        public string ItemName { get; set; }
+
+        public decimal Qty { get; set; }
+
+        public decimal Rate { get; set; }
+
+        public decimal SubTotal { get; set; }
+    }
+
 }

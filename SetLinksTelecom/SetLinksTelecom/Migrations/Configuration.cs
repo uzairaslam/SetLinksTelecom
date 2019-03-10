@@ -172,13 +172,20 @@ namespace SetLinksTelecom.Migrations
                                 new AccSubHead {HeadCode = 42,OID = 0,SubHeadCode = 2, SubHeadName = "InTangible Purchase Discount", SubHeadString = "42-02"}
                             }
                         },
-                        new AccHead {TypeCode = 4, HeadName = "Project Revenue", HeadString = "43", HeadCode = 43,
+                        new AccHead {TypeCode = 4, HeadName = "Commission Revenue", HeadString = "43", HeadCode = 43,
                             SubHeads = new List<AccSubHead>
                             {
                                 new AccSubHead {HeadCode = 43,OID = 0,SubHeadCode = 1, SubHeadName = "Tangible Sale Commission", SubHeadString = "43-01"},
                                 new AccSubHead {HeadCode = 43,OID = 0,SubHeadCode = 2, SubHeadName = "InTangible Sale Commission", SubHeadString = "43-02"}
                             }
                         },
+                        new AccHead {TypeCode = 4, HeadName = "Contra Revenue", HeadString = "44", HeadCode = 44,
+                            SubHeads = new List<AccSubHead>
+                            {
+                                new AccSubHead {HeadCode = 44,OID = 0,SubHeadCode = 1, SubHeadName = "Tangible Contra Revenue", SubHeadString = "44-01"},
+                                new AccSubHead {HeadCode = 44,OID = 0,SubHeadCode = 2, SubHeadName = "InTangible Contra Revenue", SubHeadString = "44-02"}
+                            }
+                        }
                     }
                 },
                 new AccType

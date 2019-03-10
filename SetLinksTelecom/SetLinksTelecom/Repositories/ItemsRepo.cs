@@ -109,6 +109,9 @@ namespace SetLinksTelecom.Repositories
                     var saleComm = _db.AccAccounts.Where(acc => acc.HeadCode == 43 && acc.SubHeadCode == 1)
                                        .Max(a => (int?) a.AccCode) ?? 0;
                     ++saleComm;
+                    var CRev = _db.AccAccounts.Where(acc => acc.HeadCode == 44 && acc.SubHeadCode == 1)
+                                       .Max(a => (int?) a.AccCode) ?? 0;
+                    ++CRev;
 
                     IList<AccAccount> accounts = new List<AccAccount>()
                     {
@@ -141,6 +144,12 @@ namespace SetLinksTelecom.Repositories
                         {
                             HeadCode = 43, SubHeadCode = 01, OID = 0, AccCode = saleComm, AccMade = 1,
                             AccName = item.Name, AccString = "43-01-" + (saleComm.ToAccString())
+                        },
+                        //Contra Revenue
+                        new AccAccount
+                        {
+                            HeadCode = 44, SubHeadCode = 01, OID = 0, AccCode = saleComm, AccMade = 1,
+                            AccName = item.Name, AccString = "44-01-" + (CRev.ToAccString())
                         }
                     };
 
@@ -151,6 +160,7 @@ namespace SetLinksTelecom.Repositories
                     item.CosString = "51-01-" + maxCosAcc.ToAccString();
                     item.PurDiscString = "42-01-" + (purDisc.ToAccString());
                     item.SaleCommString = "43-01-" + (saleComm.ToAccString());
+                    item.CRevString = "44-01-" + (CRev.ToAccString());
                 }
                 else
                 {
@@ -169,6 +179,9 @@ namespace SetLinksTelecom.Repositories
                     var saleComm = _db.AccAccounts.Where(acc => acc.HeadCode == 43 && acc.SubHeadCode == 2)
                                        .Max(a => (int?) a.AccCode) ?? 0;
                     ++saleComm;
+                    var CRev = _db.AccAccounts.Where(acc => acc.HeadCode == 44 && acc.SubHeadCode == 2)
+                                   .Max(a => (int?)a.AccCode) ?? 0;
+                    ++CRev;
 
                     IList<AccAccount> accounts = new List<AccAccount>()
                     {
@@ -201,6 +214,12 @@ namespace SetLinksTelecom.Repositories
                         {
                             HeadCode = 43, SubHeadCode = 02, OID = 0, AccCode = saleComm, AccMade = 1,
                             AccName = item.Name, AccString = "43-02-" + (saleComm.ToAccString())
+                        },
+                        //Contra Revenue
+                        new AccAccount
+                        {
+                            HeadCode = 44, SubHeadCode = 02, OID = 0, AccCode = saleComm, AccMade = 1,
+                            AccName = item.Name, AccString = "44-02-" + (CRev.ToAccString())
                         }
                     };
 
@@ -211,6 +230,7 @@ namespace SetLinksTelecom.Repositories
                     item.CosString = "51-02-" + maxCosAcc.ToAccString();
                     item.PurDiscString = "42-02-" + (purDisc.ToAccString());
                     item.SaleCommString = "43-02-" + (saleComm.ToAccString());
+                    item.CRevString = "44-02-" + (CRev.ToAccString());
                 }
 
                 _db.Items.Add(item);

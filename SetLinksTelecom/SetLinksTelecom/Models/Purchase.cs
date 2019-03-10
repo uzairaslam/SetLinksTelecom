@@ -19,9 +19,9 @@ namespace SetLinksTelecom.Models
         [Column("PortalId", Order = 1)]
         [Display(Name = "Portal")]
         public int PortalId { get; set; }
-        [NotMapped]
+        //[NotMapped]
         [ForeignKey("PortalId")]
-        private Portal Portal { get; set; }
+        public virtual Portal Portal { get; set; }
 
         [Column("ItemId", Order = 2)]
         [Display(Name = "Item")]
@@ -63,6 +63,8 @@ namespace SetLinksTelecom.Models
         [Display(Name = "Stock Out")]
         public decimal StockOut { get; set; }
 
+
+        public bool Return { get; set; }
 
         public Purchase()
         {

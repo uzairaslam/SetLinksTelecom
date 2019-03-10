@@ -202,6 +202,7 @@
     <Compile Include="Controllers\PurchaseController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\SaleController.cs" />
+    <Compile Include="Controllers\SaleReturnController.cs" />
     <Compile Include="Controllers\VoucherController.cs" />
     <Compile Include="Data\DataContext.cs" />
     <Compile Include="Data\HtmlHelpers.cs" />
@@ -452,6 +453,14 @@
     <Compile Include="Migrations\201903021351518_AddedPidAndNumberPurchase.Designer.cs">
       <DependentUpon>201903021351518_AddedPidAndNumberPurchase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903041603512_AddedCRevStringToItem.cs" />
+    <Compile Include="Migrations\201903041603512_AddedCRevStringToItem.Designer.cs">
+      <DependentUpon>201903041603512_AddedCRevStringToItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903051414196_ReturnBitPurchase.cs" />
+    <Compile Include="Migrations\201903051414196_ReturnBitPurchase.Designer.cs">
+      <DependentUpon>201903051414196_ReturnBitPurchase.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BvsService.cs" />
     <Compile Include="Models\AccAccount.cs" />
@@ -685,6 +694,9 @@
     <Content Include="Views\BVS\Index.cshtml" />
     <Content Include="Views\BVS\AddOrEdit.cshtml" />
     <Content Include="Views\Purchase\TangiblePurchase.cshtml" />
+    <Content Include="Views\SaleReturn\TangibleSaleReturnIndex.cshtml" />
+    <Content Include="Views\SaleReturn\SaleReturnGrid.cshtml" />
+    <Content Include="Views\Sale\SaleReturnItemRow.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -851,6 +863,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902240720458_UpdatedStockOutProperty.resx">
       <DependentUpon>201902240720458_UpdatedStockOutProperty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903041603512_AddedCRevStringToItem.resx">
+      <DependentUpon>201903041603512_AddedCRevStringToItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903051414196_ReturnBitPurchase.resx">
+      <DependentUpon>201903051414196_ReturnBitPurchase.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\BalanceSheet.rdlc" />
     <EmbeddedResource Include="Migrations\201902251355230_PersonSelfReference.resx">
