@@ -86,4 +86,44 @@ namespace SetLinksTelecom.DTO
         public DateTime DatePurchased { get; set; }
         public string DatePurchasedFormatted { get { return this.DatePurchased.ToString("dd/MM/yyyy"); } }
     }
+
+    public class DtoTangiblePurchase
+    {
+        public DtoTangiblePurchase()
+        {
+            Portals = new List<Portal>();
+            Items = new List<Item>();
+            Numbers = new List<string>();
+        }
+        public int PurchaseId { get; set; }
+
+        [Required]
+        [Display(Name = "Portal")]
+        public int PortalId { get; set; }
+        public List<Portal> Portals { get; set; }
+
+        [Required]
+        [Display(Name = "Item")]
+        public int ItemId { get; set; }
+        public List<Item> Items { get; set; }
+
+        [Display(Name = "Sub Name")]
+        [MinLength(3), MaxLength(50)]
+        public string Subname { get; set; }
+
+        public decimal Rate { get; set; }
+        public decimal Total { get; set; }
+
+        [Display(Name = "Date Purchased")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime DatePurchased { get; set; }
+
+
+        [MaxLength(150)]
+        public string Remarks { get; set; }
+
+        public List<string> Numbers { get; set; }
+    }
+    
 }

@@ -21,40 +21,40 @@ namespace SetLinksTelecom.Repositories
         {
             IEnumerable<dtoDisplayPurchase> purchases = from A in (
                     (from p in _db.Purchases
-                        join po in _db.Portals on p.PortalId equals po.PortalId
-                        join i in _db.Items on p.ItemId equals i.ItemId
-                        join cat in _db.ProductCategories on i.ProductCategoryId equals cat.ProductCategoryId
-                        select new
-                        {
-                            PortalName = po.Name,
-                            CategoryName = cat.Name,
-                            ItemName = i.Name,
-                            InventoryTypeId = cat.InventoryTypeId,
-                            p.PurchaseId,
-                            Subname = p.Subname,
-                            Remarks = p.Remarks,
-                            Qty = p.Qty,
-                            Total = p.Total,
-                            Percentage = p.Percentage,
-                            Rate = p.Rate
-                        }))
-                join t in _db.InventoryTypes on new {InventoryTypeId = A.InventoryTypeId} equals new
-                    {InventoryTypeId = t.InventoryTypeId}
-                select new dtoDisplayPurchase
-                {
-                    InventoryType = t.Name,
-                    PortalName = A.PortalName,
-                    CategoryName = A.CategoryName,
-                    ItemName = A.ItemName,
-                    //InventoryTypeId = (int?)A.InventoryTypeId,
-                    PurchaseId = A.PurchaseId,
-                    Subname = A.Subname,
-                    Remarks = A.Remarks,
-                    Qty = A.Qty,
-                    Total = A.Total,
-                    Percentage = A.Percentage,
-                    Rate = A.Rate
-                };
+                     join po in _db.Portals on p.PortalId equals po.PortalId
+                     join i in _db.Items on p.ItemId equals i.ItemId
+                     join cat in _db.ProductCategories on i.ProductCategoryId equals cat.ProductCategoryId
+                     select new
+                     {
+                         PortalName = po.Name,
+                         CategoryName = cat.Name,
+                         ItemName = i.Name,
+                         InventoryTypeId = cat.InventoryTypeId,
+                         p.PurchaseId,
+                         Subname = p.Subname,
+                         Remarks = p.Remarks,
+                         Qty = p.Qty,
+                         Total = p.Total,
+                         Percentage = p.Percentage,
+                         Rate = p.Rate
+                     }))
+                                                        join t in _db.InventoryTypes on new { InventoryTypeId = A.InventoryTypeId } equals new
+                                                        { InventoryTypeId = t.InventoryTypeId }
+                                                        select new dtoDisplayPurchase
+                                                        {
+                                                            InventoryType = t.Name,
+                                                            PortalName = A.PortalName,
+                                                            CategoryName = A.CategoryName,
+                                                            ItemName = A.ItemName,
+                                                            //InventoryTypeId = (int?)A.InventoryTypeId,
+                                                            PurchaseId = A.PurchaseId,
+                                                            Subname = A.Subname,
+                                                            Remarks = A.Remarks,
+                                                            Qty = A.Qty,
+                                                            Total = A.Total,
+                                                            Percentage = A.Percentage,
+                                                            Rate = A.Rate
+                                                        };
             return purchases;
             //return from p in _db.Purchases
             //       join po in _db.Portals on p.PortalId equals po.PortalId
@@ -82,26 +82,26 @@ namespace SetLinksTelecom.Repositories
             if (id != 0)
             {
                 purchase = (from p in _db.Purchases
-                    join i in _db.Items on p.ItemId equals i.ItemId
-                    where p.PurchaseId == id
-                    select new dtoPurchase
-                    {
-                        PurchaseId = p.PurchaseId,
-                        PortalId = p.PortalId,
-                        InventoryTypeId = i.ProductCategory.InventoryTypeId,
-                        ProductCategoryId = i.ProductCategoryId,
-                        ItemId = p.ItemId,
-                        Subname = p.Subname,
-                        Qty = p.Qty,
-                        Total = p.Total,
-                        Remarks = p.Remarks,
-                        Percentage = p.Percentage,
-                        Rate = p.Rate,
-                        StockOut = p.StockOut,
-                        DatePurchased = p.DatePurchased
-                    }).FirstOrDefault();
+                            join i in _db.Items on p.ItemId equals i.ItemId
+                            where p.PurchaseId == id
+                            select new dtoPurchase
+                            {
+                                PurchaseId = p.PurchaseId,
+                                PortalId = p.PortalId,
+                                InventoryTypeId = i.ProductCategory.InventoryTypeId,
+                                ProductCategoryId = i.ProductCategoryId,
+                                ItemId = p.ItemId,
+                                Subname = p.Subname,
+                                Qty = p.Qty,
+                                Total = p.Total,
+                                Remarks = p.Remarks,
+                                Percentage = p.Percentage,
+                                Rate = p.Rate,
+                                StockOut = p.StockOut,
+                                DatePurchased = p.DatePurchased
+                            }).FirstOrDefault();
             }
-                
+
             purchase.InventoryTypes = _db.InventoryTypes.ToList();
             purchase.ProductCategories = _db.ProductCategories.ToList();
             purchase.Items = _db.Items.ToList();
@@ -116,6 +116,10 @@ namespace SetLinksTelecom.Repositories
                 #region Save In PurchaseTable
                 InventoryType type =
                     _db.InventoryTypes.FirstOrDefault(t => t.InventoryTypeId.Equals(dtoPurchase.InventoryTypeId));
+
+                int purchaseId = _db.Purchases.Max(v => (int?)v.Pid) ?? 0;
+                ++purchaseId;
+
                 Purchase purchase = new Purchase
                 {
                     //PurchaseId = dtoPurchase.PurchaseId,
@@ -137,8 +141,8 @@ namespace SetLinksTelecom.Repositories
 
                 #region Save In Stock
 
-                int purchaseId = purchase.PurchaseId;
-                
+                //int purchaseId = purchase.PurchaseId;
+
                 Stock stock = _db.Stocks.FirstOrDefault(s => s.ItemId.Equals(dtoPurchase.ItemId));
                 if (stock == null)
                 {
@@ -168,7 +172,7 @@ namespace SetLinksTelecom.Repositories
                 if (type.Name == "Tangible")
                 {
                     Portal portal = _db.Portals.Single(p => p.PortalId.Equals(purchase.PortalId));
-                    var maxVno = _db.AccVouchers.Max(v => (int?) v.VNo) ?? 0;
+                    var maxVno = _db.AccVouchers.Max(v => (int?)v.VNo) ?? 0;
                     AccAccount acc = _db.AccAccounts.Single(a => a.AccString.Equals(portal.AccString));
 
                     maxVno = ++maxVno;
@@ -185,7 +189,8 @@ namespace SetLinksTelecom.Repositories
                         Credit = purchase.Total,
                         UserCode = 0,
                         OID = 0,
-                        BID = 0, CID = 0,
+                        BID = 0,
+                        CID = 0,
                         HeadCode = acc.HeadCode,
                         SubHeadCode = acc.SubHeadCode,
                         AccCode = acc.AccCode,
@@ -318,41 +323,41 @@ namespace SetLinksTelecom.Repositories
         public DtoTangibleItemSale GetSpecificPurchase(int id)
         {
             DtoTangibleItemSale purchase = (from p in _db.Purchases
-                join i in _db.Items on p.ItemId equals i.ItemId
-                where p.PurchaseId == id 
-                select new DtoTangibleItemSale
-                {
-                    ItemCode = i.ItemCode,
-                    ItemName = i.Name,
-                    Rate = i.SaleRate,
-                    PurchaseId = p.PurchaseId,
-                    Qty = 1,
-                    SubTotal = i.SaleRate
-                }).FirstOrDefault();
+                                            join i in _db.Items on p.ItemId equals i.ItemId
+                                            where p.PurchaseId == id
+                                            select new DtoTangibleItemSale
+                                            {
+                                                ItemCode = i.ItemCode,
+                                                ItemName = i.Name,
+                                                Rate = i.SaleRate,
+                                                PurchaseId = p.PurchaseId,
+                                                Qty = 1,
+                                                SubTotal = i.SaleRate
+                                            }).FirstOrDefault();
             return purchase;
         }
 
-        public DtoInTangibleItemSale GetSpecificInTangiblePurchase(int id,int PersonId)
+        public DtoInTangibleItemSale GetSpecificInTangiblePurchase(int id, int PersonId)
         {
             DtoInTangibleItemSale purchase = (from p in _db.Purchases
-                join i in _db.Items on p.ItemId equals i.ItemId
-                where p.PurchaseId == id
-                select new DtoInTangibleItemSale
-                {
-                    ItemCode = i.ItemCode,
-                    ItemName = i.Name,
-                    Rate = i.SaleRate,
-                    PurchaseId = p.PurchaseId,
-                    Qty = 1,
-                    SubTotal = i.SaleRate,
-                    //Lines = _db.Lines.ToList()
-                }).FirstOrDefault();
+                                              join i in _db.Items on p.ItemId equals i.ItemId
+                                              where p.PurchaseId == id
+                                              select new DtoInTangibleItemSale
+                                              {
+                                                  ItemCode = i.ItemCode,
+                                                  ItemName = i.Name,
+                                                  Rate = i.SaleRate,
+                                                  PurchaseId = p.PurchaseId,
+                                                  Qty = 1,
+                                                  SubTotal = i.SaleRate,
+                                                  //Lines = _db.Lines.ToList()
+                                              }).FirstOrDefault();
             Person person = _db.Persons.FirstOrDefault(p => p.PersonId.Equals(PersonId));
             if (person != null && person.BusinessLineMap != null && person.BusinessLineMap != 0)
             {
                 purchase.Lines.Add(new DtoLinesWithNumbers
                 {
-                    LineId = (int) person.BusinessLineMap,
+                    LineId = (int)person.BusinessLineMap,
                     Number = person.MobileBusiness
                 });
             }
@@ -365,6 +370,147 @@ namespace SetLinksTelecom.Repositories
                 });
             }
             return purchase;
+        }
+
+        public DtoTangiblePurchase GetTangiblePurchase(int id = 0)
+        {
+            DtoTangiblePurchase purchase = new DtoTangiblePurchase();
+            purchase.DatePurchased = DateTime.Now;
+            purchase.Items = (from i in _db.Items
+                              join c in _db.ProductCategories on i.ProductCategoryId equals c.ProductCategoryId
+                              join t in _db.InventoryTypes on c.InventoryTypeId equals t.InventoryTypeId
+                              where t.Name == "Tangible"
+                              select i).ToList();
+            purchase.Portals = _db.Portals.ToList();
+            return purchase;
+        }
+
+        public void SaveTangiblePurchase(DtoTangiblePurchase dtoTangible)
+        {
+            using (var transaction = _db.Database.BeginTransaction())
+            {
+                #region Save In PurchaseTable
+
+                int purchaseId = _db.Purchases.Max(v => (int?)v.Pid) ?? 0;
+                ++purchaseId;
+                //InventoryType type =
+                //    _db.InventoryTypes.FirstOrDefault(t => t.InventoryTypeId.Equals(dtoPurchase.InventoryTypeId));
+                dtoTangible.Numbers.ForEach(a =>
+                {
+                    Purchase purchase = new Purchase
+                    {
+                        //PurchaseId = dtoPurchase.PurchaseId,
+                        ItemId = dtoTangible.ItemId,
+                        Total = dtoTangible.Rate,//dtoTangible.Total,
+                        Remarks = dtoTangible.Remarks,
+                        PortalId = dtoTangible.PortalId,
+                        Qty = 1,//dtoTangible.Numbers.Count,
+                        Subname = dtoTangible.Subname,
+                        Percentage = 0,
+                        Rate = dtoTangible.Rate,
+                        StockOut = 1,//dtoTangible.Numbers.Count,
+                        DatePurchased = dtoTangible.DatePurchased,
+                        Pid = purchaseId,
+                        Number = a
+                    };
+                    _db.Purchases.Add(purchase);
+                    _db.SaveChanges();
+
+                    //purchaseId = purchase.PurchaseId;
+                });
+                #endregion
+
+                
+
+                Stock stock = _db.Stocks.FirstOrDefault(s => s.ItemId.Equals(dtoTangible.ItemId));
+                if (stock == null)
+                {
+                    stock = new Stock
+                    {
+                        ItemId = dtoTangible.ItemId,
+                        NetQty = dtoTangible.Numbers.Count,
+                        PurchaseId = purchaseId,
+                        AvgRate =  dtoTangible.Rate
+                    };
+                    _db.Stocks.Add(stock);
+                }
+                else
+                {
+                    //stock.ItemId = dtoPurchase.ItemId,
+                    stock.NetQty = dtoTangible.Numbers.Count + stock.NetQty;
+                    stock.PurchaseId = purchaseId;
+                    stock.AvgRate = (dtoTangible.Rate + stock.AvgRate) / 2;
+                    _db.Entry(stock).State = EntityState.Modified;
+                }
+                _db.SaveChanges();
+
+
+                #region Coucher Entry
+
+                Portal portal = _db.Portals.Single(p => p.PortalId.Equals(dtoTangible.PortalId));
+                var maxVno = _db.AccVouchers.Max(v => (int?)v.VNo) ?? 0;
+                AccAccount acc = _db.AccAccounts.Single(a => a.AccString.Equals(portal.AccString));
+
+                maxVno = ++maxVno;
+                AccVoucher voucher = new AccVoucher
+                {
+                    VDate = dtoTangible.DatePurchased,
+                    SessionId = 0,
+                    AccString = portal.AccString,
+                    VNo = maxVno,
+                    VType = "JV",
+                    VSrNo = 1,
+                    VDescription = dtoTangible.Remarks,
+                    Debit = 0,
+                    Credit = dtoTangible.Total,
+                    UserCode = 0,
+                    OID = 0,
+                    BID = 0,
+                    CID = 0,
+                    HeadCode = acc.HeadCode,
+                    SubHeadCode = acc.SubHeadCode,
+                    AccCode = acc.AccCode,
+                    ChequeNo = "0",
+                    InvNo = purchaseId.ToString(),
+                    InvType = "Purchase"
+                };
+                _db.AccVouchers.Add(voucher);
+                _db.SaveChanges();
+
+                Item item = _db.Items.Single(i => i.ItemId.Equals(dtoTangible.ItemId));
+                acc = new AccAccount();
+                acc = _db.AccAccounts.Single(a => a.AccString.Equals(item.AccString));
+                voucher = new AccVoucher();
+                voucher = new AccVoucher
+                {
+                    VDate = dtoTangible.DatePurchased,
+                    SessionId = 0,
+                    AccString = item.AccString,
+                    VNo = maxVno,
+                    VType = "JV",
+                    VSrNo = 2,
+                    VDescription = dtoTangible.Remarks,
+                    Debit = dtoTangible.Total,
+                    Credit = 0,
+                    UserCode = 0,
+                    OID = 0,
+                    BID = 0,
+                    CID = 0,
+                    HeadCode = acc.HeadCode,
+                    SubHeadCode = acc.SubHeadCode,
+                    AccCode = acc.AccCode,
+                    ChequeNo = "0",
+                    InvNo = purchaseId.ToString(),
+                    InvType = "Purchase"
+                };
+                _db.AccVouchers.Add(voucher);
+                _db.SaveChanges();
+
+
+                #endregion
+
+                transaction.Commit();
+            }
         }
     }
 }

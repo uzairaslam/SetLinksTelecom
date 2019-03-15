@@ -15,5 +15,7 @@ namespace SetLinksTelecom.Data
         void DeletePurchase(int id);
         DtoTangibleItemSale GetSpecificPurchase(int id);
         DtoInTangibleItemSale GetSpecificInTangiblePurchase(int id, int PersonId);
+        DtoTangiblePurchase GetTangiblePurchase(int id = 0);
+        void SaveTangiblePurchase(DtoTangiblePurchase dtoTangible);
     }
 }

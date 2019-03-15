@@ -28,6 +28,7 @@ namespace SetLinksTelecom
             container.RegisterType<IAccAccount, AccAccountRepo>();
             container.RegisterType<IReports, ReportsRepo>();
             container.RegisterType<IAccVoucher, AccVoucherRepo>();
+            container.RegisterType<IBvsRepo, BvsRepo>();
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }
     }

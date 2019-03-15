@@ -189,6 +189,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\BVSController.cs" />
     <Compile Include="Controllers\AccAccountController.cs" />
     <Compile Include="Controllers\DesignationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -206,6 +207,7 @@
     <Compile Include="Data\HtmlHelpers.cs" />
     <Compile Include="Data\IAccAccount.cs" />
     <Compile Include="Data\IAccVoucher.cs" />
+    <Compile Include="Data\IBvsRepo.cs" />
     <Compile Include="Data\IDesignationRepo.cs" />
     <Compile Include="Data\IInventoryType.cs" />
     <Compile Include="Data\IItemsRepo.cs" />
@@ -442,7 +444,16 @@
     <Compile Include="Migrations\201902251358359_ChangeLengthVtype.Designer.cs">
       <DependentUpon>201902251358359_ChangeLengthVtype.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903011140125_AddedBvsServiceTable.cs" />
+    <Compile Include="Migrations\201903011140125_AddedBvsServiceTable.Designer.cs">
+      <DependentUpon>201903011140125_AddedBvsServiceTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903021351518_AddedPidAndNumberPurchase.cs" />
+    <Compile Include="Migrations\201903021351518_AddedPidAndNumberPurchase.Designer.cs">
+      <DependentUpon>201903021351518_AddedPidAndNumberPurchase.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\BvsService.cs" />
     <Compile Include="Models\AccAccount.cs" />
     <Compile Include="Models\AccHead.cs" />
     <Compile Include="Models\AccSubHead.cs" />
@@ -467,6 +478,7 @@
     </Compile>
     <Compile Include="Repositories\AccAccountRepo.cs" />
     <Compile Include="Repositories\AccVoucherRepo.cs" />
+    <Compile Include="Repositories\BvsRepo.cs" />
     <Compile Include="Repositories\DesignationRepo.cs" />
     <Compile Include="Repositories\NumberToWords.cs" />
     <Compile Include="Repositories\ReportsRepo.cs" />
@@ -671,6 +683,9 @@
     <Content Include="Views\Reports\BalanceSheet.cshtml" />
     <Content Include="Views\Person\PersonMapping.cshtml" />
     <Content Include="Views\Reports\CustomLedger.cshtml" />
+    <Content Include="Views\BVS\Index.cshtml" />
+    <Content Include="Views\BVS\AddOrEdit.cshtml" />
+    <Content Include="Views\Purchase\TangiblePurchase.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -846,6 +861,12 @@
       <DependentUpon>201902251358359_ChangeLengthVtype.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\CustomLedger.rdlc" />
+    <EmbeddedResource Include="Migrations\201903011140125_AddedBvsServiceTable.resx">
+      <DependentUpon>201903011140125_AddedBvsServiceTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903021351518_AddedPidAndNumberPurchase.resx">
+      <DependentUpon>201903021351518_AddedPidAndNumberPurchase.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\Ledger.rdlc" />
     <EmbeddedResource Include="Reports\MyReport.rdlc" />
     <EmbeddedResource Include="Reports\TrailBalance.rdlc" />
