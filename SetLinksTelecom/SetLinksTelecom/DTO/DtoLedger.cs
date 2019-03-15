@@ -22,6 +22,17 @@ namespace SetLinksTelecom.DTO
         public bool WithoutDate { get; set; }
     }
 
+    public class DtoCustomLedger
+    {
+        public string AccString { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime StartDate { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime EndDate { get; set; }
+    }
+
     //public class DtoLedgerView
     //{
     //    public DateTime VoucherDate { get; set; }

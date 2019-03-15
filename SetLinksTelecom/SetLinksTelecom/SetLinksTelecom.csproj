@@ -692,6 +692,7 @@
     <Content Include="Views\Reports\TrailBalance.cshtml" />
     <Content Include="Views\Reports\BalanceSheet.cshtml" />
     <Content Include="Views\Person\PersonMapping.cshtml" />
+    <Content Include="Views\Reports\CustomLedger.cshtml" />
     <Content Include="Views\BVS\Index.cshtml" />
     <Content Include="Views\BVS\AddOrEdit.cshtml" />
     <Content Include="Views\Purchase\TangiblePurchase.cshtml" />
@@ -879,6 +880,7 @@
     <EmbeddedResource Include="Migrations\201902251358359_ChangeLengthVtype.resx">
       <DependentUpon>201902251358359_ChangeLengthVtype.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reports\CustomLedger.rdlc" />
     <EmbeddedResource Include="Migrations\201903011140125_AddedBvsServiceTable.resx">
       <DependentUpon>201903011140125_AddedBvsServiceTable.cs</DependentUpon>
     </EmbeddedResource>
