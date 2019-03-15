@@ -151,6 +151,12 @@ namespace SetLinksTelecom.Controllers
             reportViewer.Height = Unit.Percentage(900);
             reportViewer.LocalReport.ReportPath = Request.MapPath(Request.ApplicationPath) + @"Reports\CustomLedger.rdlc";
             reportViewer.LocalReport.DataSources.Add(new ReportDataSource("DS_CustomLedger", CusLdr));
+            ReportParameterCollection rptParam = new ReportParameterCollection 
+            { new ReportParameter("ParamDateFrom", CLdr.StartDate.ToShortDateString()),
+              new ReportParameter("ParamDateTo", CLdr.EndDate.ToShortDateString()),
+              new ReportParameter("DOName", CLdr.AccString)
+            };
+            reportViewer.LocalReport.SetParameters(rptParam);
             ViewBag.ReportViewer = reportViewer;
             ViewBag.ReportTitle = "Customer Ledger";
             return View("_ReportView");
