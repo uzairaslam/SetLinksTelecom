@@ -41,9 +41,23 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item @Html.IsActiveLink(actions: "Index", controllers: "Purchase")">
-                @Html.ActionLink("Purchase", "Index", "Purchase", null, new { @class = "nav-link" })
+            <li class="nav-item dropdown show">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Purchase </a>
+                <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    @*<li class="nav-item @Html.IsActiveLink(actions: "InventoryType", controllers: "InventoryType")">
+                            @Html.ActionLink("Inventory Type", "InventoryType", "InventoryType", null, new { @class = "dropdown-item" })
+                        </li>*@
+                    <li class="nav-item @Html.IsActiveLink(actions: "Index", controllers: "Purchase")">
+                        @Html.ActionLink("Purchase", "Index", "Purchase", null, new { @class = "dropdown-item" })
+                    </li>
+                    <li class="nav-item @Html.IsActiveLink(actions: "TangiblePurchase", controllers: "Purchase")">
+                        @Html.ActionLink("Tangible Purchase", "TangiblePurchase", "Purchase", null, new { @class = "dropdown-item" })
+                    </li>
+                </ul>
             </li>
+            @*<li class="nav-item @Html.IsActiveLink(actions: "Index", controllers: "Purchase")">
+                @Html.ActionLink("Purchase", "Index", "Purchase", null, new { @class = "nav-link" })
+            </li>*@
             <li class="nav-item dropdown show">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Sale </a>
                 <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">

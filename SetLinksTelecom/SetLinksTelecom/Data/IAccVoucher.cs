@@ -11,5 +11,7 @@ namespace SetLinksTelecom.Data
     public interface IAccVoucher
     {
         List<DtoVoucherDisplay> GetData();
+        DtoJvEntry GetJvEntry();
+        void SaveJv(DtoSaveJv dtoSaveJv);
     }
 }

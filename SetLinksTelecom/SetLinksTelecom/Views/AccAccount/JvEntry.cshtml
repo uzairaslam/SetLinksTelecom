@@ -1,0 +1,302 @@
+﻿@model SetLinksTelecom.DTO.DtoJvEntry
+
+@{
+    ViewBag.Title = "Jv Entry";
+}
+
+<h2>Journal Entry Voucher</h2>
+
+@using (Html.BeginForm("JvEntry", "AccAccount", FormMethod.Post, new {onsubmit = "return save(this);"}))
+{
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="card border-light mb-3" style="max-width: 20rem;">
+                    <div class="card-body">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.TransactionId, new {@class = "control-label"})
+                            @Html.EditorFor(m => m.TransactionId, new {htmlAttributes = new {@class = "form-control"}})
+                            @Html.ValidationMessageFor(m => m.TransactionId)
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Date, new {@class = "control-label"})
+                            @Html.EditorFor(m => m.Date, new {htmlAttributes = new {@class = "form-control"}})
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.VoucherType, new {@class = "control-label"})
+                            @Html.DropDownListFor(m => m.VoucherType, new List<SelectListItem>
+                            {
+                                new SelectListItem {Text = "CPV", Value = "CPV"},
+                                new SelectListItem {Text = "CRV", Value = "CRV"},
+                                new SelectListItem {Text = "BPV", Value = "BPV"},
+                                new SelectListItem {Text = "BRV", Value = "BRV"},
+                                new SelectListItem {Text = "JV", Value = "JV"}
+                            }, "Select Voucher Type", new {@class = "ddl form-control"})
+                            @Html.ValidationMessageFor(m => m.VoucherType)
+                        </div>
+
+                        <div class="form-group" id="dvRemarks">
+                            @Html.LabelFor(m => m.Remarks, new {@class = "control-label"})
+                            @Html.TextAreaFor(m => m.Remarks, new {rows = "6", @class = "form-control", @id = "Remarks"})
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col accDiv">
+                <div class="card border-info mb-3" style="max-width: 20rem;">
+                    <div class="card-header">Account Information</div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.AccString, new {@class = "control-label"})
+                            <br/>
+                            @Html.DropDownListFor(m => m.AccString, new SelectList(Model.Accounts, "AccString", "AccName"), "Select Account", new {@class = "ddl form-control", @id = "AccStringSelect", @onchange = "accountChange(this)"})
+                            @*@Html.ValidationMessageFor(m => m.InventoryTypeId)*@
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.AccString, new {@class = "control-label"})
+                            @Html.EditorFor(m => m.AccString, new {htmlAttributes = new {@class = "form-control"}})
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Debit, new {@class = "control-label"})
+                            @Html.EditorFor(m => m.Debit, new {htmlAttributes = new {@class = "form-control"}})
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.AccBalance, new {@class = "control-label"})
+                            @Html.EditorFor(m => m.AccBalance, new {htmlAttributes = new {@class = "form-control"}})
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" value="Add" class="btn btn-primary" onclick="return addAccountRow(this);"><i class="fa fa-arrow-down"></i> Add</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col accDiv">
+                <div class="card border-info mb-3" style="max-width: 20rem;">
+                    <div class="card-header">Contra Entry</div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.AccString, new {@class = "control-label"})
+                            <br/>
+                            @Html.DropDownListFor(m => m.AccString, new SelectList(Model.Accounts, "AccString", "AccName"), "Select Account", new {@class = "ddl form-control", @id = "AccStringSelect", @onchange = "accountChange(this)"})
+                            @*@Html.ValidationMessageFor(m => m.InventoryTypeId)*@
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.AccString, new {@class = "control-label"})
+                            @Html.EditorFor(m => m.AccString, new {htmlAttributes = new {@class = "form-control"}})
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Credit, new {@class = "control-label"})
+                            @Html.EditorFor(m => m.Credit, new {htmlAttributes = new {@class = "form-control"}})
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.AccBalance, new {@class = "control-label"})
+                            @Html.EditorFor(m => m.AccBalance, new {htmlAttributes = new {@class = "form-control"}})
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" value="Add" class="btn btn-primary" onclick="return addAccountRow(this);"><i class="fa fa-arrow-down"></i> Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <table id="vouchersTable" class="table table-hover">
+            <thead>
+            <tr>
+                <th>Account String</th>
+                <th>Account Name</th>
+                <th>Debit</th>
+                <th>Credit</th>
+                <th>Remarks</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.TotalDebit, new {@class = "control-label"})
+                    @Html.EditorFor(m => m.TotalDebit, new {htmlAttributes = new {@class = "form-control"}})
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.TotalCredit, new {@class = "control-label"})
+                    @Html.EditorFor(m => m.TotalCredit, new {htmlAttributes = new {@class = "form-control"}})
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Difference, new {@class = "control-label"})
+                    @Html.EditorFor(m => m.Difference, new {htmlAttributes = new {@class = "form-control"}})
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> Save</button>
+            </div>
+        </div>
+    </div>
+}
+
+@section scripts {
+    <script>
+        String.prototype.replaceAll = function (search, replacement) {
+            var target = this;
+            return target.split(search).join(replacement);
+        };
+    </script>
+
+    <script id="rowNumberTable" type="text/template">
+        <tr class="rowNumberClass">
+            <td id="AccountString">{AccountString}</td>
+            <td id="AccountName">{AccountName}</td>
+            <td id="Debit">{Debit}</td>
+            <td id="Credit">{Credit}</td>
+            <td id="Remarks">{Remarks}</td>
+            <td><a class='btn btn-danger btn-sm' style='margin-left:5px;' onClick="Delete(this);"><i class='fa fa-trash'></i> Delete</a></td>
+        </tr>
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('.ddl').chosen();
+            $('#TotalDebit').attr("disabled", "true");
+            $('#TotalCredit').attr("disabled", "true");
+            $('#Difference').attr("disabled", "true");
+            //$('.ddl').chosen();
+        });
+
+        function Delete(my) {
+            $(my).closest('tr').remove();
+            valueChanged();
+        }
+
+        function valueChanged() {
+            var debit = 0, credit = 0;
+            $('#vouchersTable > tbody  > tr').each(function () {
+                debit += parseInt($(this).find('#Debit').get(0).innerHTML);
+                credit += parseInt($(this).find('#Credit').get(0).innerHTML);
+            });
+
+            $('#TotalDebit').val(debit);
+            $('#TotalCredit').val(credit);
+            $('#Difference').val(debit - credit);
+        }
+
+        function addAccountRow(my) {
+            var accDiv = $(my).closest('.accDiv');
+            var rowNumberTable = $('#rowNumberTable').html();
+            rowNumberTable = rowNumberTable.replaceAll('{AccountString}', $(accDiv.find('#AccString').get(0)).val());
+            rowNumberTable = rowNumberTable.replaceAll('{AccountName}', $(accDiv.find('#AccStringSelect option:selected').get(0)).text());
+            rowNumberTable = rowNumberTable.replaceAll('{Debit}',
+                (accDiv.find('#Debit').length == 0)
+                ? '0.00'
+                : $(accDiv.find('#Debit').get(0)).val());
+            rowNumberTable =
+                rowNumberTable.replaceAll('{Credit}', (accDiv.find('#Credit').length == 0)
+                    ? '0.00'
+                    : $(accDiv.find('#Credit').get(0)).val());
+            rowNumberTable = rowNumberTable.replaceAll('{Remarks}', $($('#Remarks').get(0)).val());
+            //console.log(rowNumberTable);
+            $('#vouchersTable').find('tbody').append(rowNumberTable);
+
+            valueChanged();
+            return false;
+        }
+
+        function accountChange(my) {
+            var accDiv = $(my).closest('.accDiv');
+            $(accDiv.find('#AccString').get(0)).val($(accDiv.find('#AccStringSelect option:selected').get(0)).val());
+        }
+
+        function save(form) {
+            console.log(form);
+            event.preventDefault();
+
+            //console.log($('#Difference').val());
+            if ($('#vouchersTable tr').length > 0) {
+                if ($('#Difference').val() != 0) {
+                    alert('Please clear the difference');
+                } else {
+
+                    var JvDetails = [];
+
+                    $('#vouchersTable > tbody  > tr').each(function () {
+                        JvDetails.push({
+                            AccString: $(this).find('#AccountString').get(0).innerHTML,
+                            Debit: $(this).find('#Debit').get(0).innerHTML,
+                            Credit: $(this).find('#Credit').get(0).innerHTML,
+                            Remarks: $(this).find('#Remarks').get(0).innerHTML
+                        });
+                    });
+                    //console.log(JvDetails);
+
+                    var dtoSaveJv = {
+                        TransactionId: $('#TransactionId').val(),
+                        Date: $('#Date').val(),
+                        VoucherType: $('#VoucherType').val(),
+                        TotalDebit: $('#TotalDebit').val(),
+                        TotalCredit: $('#TotalCredit').val(),
+                        Difference: $('#Difference').val(),
+                        JvDetails: JvDetails
+                    };
+
+                    //console.log(dtoSaveJv);
+
+                    $.ajax({
+                        type: "POST",
+                        url: form.action,
+                        data: dtoSaveJv,
+                        success: function (data) {
+                            if (data.success) {
+
+                                resetForm();
+                                $.notify(
+                                    data.message,
+                                    {
+                                        position: "top center",
+                                        className: "success"
+                                    }
+                                );
+
+                            }
+                        }
+                    });
+                }
+            } else {
+                alert('No Entry found');
+            }
+
+            return false;
+        }
+
+        function resetForm() {
+            window.setInterval(function () {
+                    window.location = ("@Url.Action("JvEntry", "AccAccount")");
+                },
+                2000);
+        }
+
+    </script>
+
+
+}

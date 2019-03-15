@@ -69,4 +69,34 @@ namespace SetLinksTelecom.DTO
           
     }
 
+    public class DtoSaveJv
+    {
+        public DtoSaveJv()
+        {
+            JvDetails = new List<DtoSaveJvDetail>();
+        }
+        public int TransactionId { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime Date { get; set; }
+
+        [Display(Name = "Voucher Type")]
+        public string VoucherType { get; set; }
+        public decimal TotalDebit { get; set; }
+        public decimal TotalCredit { get; set; }
+        public decimal Difference { get; set; }
+
+        public List<DtoSaveJvDetail> JvDetails { get; set; }
+    }
+
+    public class DtoSaveJvDetail
+    {
+        public string AccString { get; set; }
+
+        public decimal Debit { get; set; }
+        public decimal Credit { get; set; }
+        public string Remarks { get; set; }
+    }
+
 }

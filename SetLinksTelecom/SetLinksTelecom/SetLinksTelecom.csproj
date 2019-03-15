@@ -218,6 +218,7 @@
     <Compile Include="Data\IPurchaseRepo.cs" />
     <Compile Include="Data\IReports.cs" />
     <Compile Include="Data\ISaleRepo.cs" />
+    <Compile Include="DTO\DtoAccounts.cs" />
     <Compile Include="DTO\dtoItem.cs" />
     <Compile Include="DTO\DtoLedger.cs" />
     <Compile Include="DTO\DtoLinesWithNumbers.cs" />
@@ -697,6 +698,7 @@
     <Content Include="Views\SaleReturn\TangibleSaleReturnIndex.cshtml" />
     <Content Include="Views\SaleReturn\SaleReturnGrid.cshtml" />
     <Content Include="Views\Sale\SaleReturnItemRow.cshtml" />
+    <Content Include="Views\AccAccount\JvEntry.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
