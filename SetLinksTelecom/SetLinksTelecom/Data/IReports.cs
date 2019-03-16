@@ -16,5 +16,6 @@ namespace SetLinksTelecom.Data
         DataTable GetTrailBalance();
         DataTable GetBalanceSheet();
         DataTable GetCustomLedger(DtoCustomLedger CLdr);
+
     }
 }
