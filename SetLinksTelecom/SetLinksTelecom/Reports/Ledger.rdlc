@@ -285,7 +285,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!VoucherDate.Value</Value>
+                              <Value>=CDate(Fields!VoucherDate.Value).ToString("dd-MMM-yyyy")</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>

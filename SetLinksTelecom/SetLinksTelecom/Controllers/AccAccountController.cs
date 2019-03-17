@@ -30,9 +30,9 @@ namespace SetLinksTelecom.Controllers
             return View();
         }
 
-        public ActionResult GetData()
+        public ActionResult GetData(int includeHead = 0)
         {
-            var accounts = _repo.GetData();
+            var accounts = _repo.GetData(includeHead);
             return Json(new { data = accounts }, JsonRequestBehavior.AllowGet);
         }
         

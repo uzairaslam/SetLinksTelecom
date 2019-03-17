@@ -9,6 +9,6 @@ namespace SetLinksTelecom.Data
 {
     public interface IAccAccount
     {
-        List<AccAccount> GetData();
+        List<AccAccount> GetData(int includeHead = 0);
     }
 }

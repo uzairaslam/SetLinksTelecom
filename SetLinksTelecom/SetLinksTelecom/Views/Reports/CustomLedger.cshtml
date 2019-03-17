@@ -84,7 +84,7 @@
         function loadDialogContent() {
             dataTable = $("#accountsTable").DataTable({
                 "ajax": {
-                    "url": "/AccAccount/GetData",
+                    "url": "/AccAccount/GetData?includeHead=13",
                     "type": "Get",
                     "datatype": "json"
                 },

@@ -16,9 +16,12 @@ namespace SetLinksTelecom.Repositories
             _db = db;
         }
 
-        public List<AccAccount> GetData()
+        public List<AccAccount> GetData(int includeHead = 0)
         {
-            return _db.AccAccounts.ToList();
+            if(includeHead == 0)
+                return _db.AccAccounts.ToList();
+            else
+                return _db.AccAccounts.Where(a => a.HeadCode == includeHead).ToList();
         }
     }
 }
