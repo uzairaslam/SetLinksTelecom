@@ -47,11 +47,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
@@ -218,6 +218,7 @@
     <Compile Include="Data\IPurchaseRepo.cs" />
     <Compile Include="Data\IReports.cs" />
     <Compile Include="Data\ISaleRepo.cs" />
+    <Compile Include="DTO\DtoBvsAllotment.cs" />
     <Compile Include="DTO\DtoAccounts.cs" />
     <Compile Include="DTO\dtoItem.cs" />
     <Compile Include="DTO\DtoLedger.cs" />
@@ -462,7 +463,21 @@
     <Compile Include="Migrations\201903051414196_ReturnBitPurchase.Designer.cs">
       <DependentUpon>201903051414196_ReturnBitPurchase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903161103224_BVSAllotment.cs" />
+    <Compile Include="Migrations\201903161103224_BVSAllotment.Designer.cs">
+      <DependentUpon>201903161103224_BVSAllotment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903161108408_BVSAllotmentServiceChange.cs" />
+    <Compile Include="Migrations\201903161108408_BVSAllotmentServiceChange.Designer.cs">
+      <DependentUpon>201903161108408_BVSAllotmentServiceChange.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903161306177_BVSAllotmentNotMapped.cs" />
+    <Compile Include="Migrations\201903161306177_BVSAllotmentNotMapped.Designer.cs">
+      <DependentUpon>201903161306177_BVSAllotmentNotMapped.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\BVSAllot.cs" />
+    <Compile Include="Models\BVSAllotService.cs" />
     <Compile Include="Models\BvsService.cs" />
     <Compile Include="Models\AccAccount.cs" />
     <Compile Include="Models\AccHead.cs" />
@@ -700,6 +715,7 @@
     <Content Include="Views\SaleReturn\SaleReturnGrid.cshtml" />
     <Content Include="Views\Sale\SaleReturnItemRow.cshtml" />
     <Content Include="Views\AccAccount\JvEntry.cshtml" />
+    <Content Include="Views\BVS\BvsAllotment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -872,6 +888,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903051414196_ReturnBitPurchase.resx">
       <DependentUpon>201903051414196_ReturnBitPurchase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903161103224_BVSAllotment.resx">
+      <DependentUpon>201903161103224_BVSAllotment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903161108408_BVSAllotmentServiceChange.resx">
+      <DependentUpon>201903161108408_BVSAllotmentServiceChange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903161306177_BVSAllotmentNotMapped.resx">
+      <DependentUpon>201903161306177_BVSAllotmentNotMapped.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\BalanceSheet.rdlc" />
     <EmbeddedResource Include="Migrations\201902251355230_PersonSelfReference.resx">

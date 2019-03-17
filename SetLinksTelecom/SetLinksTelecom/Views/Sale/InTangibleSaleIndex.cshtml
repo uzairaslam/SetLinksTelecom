@@ -232,7 +232,7 @@
         function loadDialogContent() {
             dataTable = $("#purchaseTable").DataTable({
                 "ajax": {
-                    "url": "/Purchase/GetData",
+                    "url": "/Purchase/GetData?inventoryType=InTangible",
                     "type": "Get",
                     "datatype": "json"
                 },

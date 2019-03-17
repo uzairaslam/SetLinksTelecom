@@ -8,7 +8,7 @@ namespace SetLinksTelecom.Data
 {
     public interface IPurchaseRepo
     {
-        IEnumerable<dtoDisplayPurchase> GetData();
+        IEnumerable<dtoDisplayPurchase> GetData(string inventoryType = "");
         dtoPurchase GetPurchase(int id);
         void SavePurchase(dtoPurchase dtoPurchase);
         void UpdatePurchase(dtoPurchase dtoPurchase);

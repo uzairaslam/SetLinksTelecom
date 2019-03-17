@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using SetLinksTelecom.Data;
+using SetLinksTelecom.DTO;
 using SetLinksTelecom.Models;
 
 namespace SetLinksTelecom.Controllers
@@ -51,6 +52,25 @@ namespace SetLinksTelecom.Controllers
             {
                 return Json(new { success = false, message = "Error in " + (bvsService.BvsServiceId == 0 ? "saving" : "updation") + "\n" + e.Message }, JsonRequestBehavior.AllowGet);
             }
+        }
+
+        [HttpGet]
+        public ActionResult BvsAllotment()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult BvsAllotment(DtoBvsAllotment allotment)
+        {
+            _repo.BvsAllotment(allotment);
+            return Json(new { success = true, message = "Saved Successfully" }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult GetServices(int PersonId, int ItemId = 0)
+        {
+            return Json(new { data = _repo.GetAllotedServices(PersonId) }, JsonRequestBehavior.AllowGet);
         }
     }
 }

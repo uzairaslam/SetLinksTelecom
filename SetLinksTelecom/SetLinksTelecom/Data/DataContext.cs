@@ -38,6 +38,8 @@ namespace SetLinksTelecom.Data
         public DbSet<AccAccount> AccAccounts { get; set; }
         public DbSet<AccVoucher> AccVouchers { get; set; }
         public DbSet<BvsService> BvsServices { get; set; }
+        public DbSet<BVSAllot> BvsAllots { get; set; }
+        public DbSet<BVSAllotService> BvsAllotServices { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

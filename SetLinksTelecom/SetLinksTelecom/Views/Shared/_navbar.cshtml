@@ -22,6 +22,12 @@
                     <li class="nav-item @Html.IsActiveLink(actions: "Index", controllers: "Person")">
                         @Html.ActionLink("Person", "Index", "Person", null, new { @class = "dropdown-item" })
                     </li>
+                    <li class="nav-item @Html.IsActiveLink(actions: "PersonMapping", controllers: "Person")">
+                        @Html.ActionLink("Person Mapping", "PersonMapping", "Person", null, new { @class = "dropdown-item" })
+                    </li>
+                    <li class="nav-item @Html.IsActiveLink(actions: "Index", controllers: "BVS")">
+                        @Html.ActionLink("BVS", "Index", "BVS", null, new { @class = "dropdown-item" })
+                    </li>
                     @*<li class="nav-item @Html.IsActiveLink(actions: "Index", controllers: "Item")">
                             @Html.ActionLink("Items", "Index", "Item", null, new { @class = "dropdown-item" })
                         </li>*@
@@ -66,6 +72,32 @@
                     </li>
                     <li class="nav-item @Html.IsActiveLink(actions: "InTangibleSaleIndex", controllers: "Sale")">
                         @Html.ActionLink("InTangible Items", "InTangibleSaleIndex", "Sale", null, new { @class = "dropdown-item" })
+                    </li>
+                    <li class="nav-item @Html.IsActiveLink(actions: "InTangibleSaleIndex", controllers: "SaleReturn")">
+                        @Html.ActionLink("Tangible Sale Return", "TangibleSaleReturnIndex", "SaleReturn", null, new { @class = "dropdown-item" })
+                    </li>
+                    <li class="nav-item @Html.IsActiveLink(actions: "BvsAllotment", controllers: "BVS")">
+                        @Html.ActionLink("Bvs Allotment", "BvsAllotment", "BVS", null, new { @class = "dropdown-item" })
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item dropdown show">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Reports </a>
+                <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
+                    <li class="nav-item @Html.IsActiveLink(actions: "Ledger", controllers: "Reports")">
+                        @Html.ActionLink("Ledger", "Ledger", "Reports", null, new { @class = "dropdown-item" })
+                    </li>
+                    <li class="nav-item @Html.IsActiveLink(actions: "Voucher", controllers: "Reports")">
+                        @Html.ActionLink("Voucher", "Voucher", "Reports", null, new { @class = "dropdown-item" })
+                    </li>
+                    <li class="nav-item @Html.IsActiveLink(actions: "TrailBalance", controllers: "Reports")">
+                        @Html.ActionLink("Trail Balance", "TrailBalance", "Reports", null, new { @class = "dropdown-item" })
+                    </li>
+                    <li class="nav-item @Html.IsActiveLink(actions: "BalanceSheet", controllers: "Reports")">
+                        @Html.ActionLink("Balance Sheet", "BalanceSheet", "Reports", null, new { @class = "dropdown-item" })
+                    </li>
+                    <li class="nav-item @Html.IsActiveLink(actions: "CustomLedger", controllers: "Reports")">
+                        @Html.ActionLink("Custom Ledger", "CustomLedger", "Reports", null, new { @class = "dropdown-item" })
                     </li>
                 </ul>
             </li>

@@ -1,0 +1,311 @@
+﻿@model SetLinksTelecom.DTO.DtoBvsAllotment
+
+@{
+    ViewBag.Title = "Bvs Allotment";
+}
+
+<h2>Bvs Allotment</h2>
+
+@using (Html.BeginForm("BvsAllotment", "BVS", FormMethod.Post, new {onsubmit = "return SubmitForm(this)"}))
+{
+    <div class="row">
+        <div class="col">
+            @Html.HiddenFor(m => m.PersonId)
+            <div class="form-group">
+                @Html.LabelFor(m => m.PersonName, new {@class = "control-label"})
+                @Html.EditorFor(m => m.PersonName, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(m => m.PersonName)
+            </div>
+
+            @Html.HiddenFor(m => m.ItemId)
+            <div class="form-group">
+                @Html.LabelFor(m => m.ItemName, new {@class = "control-label"})
+                @Html.EditorFor(m => m.ItemName, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(m => m.ItemName)
+            </div>
+        </div>
+        <div class="col">
+            <table id="servicesTable" class="table table-hover">
+                <thead>
+                <tr>
+                    <th style="display: none">Id</th>
+                    <th style="display: none">BVS Service</th>
+                    <th>Service</th>
+                    <th>Active</th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+    
+    <div class="form-group">
+        <button type="submit" value="Submit" class="btn btn-primary" style="margin-right: 10px;"><i class="fa fa-save"></i> Submit</button>
+    </div>
+}
+
+<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+
+@section scripts
+{
+
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+        var popUp, dataTable;
+        $(document).ready(function() {
+            $('#PersonName').keypress(function(event) {
+                var keycode = (event.keyCode ? event.keyCode : event.which);
+                if (keycode == '13') {
+                    popUpForm('@Url.Action("PersonGrid", "Person")', "Person");
+                } else {
+                    event.preventDefault();
+                }
+                return false;
+            });
+            $('#ItemName').keypress(function (event) {
+                var keycode = (event.keyCode ? event.keyCode : event.which);
+                if (keycode == '13') {
+                    popUpForm('@Url.Action("PurchaseGrid", "Purchase")', "Purchase");
+                } else {
+                    event.preventDefault();
+                }
+                return false;
+            });
+        });
+
+        function popUpForm(url, type) {
+            event.preventDefault();
+            var formDiv = $('<div class="popDiv" />');
+            $.get(url).done(function(response) {
+                formDiv.html(response);
+
+                popUp = formDiv.dialog({
+                    autoOpen: true,
+                    resizable: false,
+                    title: 'Select Items',
+                    draggable: false,
+                    width: $(window).width() - 50,
+                    height: 600,
+                    modal: true,
+                    close: function() {
+                        dataTable.destroy();
+                        popUp.dialog('close');
+                        $('.popDiv').remove();
+                    }
+                });
+                if (type == 'Person')
+                    loadPersonDialogContent('');
+                else if (type == 'Purchase')
+                    loadDialogContent();
+
+
+            });
+        }
+
+        function loadDialogContent() {
+            dataTable = $("#purchaseTable").DataTable({
+                "ajax": {
+                    "url": "/Purchase/GetData",
+                    "type": "Get",
+                    "datatype": "json"
+                },
+                "columns": [
+                    { "data": "PortalName", "name": "PortalName" },
+                    { "data": "InventoryType", "name": "InventoryType" },
+                    { "data": "CategoryName", "name": "CategoryName" },
+                    { "data": "ItemName", "name": "ItemName" },
+                    { "data": "Subname", "name": "Subname" },
+                    { "data": "Qty", "name": "Qty" },
+                    { "data": "Rate", "name": "Rate" },
+                    { "data": "Total", "name": "Total" },
+                    { "data": "Percentage", "name": "Percentage" },
+                    { "data": "DatePurchasedFormatted", "name": "DatePurchased" }
+                ],
+                "language": {
+                    "emptyTable": "No data found, Please Click on <b>Add New</b> button",
+                    "processing": "Processing... Please wait"
+                },
+                keys: true
+            });
+
+            //bind row event
+            $('#purchaseTable tbody').on('dblclick',
+                'tr',
+                function() {
+                    var data = dataTable.row(this).data();
+                    //var data = dataTable.row(this).data();
+                    $('#ItemId').val(data['PurchaseId']);
+                    $('#ItemName').val(data['ItemName']);
+                    //console.log(data);
+
+                    popUp.dialog('close');
+                });
+        }
+
+        function loadPersonDialogContent(params) {
+            var url = '@Url.Action("GetData", "Person")' + params;
+            //params = params.split('?')[1].split('=')[0];
+
+            dataTable = $("#personTable").DataTable({
+                "ajax": {
+                    "url": url,
+                    "type": "Get",
+                    "datatype": "json"
+                },
+                "columns": [
+                    { "data": "Name", "name": "Name" },
+                    { "data": "FatherName", "name": "FatherName" },
+                    { "data": "Gender", "name": "Gender" },
+                    { "data": "CNIC", "name": "CNIC" },
+                    { "data": "DOB", "name": "DOB" },
+                    { "data": "Designation", "name": "Designation" }
+                ],
+                "language": {
+                    "emptyTable": "No data found",
+                    "processing": "Processing... Please wait"
+                },
+                keys: true
+            });
+            //console.log('hi1');
+            //bind row event
+            $('#personTable tbody').on('dblclick',
+                'tr',
+                function() {
+                    var data = dataTable.row(this).data();
+                    $('#PersonId').val(data['PersonId']);
+                    $('#PersonName').val(data['Name']);
+                    popUp.dialog('close');
+
+                    var urlService = '@Url.Action("GetServices", "BVS")?PersonId=' + $('#PersonId').val();
+                    $.ajax({
+                        url: urlService,
+                        type: "get"
+                    }).done(function(result) {
+                        //console.log(urlService);
+                        //console.log(result.data);
+
+
+                        $.each(result.data,
+                            function(i, item) {
+                                //console.log(item);
+                                //console.log(item.AllotmentServiceses);
+                                //console.log(item[0]);
+                                //console.log(i);
+                                //console.log('-------------');
+                                $('#ItemId').val(item.ItemId);
+                                $('#ItemName').val(item.ItemName);
+
+                                $.each(item.AllotmentServiceses,
+                                    function (j, itemService) {
+                                        //console.log(itemService);
+                                        //console.log('-------------');
+
+                                        var row = '<tr class="bvsTableRow">' +
+                                            '<td style="display: none" class="BVSAllotServiceId">' +
+                                            itemService.BVSAllotServiceId +
+                                            '</td>' +
+                                            '<td style="display: none" class="BvsServiceId">' +
+                                            itemService.BvsServiceId +
+                                            '</td>' +
+                                            '<td class="BvsServiceName">' +
+                                            itemService.BvsServiceName +
+                                            '</td>' +
+                                            '<td>' +
+                                            '<input type="checkbox" name="vehicle1" class="Active" id="Active" ' + (itemService.Active ? 'checked="checked"' : 'uzair') + '>' +
+                                            '</td>' +
+                                            '</tr>';
+                                        //console.log(row);
+                                        $('#servicesTable tbody').append(row);
+                                    });
+                                //$('#Active').click(function () {
+                                //    console.log($(this).is(':checked'));
+                                //    //if (this.checked == false) {
+                                //    //    $(this).attr('checked', false);
+                                //    //}
+                                //    //else {
+                                //    //    $(this).attr('checked', true);
+                                //    //}
+                                //});
+                            });
+
+
+                    }).fail(function(jqXHR, textStatus, errorThrown) {
+                        // needs to implement if it fails
+                        alert('Error in loading data');
+                    });
+                });
+        }
+
+        function SubmitForm(form) {
+            event.preventDefault();
+            //$.validator.unobtrusive.parse(form);
+
+
+            //if ($(form).valid()) {
+
+                var pur = $('.bvsTableRow');
+
+                var AllotmentServiceses = [];
+
+                $.each(pur,
+                    function () {
+                        AllotmentServiceses.push({
+                            BVSAllotServiceId: $(this).find('.BVSAllotServiceId').get(0).innerText,
+                            BvsServiceName: $(this).find('.BvsServiceName').get(0).innerText,
+                            BvsServiceId: $(this).find('.BvsServiceId').get(0).innerText,
+                            Active: $(this).find('.Active').is(':checked')
+                        });
+                    });
+
+                console.log(AllotmentServiceses);
+
+
+                var allotment = {
+                    PersonId: $('#PersonId').val(),
+                    PersonName: $('#PersonName').val(),
+                    //Date: $('#Date').val(),
+                    ItemId: $('#ItemId').val(),
+                    ItemName: $('#ItemName').val(),
+                    AllotmentServiceses: AllotmentServiceses
+                }
+            console.log(allotment);
+
+                $.ajax({
+                    type: "POST",
+                    url: form.action,
+                    data: allotment,
+                    success: function (data) {
+                        if (data.success) {
+
+                            //resetForm();
+                            $.notify(
+                                data.message,
+                                {
+                                    position: "top center",
+                                    className: "success"
+                                }
+                            );
+
+                        }
+                    }
+                });
+            //} else {
+            //    $.notify(
+            //        "Validation Error",
+            //        {
+            //            position: "top center",
+            //            className: "error"
+            //        }
+            //    );
+            //}
+            return false;
+        }
+
+
+
+    </script>
+
+}

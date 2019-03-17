@@ -28,9 +28,9 @@ namespace SetLinksTelecom.Controllers
             return View();
         }
 
-        public ActionResult GetData()
+        public ActionResult GetData(string inventoryType = "")
         {
-            return Json(new {data = _purchaseRepo.GetData()}, JsonRequestBehavior.AllowGet);
+            return Json(new {data = _purchaseRepo.GetData(inventoryType)}, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]

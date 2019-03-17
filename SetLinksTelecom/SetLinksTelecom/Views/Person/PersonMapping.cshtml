@@ -3,9 +3,9 @@
     ViewBag.Title = "PersonMapping";
 }
 
-<h2>Mapping</h2>
+<h2>Person Mapping</h2>
 
-<a class="btn btn-success" style="margin-bottom: 10px;" onclick="popUpForm('@Url.Action("AddOrEdit", "Person", new { withoutBoss = "with"})')"><i class="fa fa-plus"></i> Add Follower</a>
+
 <div class="form-group">
     @Html.LabelFor(m => m.DesignationId, new { @class = "control-label" })
     @Html.DropDownListFor(m => m.DesignationId, new SelectList(Model.Designations, "Id", "Name"), "Select Designation", new { @class = "form-control", @onchange="clearPersonAndGrid()" })
@@ -19,11 +19,11 @@
     @Html.ValidationMessageFor(m => m.PersonName)
 </div>
 
+<a class="btn btn-success" style="margin-bottom: 10px;" onclick="popUpForm('@Url.Action("PersonGrid", "Person")', 'with')"><i class="fa fa-plus"></i> Add Follower</a>
 
 <table id="workersTable" class="table table-hover">
     <thead>
     <tr>
-        <th></th>
         <th>Name</th>
         <th>Father Name</th>
         <th>Gender</th>
@@ -47,8 +47,8 @@
 
     <script>
         var popUp, dataTable, followersDT;
-        $(document).ready(function () {
-            $('#PersonName').keypress(function (event) {
+        $(document).ready(function() {
+            $('#PersonName').keypress(function(event) {
                 //console.log($('#DesignationId').val());
                 if ($('#DesignationId').val() !== '') {
                     var keycode = (event.keyCode ? event.keyCode : event.which);
@@ -72,19 +72,12 @@
             followersDT = $('#workersTable').DataTable({
                 "data": [],
                 "columns": [
-                    {
-                        "className": 'details-control',
-                        "orderable": false,
-                        "searchable": false,
-                        "data": null,
-                        "defaultContent": ''
-                    },
                     { "data": "Name" },
                     { "data": "FatherName" },
                     { "data": "Gender" },
                     { "data": "CNIC" },
-                    { "data": "DOBFormatted" },
-                    { "data": "Designation.Name" },
+                    { "data": "DOB" },
+                    { "data": "Designation" },
                     {
                         "data": "PersonId",
                         "render": function(data) {
@@ -97,7 +90,7 @@
                         "width": "150px"
                     }
                 ],
-                rowCallback: function (row, data) { },
+                rowCallback: function(row, data) {},
                 info: false,
                 retrieve: true,
                 "order": [[1, 'asc']],
@@ -109,10 +102,46 @@
 
         });
 
+        function loadWorkers(params) {
+            var url = '@Url.Action("GetData", "Person")' + params;
+            //console.log(url);
+            $.ajax({
+                url: url,
+                type: "get"
+            }).done(function(result) {
+                //console.log(result);
+                //console.log(result.data);
+                followersDT.clear().draw();
+                followersDT.rows.add(result.data).draw();
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+                // needs to implement if it fails
+                alert('Error in loading data');
+            });
+        }
+
+        function Delete(data) {
+            //console.log(data);
+            if (confirm('Are you sure to remove this record')) {
+                var url = '@Url.Action("RemoveBoss", "Person")?PersonId=' + data;
+                $.ajax({
+                    url: url,
+                    type: "post"
+                }).done(function(result) {
+                    loadWorkers('?BossId=' + $('#PersonId').val());
+                }).fail(function(jqXHR, textStatus, errorThrown) {
+                    // needs to implement if it fails
+                    alert('Error in loading data');
+                });
+            }
+        }
+
         function popUpForm(url, type) {
+            event.preventDefault();
+            //url = url.replace('_with_', $('#PersonId').val());
+            //console.log(url);
             //console.log(type);
             var formDiv = $('<div class="popDiv" />');
-            $.get(url).done(function (response) {
+            $.get(url).done(function(response) {
                 formDiv.html(response);
 
                 popUp = formDiv.dialog({
@@ -123,21 +152,31 @@
                     width: $(window).width() - 50,
                     height: 600,
                     modal: true,
-                    close: function () {
+                    close: function() {
                         dataTable.destroy();
                         popUp.dialog('close');
                         $('.popDiv').remove();
                     }
                 });
-                //DesignationId
-                loadPersonDialogContent('?DesignationId=' + $('#DesignationId').val());
-                
+                //console.log('hi');
+                if (type == 'Person') {
+
+                    //DesignationId
+                    loadPersonDialogContent('?DesignationId=' + $('#DesignationId').val());
+                } else if (type == 'with') {
+                    loadPersonDialogContent('?withoutBoss=' + $('#PersonId').val());
+                }
+
             });
         }
 
+
         function loadPersonDialogContent(params) {
-            var url = '@Url.Action("GetData", "Person")'+params;
+            var url = '@Url.Action("GetData", "Person")' + params;
             //console.log(url);
+            //console.log(params);
+            params = params.split('?')[1].split('=')[0];
+
             dataTable = $("#personTable").DataTable({
                 "ajax": {
                     "url": url,
@@ -158,17 +197,23 @@
                 },
                 keys: true
             });
-
+            //console.log('hi1');
             //bind row event
             $('#personTable tbody').on('dblclick',
                 'tr',
-                function () {
-                    var data = dataTable.row(this).data();
-                    $('#PersonId').val(data['PersonId']);
-                    $('#PersonName').val(data['Name']);
-                    popUp.dialog('close');
-                    //console.log($('#PersonId').val());
-                    loadWorkers('?BossId=' + $('#PersonId').val());
+                function() {
+                    if (params == 'DesignationId') {
+                        var data = dataTable.row(this).data();
+                        $('#PersonId').val(data['PersonId']);
+                        $('#PersonName').val(data['Name']);
+                        popUp.dialog('close');
+                        //console.log($('#PersonId').val());
+                        loadWorkers('?BossId=' + $('#PersonId').val());
+                    } else if (params == 'withoutBoss') {
+                        var data = dataTable.row(this).data();
+                        assignBoss($('#PersonId').val(), data['PersonId']);
+                        popUp.dialog('close');
+                    }
                 });
         }
 
@@ -178,20 +223,21 @@
             followersDT.clear().draw();
         }
 
-        function loadWorkers(params) {
-            var url = '@Url.Action("GetData", "Person")' + params;
-            //console.log(url);
+
+        function assignBoss(bossId, followerId) {
+            var url = '@Url.Action("AssignBoss", "Person")?BossId=' + bossId + '&FollowerId=' + followerId;
             $.ajax({
                 url: url,
-                type: "get"
+                type: "post"
             }).done(function(result) {
-                followersDT.clear().draw();
-                followersDT.rows.add(result).draw();
+                loadWorkers('?BossId=' + $('#PersonId').val());
             }).fail(function(jqXHR, textStatus, errorThrown) {
                 // needs to implement if it fails
                 alert('Error in loading data');
             });
         }
+
+
     </script>
 
 }
