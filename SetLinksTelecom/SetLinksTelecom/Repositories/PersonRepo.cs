@@ -21,11 +21,15 @@ namespace SetLinksTelecom.Repositories
         public IList<Person> GetData(int BossId = 0, int DesignationId = 0, string withoutBoss = "")
         {
             if (withoutBoss != String.Empty)
-                return _db.Persons.Where(p => p.BossId == 0).Include(p => p.Designation).ToList();
-            if (BossId != 0)
+            {
+                var personId = Convert.ToInt32(withoutBoss);
+                return _db.Persons.Where(p => (p.BossId == null || p.BossId == 0) && p.PersonId != personId)
+                    .Include(p => p.Designation).ToList();
+            }
+            else if (BossId != 0)
                 return _db.Persons.Where(p => p.BossId == BossId).Include(p => p.Designation).ToList();
             else if (DesignationId != 0)
-                return _db.Persons.Where(p => p.DesignationId == DesignationId).Include(p => p.Designation).ToList();
+                return _db.Persons.Where(p => p.DesignationId == DesignationId).ToList();
             else
                 return _db.Persons.Include(p => p.Designation).ToList();
         }
@@ -71,6 +75,22 @@ namespace SetLinksTelecom.Repositories
         {
             Person person = _db.Persons.FirstOrDefault(p => p.PersonId.Equals(id));
             _db.Persons.Remove(person);
+            _db.SaveChanges();
+        }
+
+        public void AssignBoss(int BossId, int FollowerId)
+        {
+            Person person = _db.Persons.FirstOrDefault(p => p.PersonId.Equals(FollowerId));
+            person.BossId = BossId;
+            _db.Entry(person).State = EntityState.Modified;
+            _db.SaveChanges();
+        }
+
+        public void RemoveBoss(int PersonId = 0)
+        {
+            Person person = _db.Persons.FirstOrDefault(p => p.PersonId.Equals(PersonId));
+            person.BossId = null;
+            _db.Entry(person).State = EntityState.Modified;
             _db.SaveChanges();
         }
     }

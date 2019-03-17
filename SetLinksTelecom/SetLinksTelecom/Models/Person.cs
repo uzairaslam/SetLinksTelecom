@@ -86,7 +86,7 @@ namespace SetLinksTelecom.Models
         [Display(Name = "Designation")]
         public int DesignationId { get; set; }
         [ForeignKey("DesignationId")]
-        public Designation Designation { get; set; }
+        public virtual Designation Designation { get; set; }
         [MaxLength(12)]
         public string AccString { get; set; }
 

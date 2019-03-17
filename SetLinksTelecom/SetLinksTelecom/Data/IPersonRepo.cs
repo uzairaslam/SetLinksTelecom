@@ -14,5 +14,7 @@ namespace SetLinksTelecom.Data
         void SavePerson(Person person);
         void UpdatePerson(Person person);
         void DeletePerson(int id);
+        void AssignBoss(int BossId, int FollowerId);
+        void RemoveBoss(int PersonId = 0);
     }
 }

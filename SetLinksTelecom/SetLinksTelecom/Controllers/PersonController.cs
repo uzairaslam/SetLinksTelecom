@@ -30,8 +30,33 @@ namespace SetLinksTelecom.Controllers
 
         public ActionResult GetData(int BossId = 0, int DesignationId = 0, string withoutBoss = "")
         {
-            IList<Person> persons = _personRepo.GetData(BossId, DesignationId);
-            return Json(new { data = persons }, JsonRequestBehavior.AllowGet);
+            IList<Person> persons = _personRepo.GetData(BossId, DesignationId, withoutBoss);
+            return Json(new { data = (from P in persons
+                select new
+                {
+                    PersonId = P.PersonId,
+                    Name = P.Name,
+                    FatherName = P.FatherName,
+                    Gender = P.Gender,
+                    CNIC = P.CNIC,
+                    DOB = P.DOB,
+                    DOBFormatted = P.DOBFormatted,
+                    CNICIssueDateFormatted = P.CNICIssueDateFormatted,
+                    P.MobileBusiness,
+                    P.CurrentAddress,
+                    P.MobilePersonal,
+                    P.PermanentAddress,
+                    P.Qualification,
+                    Designation = P.Designation.Name
+                })
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult RemoveBoss(int PersonId = 0)
+        {
+            _personRepo.RemoveBoss(PersonId);
+            return Json(new { success = true, message = "Removed Follower Successfully" }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult PersonGrid()
@@ -77,6 +102,13 @@ namespace SetLinksTelecom.Controllers
             {
                 return Json(new { success = false, message = "Error in " + (person.PersonId == 0 ? "saving" : "updation") + "\n" + e.Message }, JsonRequestBehavior.AllowGet);
             }
+        }
+
+        [HttpPost]
+        public ActionResult AssignBoss(int BossId, int FollowerId)
+        {
+            _personRepo.AssignBoss(BossId,FollowerId);
+            return Json(new { success = true, message = "Updated Successfully" }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

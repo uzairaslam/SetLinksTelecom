@@ -17,44 +17,90 @@ namespace SetLinksTelecom.Repositories
         {
             _db = db;
         }
-        public IEnumerable<dtoDisplayPurchase> GetData()
+        public IEnumerable<dtoDisplayPurchase> GetData(string inventoryType = "")
         {
-            IEnumerable<dtoDisplayPurchase> purchases = from A in (
-                    (from p in _db.Purchases
-                     join po in _db.Portals on p.PortalId equals po.PortalId
-                     join i in _db.Items on p.ItemId equals i.ItemId
-                     join cat in _db.ProductCategories on i.ProductCategoryId equals cat.ProductCategoryId
-                     select new
-                     {
-                         PortalName = po.Name,
-                         CategoryName = cat.Name,
-                         ItemName = i.Name,
-                         InventoryTypeId = cat.InventoryTypeId,
-                         p.PurchaseId,
-                         Subname = p.Subname,
-                         Remarks = p.Remarks,
-                         Qty = p.Qty,
-                         Total = p.Total,
-                         Percentage = p.Percentage,
-                         Rate = p.Rate
-                     }))
-                                                        join t in _db.InventoryTypes on new { InventoryTypeId = A.InventoryTypeId } equals new
-                                                        { InventoryTypeId = t.InventoryTypeId }
-                                                        select new dtoDisplayPurchase
-                                                        {
-                                                            InventoryType = t.Name,
-                                                            PortalName = A.PortalName,
-                                                            CategoryName = A.CategoryName,
-                                                            ItemName = A.ItemName,
-                                                            //InventoryTypeId = (int?)A.InventoryTypeId,
-                                                            PurchaseId = A.PurchaseId,
-                                                            Subname = A.Subname,
-                                                            Remarks = A.Remarks,
-                                                            Qty = A.Qty,
-                                                            Total = A.Total,
-                                                            Percentage = A.Percentage,
-                                                            Rate = A.Rate
-                                                        };
+            IEnumerable<dtoDisplayPurchase> purchases = new List<dtoDisplayPurchase>();
+            if (inventoryType == "")
+            {
+                purchases = from A in (
+                        (from p in _db.Purchases
+                            join po in _db.Portals on p.PortalId equals po.PortalId
+                            join i in _db.Items on p.ItemId equals i.ItemId
+                            join cat in _db.ProductCategories on i.ProductCategoryId equals cat.ProductCategoryId
+                            select new
+                            {
+                                PortalName = po.Name,
+                                CategoryName = cat.Name,
+                                ItemName = i.Name,
+                                InventoryTypeId = cat.InventoryTypeId,
+                                p.PurchaseId,
+                                Subname = p.Subname,
+                                Remarks = p.Remarks,
+                                Qty = p.Qty,
+                                Total = p.Total,
+                                Percentage = p.Percentage,
+                                Rate = p.Rate
+                            }))
+                    join t in _db.InventoryTypes on new { InventoryTypeId = A.InventoryTypeId } equals new
+                        { InventoryTypeId = t.InventoryTypeId }
+                    select new dtoDisplayPurchase
+                    {
+                        InventoryType = t.Name,
+                        PortalName = A.PortalName,
+                        CategoryName = A.CategoryName,
+                        ItemName = A.ItemName,
+                        //InventoryTypeId = (int?)A.InventoryTypeId,
+                        PurchaseId = A.PurchaseId,
+                        Subname = A.Subname,
+                        Remarks = A.Remarks,
+                        Qty = A.Qty,
+                        Total = A.Total,
+                        Percentage = A.Percentage,
+                        Rate = A.Rate
+                    };
+
+            }
+            else
+            {
+                purchases = from A in (
+                        (from p in _db.Purchases
+                            join po in _db.Portals on p.PortalId equals po.PortalId
+                            join i in _db.Items on p.ItemId equals i.ItemId
+                            join cat in _db.ProductCategories on i.ProductCategoryId equals cat.ProductCategoryId
+                            select new
+                            {
+                                PortalName = po.Name,
+                                CategoryName = cat.Name,
+                                ItemName = i.Name,
+                                InventoryTypeId = cat.InventoryTypeId,
+                                p.PurchaseId,
+                                Subname = p.Subname,
+                                Remarks = p.Remarks,
+                                Qty = p.Qty,
+                                Total = p.Total,
+                                Percentage = p.Percentage,
+                                Rate = p.Rate
+                            }))
+                    join t in _db.InventoryTypes on new { InventoryTypeId = A.InventoryTypeId } equals new
+                        { InventoryTypeId = t.InventoryTypeId }
+                    where t.Name.Equals(inventoryType)
+                    select new dtoDisplayPurchase
+                    {
+                        InventoryType = t.Name,
+                        PortalName = A.PortalName,
+                        CategoryName = A.CategoryName,
+                        ItemName = A.ItemName,
+                        //InventoryTypeId = (int?)A.InventoryTypeId,
+                        PurchaseId = A.PurchaseId,
+                        Subname = A.Subname,
+                        Remarks = A.Remarks,
+                        Qty = A.Qty,
+                        Total = A.Total,
+                        Percentage = A.Percentage,
+                        Rate = A.Rate
+                    };
+
+            }
             return purchases;
             //return from p in _db.Purchases
             //       join po in _db.Portals on p.PortalId equals po.PortalId
@@ -420,7 +466,7 @@ namespace SetLinksTelecom.Repositories
                 });
                 #endregion
 
-                
+
 
                 Stock stock = _db.Stocks.FirstOrDefault(s => s.ItemId.Equals(dtoTangible.ItemId));
                 if (stock == null)
@@ -430,7 +476,7 @@ namespace SetLinksTelecom.Repositories
                         ItemId = dtoTangible.ItemId,
                         NetQty = dtoTangible.Numbers.Count,
                         PurchaseId = purchaseId,
-                        AvgRate =  dtoTangible.Rate
+                        AvgRate = dtoTangible.Rate
                     };
                     _db.Stocks.Add(stock);
                 }
