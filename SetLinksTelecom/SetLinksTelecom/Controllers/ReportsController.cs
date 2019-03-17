@@ -134,6 +134,28 @@ namespace SetLinksTelecom.Controllers
         }
 
         [HttpGet]
+        public ActionResult FullStock()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult FullStock(int i = 0)
+        {
+            DataTable FullStock = _repo.GetFullStock();
+            FullStock.TableName = "DSFullStock";
+            ReportViewer reportViewer = new ReportViewer();
+            reportViewer.ProcessingMode = ProcessingMode.Local;
+            reportViewer.SizeToReportContent = true;
+            reportViewer.Width = Unit.Percentage(900);   //Reports/FullStock
+            reportViewer.Height = Unit.Percentage(900);
+            reportViewer.LocalReport.ReportPath = Request.MapPath(Request.ApplicationPath) + @"Reports\FullStock.rdlc";
+            reportViewer.LocalReport.DataSources.Add(new ReportDataSource("DSFullStock", FullStock));
+            ViewBag.ReportViewer = reportViewer;
+            ViewBag.ReportTitle = "Full Stock";
+            return View("_ReportView");
+        }
+
+        [HttpGet]
         public ActionResult CustomLedger()
         {
             return View();

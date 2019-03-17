@@ -18,6 +18,56 @@ namespace SetLinksTelecom.Repositories
             _db = db;
         }
 
+        public DataTable GetFullStock()
+        {
+            DataTable DT = new DataTable();
+            DT = ((from StockSumary in
+                       (
+                           (from P in _db.Purchases
+                            join I in _db.Items on P.ItemId equals I.ItemId
+                            join PC in _db.ProductCategories on I.ProductCategoryId equals PC.ProductCategoryId
+                            join IT in _db.InventoryTypes on PC.InventoryTypeId equals IT.InventoryTypeId
+                            where
+                              (bool)P.Return == false
+                            group new { P, I, PC, IT} by new
+                            {
+                                P.ItemId,
+                                InventoryType = IT.Name,
+                                ProCat = PC.Name,
+                                ItemName = I.Name
+                            } into g
+                            select new
+                            {
+                                ItemId = (int?)g.Key.ItemId,
+                                InventoryType = g.Key.InventoryType,
+                                ProductCategory = g.Key.ProCat,
+                                ItemName = g.Key.ItemName,
+                                StockIn = (decimal?)g.Sum(p => p.P.Qty),
+                                StockOut = (decimal?)g.Sum(p => p.P.StockOut),
+                                StockReturn =
+                                  (from Purchases in _db.Purchases
+                                   where
+                                     Purchases.ItemId == g.Key.ItemId &&
+                                     (bool)Purchases.Return == true
+                                   select new
+                                   {
+                                       StockReturn = ((decimal?)Purchases.Qty ?? (decimal?)0)
+                                   }).Sum(p => ((decimal?)p.StockReturn ?? (decimal?)0))
+                            }))
+                   select new
+                   {
+                       StockSumary.ItemId,
+                       StockSumary.InventoryType,
+                       StockSumary.ProductCategory,
+                       StockSumary.ItemName,
+                       StockSumary.StockIn,
+                       StockSumary.StockOut,
+                       StockSumary.StockReturn,
+                       NetStock = ((StockSumary.StockIn + ((decimal?)StockSumary.StockReturn ?? (decimal?)0)) - StockSumary.StockOut)
+                   })).ToList().ToDataTable();
+            return DT;
+        }
+
         public DataTable GetCustomLedger(DtoCustomLedger CLdr)
         {
             DataTable DT = new DataTable();

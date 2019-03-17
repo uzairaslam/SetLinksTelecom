@@ -716,6 +716,7 @@
     <Content Include="Views\Sale\SaleReturnItemRow.cshtml" />
     <Content Include="Views\AccAccount\JvEntry.cshtml" />
     <Content Include="Views\BVS\BvsAllotment.cshtml" />
+    <Content Include="Views\Reports\FullStock.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -912,6 +913,7 @@
     <EmbeddedResource Include="Migrations\201903021351518_AddedPidAndNumberPurchase.resx">
       <DependentUpon>201903021351518_AddedPidAndNumberPurchase.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reports\FullStock.rdlc" />
     <EmbeddedResource Include="Reports\Ledger.rdlc" />
     <EmbeddedResource Include="Reports\MyReport.rdlc" />
     <EmbeddedResource Include="Reports\TrailBalance.rdlc" />
