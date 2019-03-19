@@ -2,6 +2,10 @@
 
 @{
     ViewBag.Title = "TangiblePurchase";
+    if (Session["userName"] == null)
+    {
+        Response.Redirect("~/User/Login");
+    }
 }
 
 <h2>Tangible Purchase</h2>

@@ -1,6 +1,10 @@
 ﻿
 @{
     ViewBag.Title = "TrailBalance";
+    if (Session["userName"] == null)
+    {
+        Response.Redirect("~/User/Login");
+    }
 }
 
 <h2>TrailBalance</h2>

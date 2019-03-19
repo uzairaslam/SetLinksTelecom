@@ -1,6 +1,10 @@
 ﻿
 @{
     ViewBag.Title = "BVS Biometric verified system";
+    if (Session["userName"] == null)
+    {
+        Response.Redirect("~/User/Login");
+    }
 }
 
 <h2>Biometric verified system (BVS) Services</h2>

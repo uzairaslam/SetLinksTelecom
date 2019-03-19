@@ -1,6 +1,10 @@
 ﻿
 @{
     ViewBag.Title = "BalanceSheet";
+    if (Session["userName"] == null)
+    {
+        Response.Redirect("~/User/Login");
+    }
 }
 
 <h2>BalanceSheet</h2>

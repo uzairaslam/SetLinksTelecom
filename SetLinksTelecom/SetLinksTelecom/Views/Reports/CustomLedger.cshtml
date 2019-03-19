@@ -1,6 +1,10 @@
 ﻿@model SetLinksTelecom.DTO.DtoLedger
 @{
     ViewBag.Title = "CustomLedger";
+    if (Session["userName"] == null)
+    {
+        Response.Redirect("~/User/Login");
+    }
 }
 
 <h2>CustomLedger</h2>

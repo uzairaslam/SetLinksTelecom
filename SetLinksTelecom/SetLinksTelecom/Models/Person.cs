@@ -28,7 +28,8 @@ namespace SetLinksTelecom.Models
         public string Gender { get; set; }
 
         [Required(ErrorMessage = "CNIC is Required")]
-        [RegularExpression(@"^[0-9+]{5}-[0-9+]{7}-[0-9]{1}$", ErrorMessage = "Not Valid CNIC \nFormat: 12345-1234567-1")]
+        //[RegularExpression(@"^[0-9+]{5}-[0-9+]{7}-[0-9]{1}$", ErrorMessage = "Not Valid CNIC \nFormat: 12345-1234567-1")]
+        [RegularExpression(@"^[1-4]{1}[0-9]{4}(-)?[0-9]{7}(-)?[0-9]{1}$", ErrorMessage = "Not Valid CNIC \nFormat: 12345-1234567-1")]
         public string CNIC { get; set; }
 
         [Display(Name = "Date of Birth")]

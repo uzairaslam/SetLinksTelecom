@@ -1,5 +1,9 @@
 ﻿@{
     ViewBag.Title = "Items";
+    if (Session["userName"] == null)
+    {
+        Response.Redirect("~/User/Login");
+    }
 }
 
 <h2>Items</h2>
