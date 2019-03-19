@@ -10,7 +10,7 @@ namespace SetLinksTelecom.Models
     {
         public int SaleId { get; set; }
         public int PersonId { get; set; }
-        [Display(Name = "Date Purchased")]
+        [Display(Name = "Date Sale")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Date { get; set; }

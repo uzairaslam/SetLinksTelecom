@@ -1,6 +1,10 @@
 ﻿
 @{
     ViewBag.Title = "Product Category";
+    if (Session["userName"] == null)
+    {
+        Response.Redirect("~/User/Login");
+    }
 }
 
 

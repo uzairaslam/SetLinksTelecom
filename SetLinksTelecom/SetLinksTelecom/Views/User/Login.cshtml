@@ -1,0 +1,57 @@
+﻿@model SetLinksTelecom.DTO.DtoUserLogin
+@{
+    ViewBag.Title = "Login";
+    if (Session["userName"] != null)
+    {
+        Response.Redirect("~/Home/Index");
+    }
+}
+
+@using (Html.BeginForm("Login", "User"))
+{
+    <div class="card text-white bg-secondary mb-3" id="login-div" style="max-width: 20rem;">
+        <div class="card-header">Login</div>
+        <div class="card-body">
+            <p class="card-title field-validation-error">@Html.DisplayFor(m => m.ErrorMessage)</p>
+
+            <div class="form-group">
+                @*@Html.LabelFor(m => m.Username, new { @class = "control-label" })*@
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fa fa-user-secret"></i></span>
+                    </div>
+                    @Html.EditorFor(m => m.Username, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.Username) } })
+                </div>
+                @Html.ValidationMessageFor(m => m.Username)
+            </div>
+
+            <div class="form-group">
+                @*@Html.LabelFor(m => m.Password, new { @class = "control-label" })*@
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fa fa-key"></i></span>
+                    </div>
+                    @Html.EditorFor(m => m.Password, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.Password) } })
+                </div>
+                @Html.ValidationMessageFor(m => m.Password)
+            </div>
+
+            <div class="form-group" style="padding-left: 10px; padding-top: 10px;">
+                <button type="submit" class="btn btn-outline-primary" style="margin-right: 20px;"><i class="fa fa-sign-in"></i> Login</button>
+                <button type="reset" class="btn btn-outline-primary"><i class="fa fa-refresh"></i> Clear</button>
+            </div>
+        </div>
+
+    </div>
+}
+<div class="clear-fix">
+    &nbsp;
+</div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('footer').remove();
+        })
+    </script>
+}

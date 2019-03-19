@@ -40,6 +40,7 @@ namespace SetLinksTelecom.Data
         public DbSet<BvsService> BvsServices { get; set; }
         public DbSet<BVSAllot> BvsAllots { get; set; }
         public DbSet<BVSAllotService> BvsAllotServices { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

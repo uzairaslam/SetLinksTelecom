@@ -2,6 +2,10 @@
 
 @{
     ViewBag.Title = "Voucher";
+    if (Session["userName"] == null)
+    {
+        Response.Redirect("~/User/Login");
+    }
 }
 
 <h2>Voucher</h2>
