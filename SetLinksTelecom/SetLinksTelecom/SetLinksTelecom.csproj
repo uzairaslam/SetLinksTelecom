@@ -717,6 +717,7 @@
     <Content Include="Views\AccAccount\JvEntry.cshtml" />
     <Content Include="Views\BVS\BvsAllotment.cshtml" />
     <Content Include="Views\Reports\FullStock.cshtml" />
+    <Content Include="Views\Reports\SumBalSheet.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -916,6 +917,7 @@
     <EmbeddedResource Include="Reports\FullStock.rdlc" />
     <EmbeddedResource Include="Reports\Ledger.rdlc" />
     <EmbeddedResource Include="Reports\MyReport.rdlc" />
+    <EmbeddedResource Include="Reports\SumBalSheet.rdlc" />
     <EmbeddedResource Include="Reports\TrailBalance.rdlc" />
     <EmbeddedResource Include="Reports\Voucher.rdlc" />
   </ItemGroup>
