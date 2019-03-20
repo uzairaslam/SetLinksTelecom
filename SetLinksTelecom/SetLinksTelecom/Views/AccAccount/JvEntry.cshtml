@@ -2,6 +2,10 @@
 
 @{
     ViewBag.Title = "Jv Entry";
+    if (Session["userName"] == null)
+    {
+        Response.Redirect("~/User/Login");
+    }
 }
 
 <h2>Journal Entry Voucher</h2>

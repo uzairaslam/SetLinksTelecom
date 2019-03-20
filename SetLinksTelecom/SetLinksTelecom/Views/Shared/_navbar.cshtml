@@ -10,100 +10,111 @@
             <li class="nav-item @Html.IsActiveLink(actions: "Index", controllers: "Home")">
                 @Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })
             </li>
-            <li class="nav-item dropdown show">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Add Initials </a>
-                <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <li class="nav-item @Html.IsActiveLink(actions: "Index", controllers: "Line")">
-                        @Html.ActionLink("Lines", "Index", "Line", null, new { @class = "dropdown-item" })
-                    </li>
-                    <li class="nav-item @Html.IsActiveLink(actions: "Index", controllers: "Designation")">
-                        @Html.ActionLink("Designation", "Index", "Designation", null, new { @class = "dropdown-item" })
-                    </li>
-                    <li class="nav-item @Html.IsActiveLink(actions: "Index", controllers: "Person")">
-                        @Html.ActionLink("Person", "Index", "Person", null, new { @class = "dropdown-item" })
-                    </li>
-                    <li class="nav-item @Html.IsActiveLink(actions: "PersonMapping", controllers: "Person")">
-                        @Html.ActionLink("Person Mapping", "PersonMapping", "Person", null, new { @class = "dropdown-item" })
-                    </li>
-                    <li class="nav-item @Html.IsActiveLink(actions: "Index", controllers: "BVS")">
-                        @Html.ActionLink("BVS", "Index", "BVS", null, new { @class = "dropdown-item" })
-                    </li>
-                    @*<li class="nav-item @Html.IsActiveLink(actions: "Index", controllers: "Item")">
+            @if (Session["userName"] != null)
+            {
+                <li class="nav-item dropdown show">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Add Initials </a>
+                    <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
+                        <li class="nav-item @Html.IsActiveLink(actions: "Index", controllers: "Line")">
+                            @Html.ActionLink("Lines", "Index", "Line", null, new { @class = "dropdown-item" })
+                        </li>
+                        <li class="nav-item @Html.IsActiveLink(actions: "Index", controllers: "Designation")">
+                            @Html.ActionLink("Designation", "Index", "Designation", null, new { @class = "dropdown-item" })
+                        </li>
+                        <li class="nav-item @Html.IsActiveLink(actions: "Index", controllers: "Person")">
+                            @Html.ActionLink("Person", "Index", "Person", null, new { @class = "dropdown-item" })
+                        </li>
+                        <li class="nav-item @Html.IsActiveLink(actions: "PersonMapping", controllers: "Person")">
+                            @Html.ActionLink("Person Mapping", "PersonMapping", "Person", null, new { @class = "dropdown-item" })
+                        </li>
+                        <li class="nav-item @Html.IsActiveLink(actions: "Index", controllers: "BVS")">
+                            @Html.ActionLink("BVS", "Index", "BVS", null, new { @class = "dropdown-item" })
+                        </li>
+                        @*<li class="nav-item @Html.IsActiveLink(actions: "Index", controllers: "Item")">
+                                @Html.ActionLink("Items", "Index", "Item", null, new { @class = "dropdown-item" })
+                            </li>*@
+                    </ul>
+                </li>
+                <li class="nav-item dropdown show">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Items </a>
+                    <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
+                        @*<li class="nav-item @Html.IsActiveLink(actions: "InventoryType", controllers: "InventoryType")">
+                                @Html.ActionLink("Inventory Type", "InventoryType", "InventoryType", null, new { @class = "dropdown-item" })
+                            </li>*@
+                        <li class="nav-item @Html.IsActiveLink(actions: "Index", controllers: "ProductCategory")">
+                            @Html.ActionLink("Product Category", "Index", "ProductCategory", null, new { @class = "dropdown-item" })
+                        </li>
+                        <li class="nav-item @Html.IsActiveLink(actions: "Index", controllers: "Item")">
                             @Html.ActionLink("Items", "Index", "Item", null, new { @class = "dropdown-item" })
-                        </li>*@
-                </ul>
-            </li>
-            <li class="nav-item dropdown show">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Items </a>
-                <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    @*<li class="nav-item @Html.IsActiveLink(actions: "InventoryType", controllers: "InventoryType")">
-                            @Html.ActionLink("Inventory Type", "InventoryType", "InventoryType", null, new { @class = "dropdown-item" })
-                        </li>*@
-                    <li class="nav-item @Html.IsActiveLink(actions: "Index", controllers: "ProductCategory")">
-                        @Html.ActionLink("Product Category", "Index", "ProductCategory", null, new { @class = "dropdown-item" })
-                    </li>
-                    <li class="nav-item @Html.IsActiveLink(actions: "Index", controllers: "Item")">
-                        @Html.ActionLink("Items", "Index", "Item", null, new { @class = "dropdown-item" })
-                    </li>
-                </ul>
-            </li>
-            <li class="nav-item dropdown show">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Purchase </a>
-                <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    @*<li class="nav-item @Html.IsActiveLink(actions: "InventoryType", controllers: "InventoryType")">
-                            @Html.ActionLink("Inventory Type", "InventoryType", "InventoryType", null, new { @class = "dropdown-item" })
-                        </li>*@
-                    <li class="nav-item @Html.IsActiveLink(actions: "Index", controllers: "Purchase")">
-                        @Html.ActionLink("Purchase", "Index", "Purchase", null, new { @class = "dropdown-item" })
-                    </li>
-                    <li class="nav-item @Html.IsActiveLink(actions: "TangiblePurchase", controllers: "Purchase")">
-                        @Html.ActionLink("Tangible Purchase", "TangiblePurchase", "Purchase", null, new { @class = "dropdown-item" })
-                    </li>
-                </ul>
-            </li>
-            @*<li class="nav-item @Html.IsActiveLink(actions: "Index", controllers: "Purchase")">
-                @Html.ActionLink("Purchase", "Index", "Purchase", null, new { @class = "nav-link" })
-            </li>*@
-            <li class="nav-item dropdown show">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Sale </a>
-                <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <li class="nav-item @Html.IsActiveLink(actions: "TangibleSaleIndex", controllers: "Sale")">
-                        @Html.ActionLink("Tangible Items", "TangibleSaleIndex", "Sale", null, new { @class = "dropdown-item" })
-                    </li>
-                    <li class="nav-item @Html.IsActiveLink(actions: "InTangibleSaleIndex", controllers: "Sale")">
-                        @Html.ActionLink("InTangible Items", "InTangibleSaleIndex", "Sale", null, new { @class = "dropdown-item" })
-                    </li>
-                    @*<li class="nav-item @Html.IsActiveLink(actions: "InTangibleSaleIndex", controllers: "SaleReturn")">
-                        @Html.ActionLink("Tangible Sale Return", "TangibleSaleReturnIndex", "SaleReturn", null, new { @class = "dropdown-item" })
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown show">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Purchase </a>
+                    <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
+                        @*<li class="nav-item @Html.IsActiveLink(actions: "InventoryType", controllers: "InventoryType")">
+                                @Html.ActionLink("Inventory Type", "InventoryType", "InventoryType", null, new { @class = "dropdown-item" })
+                            </li>*@
+                        <li class="nav-item @Html.IsActiveLink(actions: "Index", controllers: "Purchase")">
+                            @Html.ActionLink("Purchase", "Index", "Purchase", null, new { @class = "dropdown-item" })
+                        </li>
+                        <li class="nav-item @Html.IsActiveLink(actions: "TangiblePurchase", controllers: "Purchase")">
+                            @Html.ActionLink("Tangible Purchase", "TangiblePurchase", "Purchase", null, new { @class = "dropdown-item" })
+                        </li>
+                    </ul>
+                </li>
+                @*<li class="nav-item @Html.IsActiveLink(actions: "Index", controllers: "Purchase")">
+                        @Html.ActionLink("Purchase", "Index", "Purchase", null, new { @class = "nav-link" })
                     </li>*@
-                    <li class="nav-item @Html.IsActiveLink(actions: "BvsAllotment", controllers: "BVS")">
-                        @Html.ActionLink("Bvs Allotment", "BvsAllotment", "BVS", null, new { @class = "dropdown-item" })
-                    </li>
-                </ul>
-            </li>
-            <li class="nav-item dropdown show">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Reports </a>
-                <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
-                    <li class="nav-item @Html.IsActiveLink(actions: "Ledger", controllers: "Reports")">
-                        @Html.ActionLink("Ledger", "Ledger", "Reports", null, new { @class = "dropdown-item" })
-                    </li>
-                    <li class="nav-item @Html.IsActiveLink(actions: "Voucher", controllers: "Reports")">
-                        @Html.ActionLink("Voucher", "Voucher", "Reports", null, new { @class = "dropdown-item" })
-                    </li>
-                    <li class="nav-item @Html.IsActiveLink(actions: "TrailBalance", controllers: "Reports")">
-                        @Html.ActionLink("Trail Balance", "TrailBalance", "Reports", null, new { @class = "dropdown-item" })
-                    </li>
-                    <li class="nav-item @Html.IsActiveLink(actions: "BalanceSheet", controllers: "Reports")">
-                        @Html.ActionLink("Balance Sheet", "BalanceSheet", "Reports", null, new { @class = "dropdown-item" })
-                    </li>
-                    <li class="nav-item @Html.IsActiveLink(actions: "CustomLedger", controllers: "Reports")">
-                        @Html.ActionLink("Custom Ledger", "CustomLedger", "Reports", null, new { @class = "dropdown-item" })
-                    </li>
-                    <li class="nav-item @Html.IsActiveLink(actions: "FullStock", controllers: "Reports")">
-                        @Html.ActionLink("Full Stock", "FullStock", "Reports", null, new { @class = "dropdown-item" })
-                    </li>
-                </ul>
-            </li>
+                <li class="nav-item dropdown show">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Sale </a>
+                    <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
+                        <li class="nav-item @Html.IsActiveLink(actions: "TangibleSaleIndex", controllers: "Sale")">
+                            @Html.ActionLink("Tangible Items", "TangibleSaleIndex", "Sale", null, new { @class = "dropdown-item" })
+                        </li>
+                        <li class="nav-item @Html.IsActiveLink(actions: "InTangibleSaleIndex", controllers: "Sale")">
+                            @Html.ActionLink("InTangible Items", "InTangibleSaleIndex", "Sale", null, new { @class = "dropdown-item" })
+                        </li>
+                        @*<li class="nav-item @Html.IsActiveLink(actions: "InTangibleSaleIndex", controllers: "SaleReturn")">
+                                @Html.ActionLink("Tangible Sale Return", "TangibleSaleReturnIndex", "SaleReturn", null, new { @class = "dropdown-item" })
+                            </li>*@
+                        <li class="nav-item @Html.IsActiveLink(actions: "BvsAllotment", controllers: "BVS")">
+                            @Html.ActionLink("Bvs Allotment", "BvsAllotment", "BVS", null, new { @class = "dropdown-item" })
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown show">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Reports </a>
+                    <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
+                        <li class="nav-item @Html.IsActiveLink(actions: "Ledger", controllers: "Reports")">
+                            @Html.ActionLink("Ledger", "Ledger", "Reports", null, new { @class = "dropdown-item" })
+                        </li>
+                        <li class="nav-item @Html.IsActiveLink(actions: "Voucher", controllers: "Reports")">
+                            @Html.ActionLink("Voucher", "Voucher", "Reports", null, new { @class = "dropdown-item" })
+                        </li>
+                        <li class="nav-item @Html.IsActiveLink(actions: "TrailBalance", controllers: "Reports")">
+                            @Html.ActionLink("Trail Balance", "TrailBalance", "Reports", null, new { @class = "dropdown-item" })
+                        </li>
+                        <li class="nav-item @Html.IsActiveLink(actions: "BalanceSheet", controllers: "Reports")">
+                            @Html.ActionLink("Balance Sheet", "BalanceSheet", "Reports", null, new { @class = "dropdown-item" })
+                        </li>
+                        <li class="nav-item @Html.IsActiveLink(actions: "CustomLedger", controllers: "Reports")">
+                            @Html.ActionLink("Custom Ledger", "CustomLedger", "Reports", null, new { @class = "dropdown-item" })
+                        </li>
+                        <li class="nav-item @Html.IsActiveLink(actions: "FullStock", controllers: "Reports")">
+                            @Html.ActionLink("Full Stock", "FullStock", "Reports", null, new { @class = "dropdown-item" })
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown show">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Accounts </a>
+                    <ul class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 40px, 0px); top: 0px; left: 0px; will-change: transform;">
+                        <li class="nav-item @Html.IsActiveLink(actions: "JvEntry", controllers: "AccAccount")">
+                            @Html.ActionLink("Jv Entry", "JvEntry", "AccAccount", null, new { @class = "dropdown-item" })
+                        </li>
+                    </ul>
+                </li>
+            }
             <li class="nav-item  @Html.IsActiveLink(actions: "About", controllers: "Home")">
                 @Html.ActionLink("About", "About", "Home", null, new { @class = "nav-link" })
             </li>
@@ -112,9 +123,25 @@
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search">
-            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+            @if (Session["userName"] == null)
+            {
+                @Html.ActionLink("Login", "Login", "User", null, new { @class = "btn btn-secondary my-2 my-sm-0" })
+            }
+            else
+            {
+                <button type="button" class="btn btn-secondary" style="margin-right: 5px;">
+                    <span class="fa fa-user" aria-hidden="true"></span>
+                    @Session["userName"].ToString()
+                </button>
+                @*@Html.ActionLink("Logout", "Logout", "User", null, new { @class = "btn btn-secondary my-2 my-sm-0" })*@
+                <a href="@Url.Action("Logout", "User")" class="btn btn-warning my-2 my-sm-0">
+                    Logout
+                    <span class="fa fa-sign-out" aria-hidden="true"></span>
+                </a>
+            }
+
+            @*<input class="form-control mr-sm-2" type="text" placeholder="Search">*@
+            @*<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>*@
         </form>
     </ul>
 </nav>
-

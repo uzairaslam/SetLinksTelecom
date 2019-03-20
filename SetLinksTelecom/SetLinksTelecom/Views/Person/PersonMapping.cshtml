@@ -1,6 +1,10 @@
 ﻿@model SetLinksTelecom.DTO.DtoPersonMapping
 @{
     ViewBag.Title = "PersonMapping";
+    if (Session["userName"] == null)
+    {
+        Response.Redirect("~/User/Login");
+    }
 }
 
 <h2>Person Mapping</h2>

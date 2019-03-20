@@ -1,6 +1,10 @@
 ﻿
 @{
     ViewBag.Title = "Full Stock";
+    if (Session["userName"] == null)
+    {
+        Response.Redirect("~/User/Login");
+    }
 }
 
 <h2>Full Stock</h2>
