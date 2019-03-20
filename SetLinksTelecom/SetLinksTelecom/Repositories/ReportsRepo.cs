@@ -380,6 +380,125 @@ namespace SetLinksTelecom.Repositories
             return DTBalanceSheet;
         }
 
+        public DataTable GetSummaryBalanceSheet()
+        {
+            DataTable DTSummBalShet = new DataTable();
+            DTSummBalShet = (
+                            from LeftSide in
+                                (
+                                    (from Assst in
+                                         (from AccVouchers in
+                                              (from AccVouchers in _db.AccVouchers
+                                               where
+                                                 AccVouchers.HeadCode.ToString().StartsWith("1")
+                                               select new
+                                               {
+                                                   Column1 = ((Decimal?)AccVouchers.Debit ?? (Decimal?)0),
+                                                   Column2 = ((Decimal?)AccVouchers.Credit ?? (Decimal?)0),
+                                                   Dummy = "x"
+                                               })
+                                          group AccVouchers by new { AccVouchers.Dummy } into g
+                                          select new
+                                          {
+                                              SDebit = g.Sum(p => p.Column1),
+                                              SCredit = g.Sum(p => p.Column2)
+                                          })
+                                     select new
+                                     {
+                                         AssetBalance = (Assst.SDebit - Assst.SCredit)
+                                     }))
+                            from RightSide in
+                                (
+                                    (from LibResBal in
+                                         (
+                                             (from LibRes in
+                                                  (from AccVouchers in
+                                                       (from AccVouchers in _db.AccVouchers
+                                                        where
+                                                          AccVouchers.HeadCode.ToString().StartsWith("2") ||
+                                                          AccVouchers.HeadCode.ToString().StartsWith("3")
+                                                        select new
+                                                        {
+                                                            Column1 = ((Decimal?)AccVouchers.Debit ?? (Decimal?)0),
+                                                            Column2 = ((Decimal?)AccVouchers.Credit ?? (Decimal?)0),
+                                                            Dummy = "x"
+                                                        })
+                                                   group AccVouchers by new { AccVouchers.Dummy } into g
+                                                   select new
+                                                   {
+                                                       SDebit = g.Sum(p => p.Column1),
+                                                       SCredit = g.Sum(p => p.Column2)
+                                                   })
+                                              select new
+                                              {
+                                                  LibResBalance = (LibRes.SCredit - LibRes.SDebit)
+                                              }))
+                                     from ProfitLossBal in
+                                         (
+                                             (from SRev in
+                                                  (
+                                                      (from Rev in
+                                                           (from AccVouchers in
+                                                                (from AccVouchers in _db.AccVouchers
+                                                                 where
+                                                                   AccVouchers.HeadCode.ToString().StartsWith("4")
+                                                                 select new
+                                                                 {
+                                                                     Column1 = ((Decimal?)AccVouchers.Debit ?? (Decimal?)0),
+                                                                     Column2 = ((Decimal?)AccVouchers.Credit ?? (Decimal?)0),
+                                                                     Dummy = "x"
+                                                                 })
+                                                            group AccVouchers by new { AccVouchers.Dummy } into g
+                                                            select new
+                                                            {
+                                                                SDebit = g.Sum(p => p.Column1),
+                                                                SCredit = g.Sum(p => p.Column2)
+                                                            })
+                                                       select new
+                                                       {
+                                                           RevBalance = (Rev.SCredit - Rev.SDebit)
+                                                       }))
+                                              from SExps in
+                                                  (
+                                                      (from Exps in
+                                                           (from AccVouchers in
+                                                                (from AccVouchers in _db.AccVouchers
+                                                                 where
+                                                                   AccVouchers.HeadCode.ToString().StartsWith("5")
+                                                                 select new
+                                                                 {
+                                                                     Column1 = ((Decimal?)AccVouchers.Debit ?? (Decimal?)0),
+                                                                     Column2 = ((Decimal?)AccVouchers.Credit ?? (Decimal?)0),
+                                                                     Dummy = "x"
+                                                                 })
+                                                            group AccVouchers by new { AccVouchers.Dummy } into g
+                                                            select new
+                                                            {
+                                                                SDebit = g.Sum(p => p.Column1),
+                                                                SCredit = g.Sum(p => p.Column2)
+                                                            })
+                                                       select new
+                                                       {
+                                                           ExpBalance = (Exps.SDebit - Exps.SCredit)
+                                                       }))
+                                              select new
+                                              {
+                                                  ProfitLossBalance = (SRev.RevBalance - SExps.ExpBalance)
+                                              }))
+                                     select new
+                                     {
+                                         LibResProfLossBal = (LibResBal.LibResBalance + ProfitLossBal.ProfitLossBalance)
+                                     }))
+                            select new
+                            {
+                                LeftSide.AssetBalance,
+                                RightSide.LibResProfLossBal,
+                                Differ = (LeftSide.AssetBalance - RightSide.LibResProfLossBal)
+                            }
+                ).ToList().ToDataTable();
+            return DTSummBalShet;
+        }
+
        
 
         public DataTable GetTrailBalance() //DtoTrailBalance TrailBalance

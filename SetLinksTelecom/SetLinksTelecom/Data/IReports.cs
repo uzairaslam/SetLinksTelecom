@@ -14,7 +14,10 @@ namespace SetLinksTelecom.Data
         DataTable GetLedgers(DtoLedger ledger);
         DataTable GetVouchers(DtoVoucher voucher);
         DataTable GetTrailBalance();
+        //--------For BalanceSheet---------
         DataTable GetBalanceSheet();
+        DataTable GetSummaryBalanceSheet();
+        //--------------------------------
         DataTable GetCustomLedger(DtoCustomLedger CLdr);
         DataTable GetFullStock();
 
