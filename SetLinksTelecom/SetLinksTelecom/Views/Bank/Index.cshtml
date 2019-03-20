@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = "Banks";
+    if (Session["userName"] == null)
+    {
+        Response.Redirect("~/User/Login");
+    }
+}
+
+<h2>Banks</h2>
+
+<a class="btn btn-success" style="margin-bottom: 10px;" onclick="popUpForm('@Url.Action("AddOrEdit", "Designation")')"><i class="fa fa-plus"></i> Add New</a>
+<table id="designationTable" class="table table-hover">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Account Number</th>
+        <th></th>
+    </tr>
+    </thead>
+</table>
+
+
+<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+
+@section scripts
+{
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+
+    <script>
+        var popUp, dataTable;
+
+
+        $(document).ready(function () {
+            dataTable = $("#designationTable").DataTable({
+                "ajax": {
+                    "url": "/Bank/GetData",
+                    "type": "Get",
+                    "datatype": "json"
+                },
+                "columns": [
+                    { "data": "Name", "name": "Name" },
+                    { "data": "AccNumber", "name": "AccNumber" },
+                    {
+                        "data": "Id", "render": function (data) {
+                            return "<a class='btn btn-info btn-sm' onClick=popUpForm('@Url.Action("AddOrEdit", "Designation")/" +
+                                data +
+                                "')><i class='fa fa-pencil'></i> Edit</a><a class='btn btn-danger btn-sm' style='margin-left:5px;' onClick=Delete(" +
+                                data +
+                                ")><i class='fa fa-trash'></i> Delete</a>";
+                        }, "orderable": false,
+                        "searchable": false,
+                        "width": "150px"
+                    }
+                ],
+                "language": {
+                    "emptyTable": "No data found, Please Click on <b>Add New</b> button",
+                    "processing": "Processing... Please wait"
+                }
+            });
+        });
+
+    </script>
+}

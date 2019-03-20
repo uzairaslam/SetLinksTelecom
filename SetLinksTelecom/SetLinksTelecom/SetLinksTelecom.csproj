@@ -189,6 +189,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\BankController.cs" />
     <Compile Include="Controllers\BVSController.cs" />
     <Compile Include="Controllers\AccAccountController.cs" />
     <Compile Include="Controllers\DesignationController.cs" />
@@ -209,6 +210,7 @@
     <Compile Include="Data\HtmlHelpers.cs" />
     <Compile Include="Data\IAccAccount.cs" />
     <Compile Include="Data\IAccVoucher.cs" />
+    <Compile Include="Data\IBanksRepo.cs" />
     <Compile Include="Data\IBvsRepo.cs" />
     <Compile Include="Data\IDesignationRepo.cs" />
     <Compile Include="Data\IInventoryType.cs" />
@@ -482,7 +484,12 @@
     <Compile Include="Migrations\201903181254010_AddedUserTable.Designer.cs">
       <DependentUpon>201903181254010_AddedUserTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903191628374_AddedBanksTable.cs" />
+    <Compile Include="Migrations\201903191628374_AddedBanksTable.Designer.cs">
+      <DependentUpon>201903191628374_AddedBanksTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Bank.cs" />
     <Compile Include="Models\BVSAllot.cs" />
     <Compile Include="Models\BVSAllotService.cs" />
     <Compile Include="Models\BvsService.cs" />
@@ -511,6 +518,7 @@
     </Compile>
     <Compile Include="Repositories\AccAccountRepo.cs" />
     <Compile Include="Repositories\AccVoucherRepo.cs" />
+    <Compile Include="Repositories\BanksRepo.cs" />
     <Compile Include="Repositories\BvsRepo.cs" />
     <Compile Include="Repositories\DesignationRepo.cs" />
     <Compile Include="Repositories\NumberToWords.cs" />
@@ -727,6 +735,8 @@
     <Content Include="Views\BVS\BvsAllotment.cshtml" />
     <Content Include="Views\Reports\FullStock.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
+    <Content Include="Views\Bank\Index.cshtml" />
+    <Content Include="Views\Bank\AddOrEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -911,6 +921,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903181254010_AddedUserTable.resx">
       <DependentUpon>201903181254010_AddedUserTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903191628374_AddedBanksTable.resx">
+      <DependentUpon>201903191628374_AddedBanksTable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\BalanceSheet.rdlc" />
     <EmbeddedResource Include="Migrations\201902251355230_PersonSelfReference.resx">
