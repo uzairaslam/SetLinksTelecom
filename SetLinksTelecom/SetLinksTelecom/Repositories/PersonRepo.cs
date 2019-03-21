@@ -67,6 +67,9 @@ namespace SetLinksTelecom.Repositories
 
         public void UpdatePerson(Person person)
         {
+            Person per = _db.Persons.Single(p => p.PersonId.Equals(person.PersonId));
+            person.AccString = per.AccString;
+            person.BossId = per.BossId;
             _db.Entry(person).State = EntityState.Modified;
             _db.SaveChanges();
         }
@@ -74,8 +77,8 @@ namespace SetLinksTelecom.Repositories
         public void DeletePerson(int id)
         {
             Person person = _db.Persons.FirstOrDefault(p => p.PersonId.Equals(id));
-            _db.Persons.Remove(person);
-            _db.SaveChanges();
+            //_db.Persons.Remove(person);
+            //_db.SaveChanges();
         }
 
         public void AssignBoss(int BossId, int FollowerId)

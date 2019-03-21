@@ -123,14 +123,17 @@ namespace SetLinksTelecom.Controllers
             DataTable BalSheet = _repo.GetBalanceSheet();
             BalSheet.TableName = "DSBalanceSheet";
             ReportViewer reportViewer = new ReportViewer();
+            reportViewer.Reset();
             reportViewer.ProcessingMode = ProcessingMode.Local;
             reportViewer.SizeToReportContent = true;
             reportViewer.Width = Unit.Percentage(900);
             reportViewer.Height = Unit.Percentage(900);
             reportViewer.LocalReport.ReportPath = Request.MapPath(Request.ApplicationPath) + @"Reports\BalanceSheet.rdlc";
+            reportViewer.LocalReport.DataSources.Clear();
             reportViewer.LocalReport.DataSources.Add(new ReportDataSource("DSBalanceSheet", BalSheet));
             reportViewer.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(SetSubDataSource);
             reportViewer.LocalReport.Refresh();
+            
             ViewBag.ReportViewer = reportViewer;
             ViewBag.ReportTitle = "Balance Sheet";
             return View("_ReportView");
@@ -138,10 +141,12 @@ namespace SetLinksTelecom.Controllers
 
         public void SetSubDataSource(object sender, SubreportProcessingEventArgs e)
         {
+            e.DataSources.Clear();
             DataTable SBalanceSheet = _repo.GetSummaryBalanceSheet();
             SBalanceSheet.TableName = "DSsumBalSheet";
-            ReportDataSource datasource = new ReportDataSource("DSsumBalSheet", SBalanceSheet);
-            e.DataSources.Add(datasource);
+            //ReportDataSource datasource = new ReportDataSource("DSsumBalSheet", SBalanceSheet);
+            e.DataSources.Add(new ReportDataSource("DSsumBalSheet", SBalanceSheet));
+            //e.DataSources.Add(datasource);
         }
 
         [HttpGet]

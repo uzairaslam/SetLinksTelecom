@@ -60,15 +60,21 @@ namespace SetLinksTelecom.Repositories
 
         public void UpdateDesignation(Designation designation)
         {
+            Designation desig = _db.Designations.Single(d => d.Id.Equals(designation.Id));
+            designation.AccString = desig.AccString;
             _db.Entry(designation).State = EntityState.Modified;
             _db.SaveChanges();
         }
 
         public void DeleteDesignation(int id)
         {
-            Designation designation = _db.Designations.FirstOrDefault(d => d.Id.Equals(id));
-            _db.Designations.Remove(designation);
-            _db.SaveChanges();
+            var persons = _db.Persons.Any(p => p.DesignationId.Equals(id));
+            if (!persons)
+            {
+                Designation designation = _db.Designations.FirstOrDefault(d => d.Id.Equals(id));
+                _db.Designations.Remove(designation);
+                _db.SaveChanges();
+            }
         }
     }
 }

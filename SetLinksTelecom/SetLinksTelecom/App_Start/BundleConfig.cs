@@ -9,7 +9,7 @@ namespace SetLinksTelecom
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-3.0.0.js",
+                        "~/Scripts/jquery-3.3.1.js",
                 "~/Scripts/chosen.jquery.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(

@@ -382,8 +382,8 @@ namespace SetLinksTelecom.Repositories
         public void DeletePurchase(int id)
         {
             Purchase purchase = _db.Purchases.FirstOrDefault(p => p.PurchaseId.Equals(id));
-            _db.Purchases.Remove(purchase);
-            _db.SaveChanges();
+            //_db.Purchases.Remove(purchase);
+            //_db.SaveChanges();
         }
 
         public DtoTangibleItemSale GetSpecificPurchase(int id)

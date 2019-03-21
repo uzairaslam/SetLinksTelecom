@@ -858,6 +858,7 @@
       </Tablix>
       <Subreport Name="SumBalSheet">
         <ReportName>SumBalSheet</ReportName>
+        <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
         <Top>3.12028in</Top>
         <Left>0.2175in</Left>
         <Height>0.85417in</Height>
