@@ -67,9 +67,9 @@ namespace SetLinksTelecom.Repositories
 
         public void UpdatePerson(Person person)
         {
-            Person per = _db.Persons.Single(p => p.PersonId.Equals(person.PersonId));
-            person.AccString = per.AccString;
-            person.BossId = per.BossId;
+            //Person per = _db.Persons.Single(p => p.PersonId.Equals(person.PersonId));
+            //person.AccString = per.AccString;
+            //person.BossId = per.BossId;
             _db.Entry(person).State = EntityState.Modified;
             _db.SaveChanges();
         }

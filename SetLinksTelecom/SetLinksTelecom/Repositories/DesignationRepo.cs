@@ -60,8 +60,14 @@ namespace SetLinksTelecom.Repositories
 
         public void UpdateDesignation(Designation designation)
         {
-            Designation desig = _db.Designations.Single(d => d.Id.Equals(designation.Id));
-            designation.AccString = desig.AccString;
+            //string AccString = String.Empty;
+            //using (var db = new DataContext())
+            //{
+            //    Designation desig = db.Designations.Single(d => d.Id.Equals(designation.Id));
+            //    AccString = desig.AccString;
+            //}
+            
+            //designation.AccString = AccString;
             _db.Entry(designation).State = EntityState.Modified;
             _db.SaveChanges();
         }

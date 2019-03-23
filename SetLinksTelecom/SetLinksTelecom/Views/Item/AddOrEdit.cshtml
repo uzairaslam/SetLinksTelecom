@@ -6,6 +6,13 @@
 @using (Html.BeginForm("AddOrEdit", "Item", FormMethod.Post, new { onsubmit = "return SubmitForm(this)" }))
 {
     @Html.HiddenFor(m => m.ItemId)
+    @Html.HiddenFor(m => m.RevString)
+    @Html.HiddenFor(m => m.AccString)
+    @Html.HiddenFor(m => m.CosString)
+    @Html.HiddenFor(m => m.PurDiscString)
+    @Html.HiddenFor(m => m.SaleCommString)
+    @Html.HiddenFor(m => m.CRevString)
+    @Html.HiddenFor(m => m.PurDiscString)
 
     <div class="form-group">
         @Html.LabelFor(m => m.ProductCategory.InventoryTypeId, new { @class = "control-label" })

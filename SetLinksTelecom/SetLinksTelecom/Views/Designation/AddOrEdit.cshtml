@@ -6,7 +6,7 @@
 @using (Html.BeginForm("AddOrEdit", "Designation", FormMethod.Post, new { onsubmit = "return SubmitForm(this)"}))
 {
     @Html.HiddenFor(m => m.Id)
-
+    @Html.HiddenFor(m => m.AccString)
     <div class="form-group">
         @Html.LabelFor(m => m.Name, new { @class = "control-label" })
         @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control" } })

@@ -242,14 +242,14 @@ namespace SetLinksTelecom.Repositories
 
         public void UpdateItem(Item item)
         {
-            Item it = _db.Items.Single(i => i.ItemId.Equals(item.ItemId));
-            item.RevString = it.RevString;
-            item.AccString = it.AccString;
-            item.CosString = it.CosString;
-            item.PurDiscString = it.PurDiscString;
-            item.SaleCommString = it.SaleCommString;
-            item.CRevString = it.CRevString;
-            item.PurDiscString = it.PurDiscString;
+            //Item it = _db.Items.Single(i => i.ItemId.Equals(item.ItemId));
+            //item.RevString = it.RevString;
+            //item.AccString = it.AccString;
+            //item.CosString = it.CosString;
+            //item.PurDiscString = it.PurDiscString;
+            //item.SaleCommString = it.SaleCommString;
+            //item.CRevString = it.CRevString;
+            //item.PurDiscString = it.PurDiscString;
             _db.Entry(item).State = EntityState.Modified;
             _db.SaveChanges();
         }
