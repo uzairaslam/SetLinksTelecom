@@ -70,7 +70,7 @@
                     </div>
                 </div>
 
-                
+
                 <div class="col">
                     <div class="form-group">
                         @Html.LabelFor(m => m.Remarks, new { @class = "col-form-label col-form-label-sm" })
@@ -97,10 +97,29 @@
                 </div>
                 <div class="col">
                     <div class="form-group" style="position: absolute; bottom: 0;">
-                        <button type="submit" class="btn btn-sm btn-primary" onclick="return addNumber();"><i class="fa fa-plus"></i> Add</button>
+                        <button type="submit" class="btn btn-sm btn-primary" onclick="return addNumber($('#Number').val());"><i class="fa fa-plus"></i> Add</button>
                     </div>
                 </div>
             </div>
+
+            <div class="form-group">
+                <div class="input-group mb-3">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="fileUpload">
+                        <label class="custom-file-label" for="fileUpload">Choose file</label>
+                    </div>
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="upload">Upload</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert alert-dismissible alert-danger" id="columnNameError" style="display:none;">
+                <button type="button" class="close" data-dismiss="alert" style="padding-top: 5px;">&times;</button>
+                @*<strong>Oh snap!</strong> <a href="#" class="alert-link">Change a few things up</a> and try submitting again.*@
+                Column Name Must be <strong>Number</strong>
+            </div>
+
             <table id="tanPurTable" class="table table-hover">
                 <thead>
                     <tr>
@@ -120,7 +139,7 @@
 @section scripts
 {
     <script>
-        String.prototype.replaceAll = function (search, replacement) {
+        String.prototype.replaceAll = function(search, replacement) {
             var target = this;
             return target.split(search).join(replacement);
         };
@@ -136,18 +155,114 @@
             //$('#rowNumberTable').html()
         </script>*@
 
+
     <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 
+    <!-- #region File Upload -->
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.1/xlsx.full.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.1/jszip.js"></script>
+
+    <script type="text/javascript">
+        $("body").on("click",
+            "#upload",
+            function() {
+                event.preventDefault();
+
+                //Reference the FileUpload element.
+                var fileUpload = $("#fileUpload")[0];
+
+                //Validate whether File is valid Excel file.
+                var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.xls|.xlsx)$/;
+
+                if (regex.test(fileUpload.value.toLowerCase())) {
+                    if (typeof (FileReader) != "undefined") {
+                        var reader = new FileReader();
+
+                        //For browsers other than IE
+                        //console.log(reader);
+                        if (reader.readAsBinaryString) {
+                            reader.onload = function(e) {
+                                ProcessExcel(e.target.result);
+                            };
+                            reader.readAsBinaryString(fileUpload.files[0]);
+                        } else {
+                            //For IE Browser.
+                            reader.onload = function(e) {
+                                var data = "";
+                                var bytes = new Uint8Array(e.target.result);
+                                for (var i = 0; i < bytes.byteLength; i++) {
+                                    data += String.fromCharCode(bytes[i]);
+                                }
+                                ProcessExcel(data);
+                            };
+                            reader.readAsArrayBuffer(fileUpload.files[0]);
+                        }
+                    } else {
+                        alert("This browser does not support HTML5.");
+                    }
+                } else {
+                    alert("Please upload a valid Excel file.");
+                }
+            });
+
+
+        function ProcessExcel(data) {
+            //Read the Excel File data.
+            var workbook = XLSX.read(data,
+                {
+                    type: 'binary'
+                });
+            //console.log(workbook);
+
+            //Fetch the name of First Sheet.
+            var firstSheet = workbook.SheetNames[0];
+            //console.log(firstSheet);
+
+            //Read all rows from First Sheet into an JSON array.
+            var excelRows = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[firstSheet]);
+            //console.log(excelRows);
+            //console.log(excelRows.length);
+
+            for (var i = 0; i < excelRows.length; i++) {
+                if (typeof excelRows[i].Number !== 'undefined')
+                    addNumber(excelRows[i].Number);
+            }
+
+            //console.log($('#tanPurTable tbody tr').length);
+            if ($('#tanPurTable tbody tr').length === 0) {
+                $.notify(
+                    "Column Name Must be 'Number'",
+                    {
+                        position: "top center",
+                        className: "error"
+                    }
+                );
+                columnNameError();
+            }
+        }
+
+        function columnNameError() {
+            $('#columnNameError').fadeIn(1000);
+            setTimeout(function() {
+                $('#columnNameError').fadeOut(1000);
+                },
+                5000);
+        }
+
+    </script>
+    <!-- #endregion -->
+
 
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('#Total').attr("disabled", "true");
             $('.ddl').chosen();
         });
 
-        function addNumber() {
-            var number = $('#Number').val();
+        function addNumber(number) {
+            //var number = $('#Number').val();
             var rowNumberTable = $('#rowNumberTable').html();
             $('#tanPurTable').find('tbody').append(rowNumberTable.replaceAll('{Number}', number));
             $('#Number').val('');
@@ -183,7 +298,7 @@
                 var index = 0;
                 var pur = $('.rowNumberClass');
                 $.each(pur,
-                    function () {
+                    function() {
                         //console.log($(this));
                         Numbers[index] = $($(this).get(0)).find('td').get(0).innerHTML;
                         ++index;
@@ -203,7 +318,7 @@
                     DatePurchased: $('#DatePurchased').val(),
                     Remarks: $('#Remarks').val(),
                     Total: $('#Total').val(),
-                    Numbers: Numbers//{ 'Numbers': Numbers }
+                    Numbers: Numbers //{ 'Numbers': Numbers }
                 }
                 console.log(dtoTangiblePurchase);
 
@@ -211,7 +326,7 @@
                     type: "POST",
                     url: form.action,
                     data: dtoTangiblePurchase,
-                    success: function (data) {
+                    success: function(data) {
                         if (data.success) {
 
                             //resetForm();
