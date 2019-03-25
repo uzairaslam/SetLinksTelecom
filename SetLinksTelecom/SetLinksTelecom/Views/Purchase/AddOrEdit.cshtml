@@ -10,71 +10,67 @@
     <div class="row">
         <div class="col">
             <div class="form-group" id="dvPortal">
-                @Html.LabelFor(m => m.PortalId, new { @class = "control-label" })
+                @Html.LabelFor(m => m.PortalId, new { @class = "col-form-label col-form-label-sm" })
                 <br />
-                @Html.DropDownListFor(m => m.PortalId, new SelectList(Model.Portals, "PortalId", "Name"), "Select Portal", new { @class = "ddl form-control", @id = "PortalId" })
+                @Html.DropDownListFor(m => m.PortalId, new SelectList(Model.Portals, "PortalId", "Name"), "Select Portal", new { @class = "ddl form-control form-control-sm", @id = "PortalId" })
                 @Html.ValidationMessageFor(m => m.PortalId)
             </div>
         </div>
         <div class="col">
             <div class="form-group" id="dvInventoryType">
-                @Html.LabelFor(m => m.InventoryTypeId, new { @class = "control-label" })
+                @Html.LabelFor(m => m.InventoryTypeId, new { @class = "col-form-label col-form-label-sm" })
                 <br />
-                @Html.DropDownListFor(m => m.InventoryTypeId, new SelectList(Model.InventoryTypes, "InventoryTypeId", "Name"), "Select Inventory Type", new { @class = "ddl form-control", @id = "InventoryTypeId", @onchange = "inventoryChanged(this)" })
+                @Html.DropDownListFor(m => m.InventoryTypeId, new SelectList(Model.InventoryTypes, "InventoryTypeId", "Name"), "Select Inventory Type", new { @class = "ddl form-control form-control-sm", @id = "InventoryTypeId", @onchange = "inventoryChanged(this)" })
                 @Html.ValidationMessageFor(m => m.InventoryTypeId)
             </div>
         </div>
-    </div>
-    <div class="row">
         <div class="col">
             <div class="form-group" id="dvProductCategory">
-                @Html.LabelFor(m => m.ProductCategoryId, new { @class = "control-label" })
+                @Html.LabelFor(m => m.ProductCategoryId, new { @class = "col-form-label col-form-label-sm" })
                 <br />
-                @Html.DropDownListFor(m => m.ProductCategoryId, new SelectList(Model.ProductCategories, "ProductCategoryId", "Name"), "Select Product Category", new { @class = "ddl form-control", @id = "ProductCategoryId" })
+                @Html.DropDownListFor(m => m.ProductCategoryId, new SelectList(Model.ProductCategories, "ProductCategoryId", "Name"), "Select Product Category", new { @class = "ddl form-control form-control-sm", @id = "ProductCategoryId" })
                 @Html.ValidationMessageFor(m => m.ProductCategoryId)
             </div>
         </div>
         <div class="col">
             <div class="form-group" id="dvItem">
-                @Html.LabelFor(m => m.ItemId, new { @class = "control-label" })
+                @Html.LabelFor(m => m.ItemId, new { @class = "col-form-label col-form-label-sm" })
                 <br />
-                @Html.DropDownListFor(m => m.ItemId, new SelectList(Model.Items, "ItemId", "Name"), "Select Item", new { @class = "ddl form-control", @id = "ItemId" })
+                @Html.DropDownListFor(m => m.ItemId, new SelectList(Model.Items, "ItemId", "Name"), "Select Item", new { @class = "ddl form-control form-control-sm", @id = "ItemId" })
                 @Html.ValidationMessageFor(m => m.ItemId)
             </div>
         </div>
     </div>
+    @*<div class="row">
+    </div>*@
 
         <div class="row">
             <div class="col">
                 <div class="form-group" id="dvSubname">
-                    @Html.LabelFor(m => m.Subname, new { @class = "control-label" })
-                    @Html.EditorFor(m => m.Subname, new { htmlAttributes = new { @class = "form-control", @id = "Subname" } })
+                    @Html.LabelFor(m => m.Subname, new { @class = "col-form-label col-form-label-sm" })
+                    @Html.EditorFor(m => m.Subname, new { htmlAttributes = new { @class = "form-control form-control-sm", @id = "Subname" } })
                     @Html.ValidationMessageFor(m => m.Subname)
                 </div>
             </div>
 
             <div class="col">
                 <div class="form-group" id="dvQty">
-                    @Html.LabelFor(m => m.Qty, new { @class = "control-label", @id = "lblQty" })
-                    @Html.EditorFor(m => m.Qty, new { htmlAttributes = new { @class = "form-control", @id = "Qty", @onkeyup = "valueChanged()", @onchange = "valueChanged()" } })
+                    @Html.LabelFor(m => m.Qty, new { @class = "col-form-label col-form-label-sm", @id = "lblQty" })
+                    @Html.EditorFor(m => m.Qty, new { htmlAttributes = new { @class = "form-control form-control-sm", @id = "Qty", @onkeyup = "valueChanged()", @onchange = "valueChanged()" } })
                     @Html.ValidationMessageFor(m => m.Qty)
                 </div>
             </div>
-        </div>
-
-        <div class="row">
             <div class="col">
                 <div class="form-group" id="dvRate">
-                    @Html.LabelFor(m => m.Rate, new { @class = "control-label" })
-                    @Html.EditorFor(m => m.Rate, new { htmlAttributes = new { @class = "form-control", @id = "Rate", @onkeyup = "valueChanged()", @onchange = "valueChanged()" } })
+                    @Html.LabelFor(m => m.Rate, new { @class = "col-form-label col-form-label-sm" })
+                    @Html.EditorFor(m => m.Rate, new { htmlAttributes = new { @class = "form-control form-control-sm", @id = "Rate", @onkeyup = "valueChanged()", @onchange = "valueChanged()" } })
                     @Html.ValidationMessageFor(m => m.Rate)
                 </div>
             </div>
-
             <div class="col">
                 <div class="form-group" id="dvPercentage">
-                    @Html.LabelFor(m => m.Percentage, new { @class = "control-label" })
-                    @Html.EditorFor(m => m.Percentage, new { htmlAttributes = new { @class = "form-control", @id = "Percentage", @onkeyup = "valueChanged()", @onchange = "valueChanged()" } })
+                    @Html.LabelFor(m => m.Percentage, new { @class = "col-form-label col-form-label-sm" })
+                    @Html.EditorFor(m => m.Percentage, new { htmlAttributes = new { @class = "form-control form-control-sm", @id = "Percentage", @onkeyup = "valueChanged()", @onchange = "valueChanged()" } })
                     @Html.ValidationMessageFor(m => m.Percentage)
                 </div>
             </div>
@@ -83,34 +79,30 @@
         <div class="row">
             <div class="col">
                 <div class="form-group" id="dvTotal">
-                    @Html.LabelFor(m => m.Total, new { @class = "control-label" })
-                    @Html.TextBoxFor(m => m.Total, new { @class = "form-control" })
+                    @Html.LabelFor(m => m.Total, new { @class = "col-form-label col-form-label-sm" })
+                    @Html.TextBoxFor(m => m.Total, new { @class = "form-control form-control-sm" })
                     @Html.ValidationMessageFor(m => m.Total)
                 </div>
             </div>
 
             <div class="col">
                 <div class="form-group" id="dvDatePurchased">
-                    @Html.LabelFor(m => m.DatePurchased, new { @class = "control-label" })
-                    @Html.EditorFor(m => m.DatePurchased, new { htmlAttributes = new { @class = "form-control", @id = "DatePurchased" } })
+                    @Html.LabelFor(m => m.DatePurchased, new { @class = "col-form-label col-form-label-sm" })
+                    @Html.EditorFor(m => m.DatePurchased, new { htmlAttributes = new { @class = "form-control form-control-sm", @id = "DatePurchased" } })
                 </div>
             </div>
-        </div>
-
-        <div class="row">
             <div class="col">
                 <div class="form-group" id="dvRemarks">
-                    @Html.LabelFor(m => m.Remarks, new { @class = "control-label" })
-                    @Html.TextAreaFor(m => m.Remarks, new { @class = "form-control", @id = "Remarks" })
+                    @Html.LabelFor(m => m.Remarks, new { @class = "col-form-label col-form-label-sm" })
+                    @Html.TextAreaFor(m => m.Remarks, new { @class = "form-control form-control-sm", @id = "Remarks" })
                 </div>
             </div>
-
-
             <div class="col align-bottom">
                 <div class="form-group" style="position: absolute; bottom: 0;">
                     <button type="submit" value="Submit" class="btn btn-primary"><i class="fa fa-save"></i> Submit</button>
                     <button type="reset" value="Reset" class="btn btn-warning"><i class="fa fa-refresh"></i> Reset</button>
                 </div>
             </div>
+
         </div>
 }

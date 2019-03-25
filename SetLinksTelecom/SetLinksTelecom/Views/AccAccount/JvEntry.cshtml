@@ -8,7 +8,7 @@
     }
 }
 
-<h2>Journal Entry Voucher</h2>
+<h4>Journal Entry Voucher</h4>
 
 @using (Html.BeginForm("JvEntry", "AccAccount", FormMethod.Post, new {onsubmit = "return save(this);"}))
 {
@@ -18,17 +18,17 @@
                 <div class="card border-light mb-3" style="max-width: 20rem;">
                     <div class="card-body">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.TransactionId, new {@class = "control-label"})
-                            @Html.EditorFor(m => m.TransactionId, new {htmlAttributes = new {@class = "form-control"}})
+                            @Html.LabelFor(m => m.TransactionId, new {@class = "col-form-label col-form-label-sm"})
+                            @Html.EditorFor(m => m.TransactionId, new {htmlAttributes = new {@class = "form-control form-control-sm" , @disabled = "" } })
                             @Html.ValidationMessageFor(m => m.TransactionId)
                         </div>
                         <div class="form-group">
-                            @Html.LabelFor(m => m.Date, new {@class = "control-label"})
-                            @Html.EditorFor(m => m.Date, new {htmlAttributes = new {@class = "form-control"}})
+                            @Html.LabelFor(m => m.Date, new {@class = "col-form-label col-form-label-sm"})
+                            @Html.EditorFor(m => m.Date, new {htmlAttributes = new {@class = "form-control form-control-sm"}})
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(m => m.VoucherType, new {@class = "control-label"})
+                            @Html.LabelFor(m => m.VoucherType, new {@class = "col-form-label col-form-label-sm"})
                             @Html.DropDownListFor(m => m.VoucherType, new List<SelectListItem>
                             {
                                 new SelectListItem {Text = "CPV", Value = "CPV"},
@@ -36,13 +36,13 @@
                                 new SelectListItem {Text = "BPV", Value = "BPV"},
                                 new SelectListItem {Text = "BRV", Value = "BRV"},
                                 new SelectListItem {Text = "JV", Value = "JV"}
-                            }, "Select Voucher Type", new {@class = "ddl form-control"})
+                            }, "Select Voucher Type", new {@class = "ddl form-control form-control-sm"})
                             @Html.ValidationMessageFor(m => m.VoucherType)
                         </div>
 
                         <div class="form-group" id="dvRemarks">
-                            @Html.LabelFor(m => m.Remarks, new {@class = "control-label"})
-                            @Html.TextAreaFor(m => m.Remarks, new {rows = "6", @class = "form-control", @id = "Remarks"})
+                            @Html.LabelFor(m => m.Remarks, new {@class = "col-form-label col-form-label-sm"})
+                            @Html.TextAreaFor(m => m.Remarks, new {rows = "6", @class = "form-control form-control-sm", @id = "Remarks"})
                         </div>
                     </div>
                 </div>
@@ -54,25 +54,25 @@
                     <div class="card-header">Account Information</div>
                     <div class="card-body">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.AccString, new {@class = "control-label"})
+                            @Html.LabelFor(m => m.AccString, new {@class = "col-form-label col-form-label-sm"})
                             <br/>
-                            @Html.DropDownListFor(m => m.AccString, new SelectList(Model.Accounts, "AccString", "AccName"), "Select Account", new {@class = "ddl form-control", @id = "AccStringSelect", @onchange = "accountChange(this)"})
+                            @Html.DropDownListFor(m => m.AccString, new SelectList(Model.Accounts, "AccString", "AccName"), "Select Account", new {@class = "ddl form-control form-control-sm", @id = "AccStringSelect", @onchange = "accountChange(this)"})
                             @*@Html.ValidationMessageFor(m => m.InventoryTypeId)*@
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(m => m.AccString, new {@class = "control-label"})
-                            @Html.EditorFor(m => m.AccString, new {htmlAttributes = new {@class = "form-control"}})
+                            @Html.LabelFor(m => m.AccString, new {@class = "col-form-label col-form-label-sm"})
+                            @Html.EditorFor(m => m.AccString, new {htmlAttributes = new {@class = "form-control form-control-sm"}})
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(m => m.Debit, new {@class = "control-label"})
-                            @Html.EditorFor(m => m.Debit, new {htmlAttributes = new {@class = "form-control"}})
+                            @Html.LabelFor(m => m.Debit, new {@class = "col-form-label col-form-label-sm"})
+                            @Html.EditorFor(m => m.Debit, new {htmlAttributes = new {@class = "form-control form-control-sm"}})
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(m => m.AccBalance, new {@class = "control-label"})
-                            @Html.EditorFor(m => m.AccBalance, new {htmlAttributes = new {@class = "form-control"}})
+                            @Html.LabelFor(m => m.AccBalance, new {@class = "col-form-label col-form-label-sm"})
+                            @Html.EditorFor(m => m.AccBalance, new {htmlAttributes = new {@class = "form-control form-control-sm"}})
                         </div>
 
                         <div class="form-group">
@@ -89,25 +89,25 @@
                     <div class="card-header">Contra Entry</div>
                     <div class="card-body">
                         <div class="form-group">
-                            @Html.LabelFor(m => m.AccString, new {@class = "control-label"})
+                            @Html.LabelFor(m => m.AccString, new {@class = "col-form-label col-form-label-sm"})
                             <br/>
-                            @Html.DropDownListFor(m => m.AccString, new SelectList(Model.Accounts, "AccString", "AccName"), "Select Account", new {@class = "ddl form-control", @id = "AccStringSelect", @onchange = "accountChange(this)"})
+                            @Html.DropDownListFor(m => m.AccString, new SelectList(Model.Accounts, "AccString", "AccName"), "Select Account", new {@class = "ddl form-control form-control-sm", @id = "AccStringSelect", @onchange = "accountChange(this)"})
                             @*@Html.ValidationMessageFor(m => m.InventoryTypeId)*@
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(m => m.AccString, new {@class = "control-label"})
-                            @Html.EditorFor(m => m.AccString, new {htmlAttributes = new {@class = "form-control"}})
+                            @Html.LabelFor(m => m.AccString, new {@class = "col-form-label col-form-label-sm"})
+                            @Html.EditorFor(m => m.AccString, new {htmlAttributes = new {@class = "form-control form-control-sm"}})
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(m => m.Credit, new {@class = "control-label"})
-                            @Html.EditorFor(m => m.Credit, new {htmlAttributes = new {@class = "form-control"}})
+                            @Html.LabelFor(m => m.Credit, new {@class = "col-form-label col-form-label-sm"})
+                            @Html.EditorFor(m => m.Credit, new {htmlAttributes = new {@class = "form-control form-control-sm"}})
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(m => m.AccBalance, new {@class = "control-label"})
-                            @Html.EditorFor(m => m.AccBalance, new {htmlAttributes = new {@class = "form-control"}})
+                            @Html.LabelFor(m => m.AccBalance, new {@class = "col-form-label col-form-label-sm"})
+                            @Html.EditorFor(m => m.AccBalance, new {htmlAttributes = new {@class = "form-control form-control-sm"}})
                         </div>
 
                         <div class="form-group">
@@ -135,20 +135,20 @@
         <div class="row">
             <div class="col">
                 <div class="form-group">
-                    @Html.LabelFor(m => m.TotalDebit, new {@class = "control-label"})
-                    @Html.EditorFor(m => m.TotalDebit, new {htmlAttributes = new {@class = "form-control"}})
+                    @Html.LabelFor(m => m.TotalDebit, new {@class = "col-form-label col-form-label-sm"})
+                    @Html.EditorFor(m => m.TotalDebit, new {htmlAttributes = new {@class = "form-control form-control-sm"}})
                 </div>
             </div>
             <div class="col">
                 <div class="form-group">
-                    @Html.LabelFor(m => m.TotalCredit, new {@class = "control-label"})
-                    @Html.EditorFor(m => m.TotalCredit, new {htmlAttributes = new {@class = "form-control"}})
+                    @Html.LabelFor(m => m.TotalCredit, new {@class = "col-form-label col-form-label-sm"})
+                    @Html.EditorFor(m => m.TotalCredit, new {htmlAttributes = new {@class = "form-control form-control-sm"}})
                 </div>
             </div>
             <div class="col">
                 <div class="form-group">
-                    @Html.LabelFor(m => m.Difference, new {@class = "control-label"})
-                    @Html.EditorFor(m => m.Difference, new {htmlAttributes = new {@class = "form-control"}})
+                    @Html.LabelFor(m => m.Difference, new {@class = "col-form-label col-form-label-sm"})
+                    @Html.EditorFor(m => m.Difference, new {htmlAttributes = new {@class = "form-control form-control-sm"}})
                 </div>
             </div>
         </div>

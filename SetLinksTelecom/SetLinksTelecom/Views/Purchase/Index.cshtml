@@ -7,10 +7,10 @@
     }
 }
 
-<h2>Purchases</h2>
+<h4>Purchases</h4>
 
 
-<a class="btn btn-success" style="margin-bottom: 10px;" onclick="popUpForm('@Url.Action("AddOrEdit", "Purchase")')"><i class="fa fa-plus"></i> Add New</a>
+<a class="btn btn-sm btn-success" style="margin-bottom: 10px;" onclick="popUpForm('@Url.Action("AddOrEdit", "Purchase")')"><i class="fa fa-plus"></i> Add New</a>
 
 <table id="purchaseTable" class="table table-hover">
     <thead>
@@ -92,8 +92,8 @@
                     resizable: false,
                     title: 'Fill Purchase Details',
                     draggable: false,
-                    width: 700,
-                    height: 500,
+                    width: 1000,
+                    height: 370,
                     modal: true,
                     close: function () {
                         //popUp.dialog('destroy').close();

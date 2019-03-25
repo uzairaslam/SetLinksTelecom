@@ -6,13 +6,13 @@
     }
 }
 
-<h2>Items</h2>
+<h4>Items</h4>
 
 @*<div class="container" id="dvAddOrEditItem">
     @Html.Action("AddOrEdit")
 </div>*@
 
-<a class="btn btn-success" style="margin-bottom: 10px;" onclick="popUpForm('@Url.Action("AddOrEdit", "Item")')"><i class="fa fa-plus"></i> Add New</a>
+<a class="btn btn-sm btn-success" style="margin-bottom: 10px;" onclick="popUpForm('@Url.Action("AddOrEdit", "Item")')"><i class="fa fa-plus"></i> Add New</a>
 <div class="container" id="dvItemsTable">
     <table id="itemsTable" class="table table-hover">
         <thead>
@@ -88,10 +88,10 @@
                 popUp = formDiv.dialog({
                     autoOpen: true,
                     resizable: false,
-                    title: 'Fill Designation Details',
+                    title: 'Fill Item Details',
                     draggable: false,
-                    width: 300,
-                    height: 450,
+                    width: 1000,
+                    height: 200,
                     modal: true,
                     close: function () {
                         //popUp.dialog('destroy').close();

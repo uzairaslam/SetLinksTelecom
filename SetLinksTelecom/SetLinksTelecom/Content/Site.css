@@ -46,3 +46,16 @@ tr.shown td.details-control {
     top: 25%;
     padding: 10px 10px;
 }
+
+.table th { font-size: 12px; text-align: center; align-content: center; align-items: center; padding-top: 2px; padding-bottom: 2px;  }
+.table tr { padding: 2px;}
+.table td { font-size: 11px; text-align: center; align-content: center; align-items: center; padding: 2px; padding-bottom: 2px;}
+
+.dataTables_wrapper {
+    font-family: tahoma;
+    font-size: 12px;
+    position: relative;
+    clear: both;
+    *zoom: 1;
+    zoom: 1;
+}

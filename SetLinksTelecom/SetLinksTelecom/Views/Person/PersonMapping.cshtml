@@ -7,19 +7,19 @@
     }
 }
 
-<h2>Person Mapping</h2>
+<h4>Person Mapping</h4>
 
 
 <div class="form-group">
-    @Html.LabelFor(m => m.DesignationId, new { @class = "control-label" })
-    @Html.DropDownListFor(m => m.DesignationId, new SelectList(Model.Designations, "Id", "Name"), "Select Designation", new { @class = "form-control", @onchange="clearPersonAndGrid()" })
+    @Html.LabelFor(m => m.DesignationId, new { @class = "col-form-label col-form-label-sm" })
+    @Html.DropDownListFor(m => m.DesignationId, new SelectList(Model.Designations, "Id", "Name"), "Select Designation", new { @class = "form-control form-control-sm", @onchange="clearPersonAndGrid()" })
     @Html.ValidationMessageFor(m => m.DesignationId)
 </div>
 
 @Html.HiddenFor(m => m.PersonId)
 <div class="form-group">
-    @Html.LabelFor(m => m.PersonName, new { @class = "control-label" })
-    @Html.EditorFor(m => m.PersonName, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.LabelFor(m => m.PersonName, new { @class = "col-form-label col-form-label-sm" })
+    @Html.EditorFor(m => m.PersonName, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
     @Html.ValidationMessageFor(m => m.PersonName)
 </div>
 

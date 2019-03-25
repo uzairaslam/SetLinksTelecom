@@ -8,45 +8,49 @@
     }
 }
 
-<h2>Bvs Allotment</h2>
+<h4>Bvs Allotment</h4>
 
-@using (Html.BeginForm("BvsAllotment", "BVS", FormMethod.Post, new {onsubmit = "return SubmitForm(this)"}))
+@using (Html.BeginForm("BvsAllotment", "BVS", FormMethod.Post, new { onsubmit = "return SubmitForm(this)" }))
 {
     <div class="row">
-        <div class="col">
+        <div class="col-3">
             @Html.HiddenFor(m => m.PersonId)
             <div class="form-group">
-                @Html.LabelFor(m => m.PersonName, new {@class = "control-label"})
-                @Html.EditorFor(m => m.PersonName, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.LabelFor(m => m.PersonName, new { @class = "col-form-label col-form-label-sm" })
+                @Html.EditorFor(m => m.PersonName, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
                 @Html.ValidationMessageFor(m => m.PersonName)
             </div>
+            
+            <div class="form-group">
+                <button type="submit" value="Submit" class="btn btn-sm btn-primary" style="margin-right: 10px;"><i class="fa fa-save"></i> Submit</button>
+            </div>
+        </div>
 
+        <div class="col-3">
             @Html.HiddenFor(m => m.ItemId)
             <div class="form-group">
-                @Html.LabelFor(m => m.ItemName, new {@class = "control-label"})
-                @Html.EditorFor(m => m.ItemName, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.LabelFor(m => m.ItemName, new { @class = "col-form-label col-form-label-sm" })
+                @Html.EditorFor(m => m.ItemName, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
                 @Html.ValidationMessageFor(m => m.ItemName)
             </div>
         </div>
-        <div class="col">
+        <div class="col" style="border-style: groove;">
             <table id="servicesTable" class="table table-hover">
                 <thead>
-                <tr>
-                    <th style="display: none">Id</th>
-                    <th style="display: none">BVS Service</th>
-                    <th>Service</th>
-                    <th>Active</th>
-                </tr>
+                    <tr>
+                        <th style="display: none">Id</th>
+                        <th style="display: none">BVS Service</th>
+                        <th>Service</th>
+                        <th>Active</th>
+                    </tr>
                 </thead>
                 <tbody></tbody>
             </table>
         </div>
     </div>
 
+
     
-    <div class="form-group">
-        <button type="submit" value="Submit" class="btn btn-primary" style="margin-right: 10px;"><i class="fa fa-save"></i> Submit</button>
-    </div>
 }
 
 <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
@@ -59,8 +63,8 @@
 
     <script>
         var popUp, dataTable;
-        $(document).ready(function() {
-            $('#PersonName').keypress(function(event) {
+        $(document).ready(function () {
+            $('#PersonName').keypress(function (event) {
                 var keycode = (event.keyCode ? event.keyCode : event.which);
                 if (keycode == '13') {
                     popUpForm('@Url.Action("PersonGrid", "Person")', "Person");
@@ -83,7 +87,7 @@
         function popUpForm(url, type) {
             event.preventDefault();
             var formDiv = $('<div class="popDiv" />');
-            $.get(url).done(function(response) {
+            $.get(url).done(function (response) {
                 formDiv.html(response);
 
                 popUp = formDiv.dialog({
@@ -94,7 +98,7 @@
                     width: $(window).width() - 50,
                     height: 600,
                     modal: true,
-                    close: function() {
+                    close: function () {
                         dataTable.destroy();
                         popUp.dialog('close');
                         $('.popDiv').remove();
@@ -138,7 +142,7 @@
             //bind row event
             $('#purchaseTable tbody').on('dblclick',
                 'tr',
-                function() {
+                function () {
                     var data = dataTable.row(this).data();
                     //var data = dataTable.row(this).data();
                     $('#ItemId').val(data['PurchaseId']);
@@ -177,7 +181,7 @@
             //bind row event
             $('#personTable tbody').on('dblclick',
                 'tr',
-                function() {
+                function () {
                     var data = dataTable.row(this).data();
                     $('#PersonId').val(data['PersonId']);
                     $('#PersonName').val(data['Name']);
@@ -187,13 +191,13 @@
                     $.ajax({
                         url: urlService,
                         type: "get"
-                    }).done(function(result) {
+                    }).done(function (result) {
                         //console.log(urlService);
                         //console.log(result.data);
 
 
                         $.each(result.data,
-                            function(i, item) {
+                            function (i, item) {
                                 //console.log(item);
                                 //console.log(item.AllotmentServiceses);
                                 //console.log(item[0]);
@@ -236,7 +240,7 @@
                             });
 
 
-                    }).fail(function(jqXHR, textStatus, errorThrown) {
+                    }).fail(function (jqXHR, textStatus, errorThrown) {
                         // needs to implement if it fails
                         alert('Error in loading data');
                     });
@@ -250,52 +254,52 @@
 
             //if ($(form).valid()) {
 
-                var pur = $('.bvsTableRow');
+            var pur = $('.bvsTableRow');
 
-                var AllotmentServiceses = [];
+            var AllotmentServiceses = [];
 
-                $.each(pur,
-                    function () {
-                        AllotmentServiceses.push({
-                            BVSAllotServiceId: $(this).find('.BVSAllotServiceId').get(0).innerText,
-                            BvsServiceName: $(this).find('.BvsServiceName').get(0).innerText,
-                            BvsServiceId: $(this).find('.BvsServiceId').get(0).innerText,
-                            Active: $(this).find('.Active').is(':checked')
-                        });
+            $.each(pur,
+                function () {
+                    AllotmentServiceses.push({
+                        BVSAllotServiceId: $(this).find('.BVSAllotServiceId').get(0).innerText,
+                        BvsServiceName: $(this).find('.BvsServiceName').get(0).innerText,
+                        BvsServiceId: $(this).find('.BvsServiceId').get(0).innerText,
+                        Active: $(this).find('.Active').is(':checked')
                     });
+                });
 
-                console.log(AllotmentServiceses);
+            console.log(AllotmentServiceses);
 
 
-                var allotment = {
-                    PersonId: $('#PersonId').val(),
-                    PersonName: $('#PersonName').val(),
-                    //Date: $('#Date').val(),
-                    ItemId: $('#ItemId').val(),
-                    ItemName: $('#ItemName').val(),
-                    AllotmentServiceses: AllotmentServiceses
-                }
+            var allotment = {
+                PersonId: $('#PersonId').val(),
+                PersonName: $('#PersonName').val(),
+                //Date: $('#Date').val(),
+                ItemId: $('#ItemId').val(),
+                ItemName: $('#ItemName').val(),
+                AllotmentServiceses: AllotmentServiceses
+            }
             console.log(allotment);
 
-                $.ajax({
-                    type: "POST",
-                    url: form.action,
-                    data: allotment,
-                    success: function (data) {
-                        if (data.success) {
+            $.ajax({
+                type: "POST",
+                url: form.action,
+                data: allotment,
+                success: function (data) {
+                    if (data.success) {
 
-                            //resetForm();
-                            $.notify(
-                                data.message,
-                                {
-                                    position: "top center",
-                                    className: "success"
-                                }
-                            );
+                        //resetForm();
+                        $.notify(
+                            data.message,
+                            {
+                                position: "top center",
+                                className: "success"
+                            }
+                        );
 
-                        }
                     }
-                });
+                }
+            });
             //} else {
             //    $.notify(
             //        "Validation Error",

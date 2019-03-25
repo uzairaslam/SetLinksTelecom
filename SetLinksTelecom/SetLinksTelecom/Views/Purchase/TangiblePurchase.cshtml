@@ -8,7 +8,7 @@
     }
 }
 
-<h2>Tangible Purchase</h2>
+<h4>Tangible Purchase</h4>
 
 @using (Html.BeginForm("TangiblePurchase", "Purchase", FormMethod.Post, new { onsubmit = "return SubmitForm(this)" }))
 {
@@ -16,65 +16,88 @@
 
 
     <div class="row">
-        <div class="col">
-            <div class="form-group" id="dvDatePurchased">
-                @Html.LabelFor(m => m.DatePurchased, new { @class = "control-label" })
-                @Html.EditorFor(m => m.DatePurchased, new { htmlAttributes = new { @class = "form-control", @id = "DatePurchased" } })
+        <div class="col-8">
+            <div class="row">
+                <div class="col">
+                    <div class="form-group" id="dvDatePurchased">
+                        @Html.LabelFor(m => m.DatePurchased, new { @class = "col-form-label col-form-label-sm" })
+                        @Html.EditorFor(m => m.DatePurchased, new { htmlAttributes = new { @class = "form-control form-control-sm", @id = "DatePurchased" } })
+                    </div>
+
+                </div>
+                <div class="col">
+                    <div class="form-group" id="dvPortal">
+                        @Html.LabelFor(m => m.PortalId, new { @class = "col-form-label col-form-label-sm" })
+                        <br />
+                        @Html.DropDownListFor(m => m.PortalId, new SelectList(Model.Portals, "PortalId", "Name"), "Select Portal", new { @class = "ddl form-control form-control-sm", @id = "PortalId" })
+                        @Html.ValidationMessageFor(m => m.PortalId)
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group" id="dvItem">
+                        @Html.LabelFor(m => m.ItemId, new { @class = "col-form-label col-form-label-sm" })
+                        <br />
+                        @Html.DropDownListFor(m => m.ItemId, new SelectList(Model.Items, "ItemId", "Name"), "Select Item", new { @class = "ddl form-control form-control-sm", @id = "ItemId" })
+                        @Html.ValidationMessageFor(m => m.ItemId)
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Subname, new { @class = "col-form-label col-form-label-sm" })
+                        @Html.EditorFor(m => m.Subname, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                        @Html.ValidationMessageFor(m => m.Subname)
+                    </div>
+                </div>
+
             </div>
 
-            <div class="form-group" id="dvPortal">
-                @Html.LabelFor(m => m.PortalId, new { @class = "control-label" })
-                <br />
-                @Html.DropDownListFor(m => m.PortalId, new SelectList(Model.Portals, "PortalId", "Name"), "Select Portal", new { @class = "ddl form-control", @id = "PortalId" })
-                @Html.ValidationMessageFor(m => m.PortalId)
+            <div class="row">
+
+                <div class="col">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Rate, new { @class = "col-form-label col-form-label-sm" })
+                        @Html.EditorFor(m => m.Rate, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Total, new { @class = "col-form-label col-form-label-sm" })
+                        @Html.TextBoxFor(m => m.Total, new { @class = "form-control form-control-sm" })
+                        @Html.ValidationMessageFor(m => m.Total)
+                    </div>
+                </div>
+
+                
+                <div class="col">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Remarks, new { @class = "col-form-label col-form-label-sm" })
+                        @Html.TextAreaFor(m => m.Remarks, new { @class = "form-control form-control-sm", @id = "Remarks" })
+                    </div>
+                </div>
+
             </div>
 
-            <div class="form-group" id="dvItem">
-                @Html.LabelFor(m => m.ItemId, new { @class = "control-label" })
-                <br />
-                @Html.DropDownListFor(m => m.ItemId, new SelectList(Model.Items, "ItemId", "Name"), "Select Item", new { @class = "ddl form-control", @id = "ItemId" })
-                @Html.ValidationMessageFor(m => m.ItemId)
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(m => m.Subname, new { @class = "control-label" })
-                @Html.EditorFor(m => m.Subname, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(m => m.Subname)
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(m => m.Rate, new { @class = "control-label" })
-                @Html.EditorFor(m => m.Rate, new { htmlAttributes = new { @class = "form-control" } })
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(m => m.Total, new { @class = "control-label" })
-                @Html.TextBoxFor(m => m.Total, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.Total)
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(m => m.Remarks, new { @class = "control-label" })
-                @Html.TextAreaFor(m => m.Remarks, new { @class = "form-control", @id = "Remarks" })
-            </div>
 
             <div class="form-group">
                 <button type="submit" value="Submit" class="btn btn-primary"><i class="fa fa-save"></i> Submit</button>
             </div>
 
         </div>
-        <div class="col">
-            <h4> Add Number</h4>
+        <div class="col" style="border-style: groove; padding-top: 20px;">
+            <h5> Add Number</h5>
             <div class="row">
                 <div class="col">
                     <div class="form-group" id="dvPercentage">
-                        @Html.Label("Number", new { @class = "control-label" })
-                        @Html.Editor("Number", new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.Label("Number", new { @class = "col-form-label col-form-label-sm" })
+                        @Html.Editor("Number", new { htmlAttributes = new { @class = "form-control form-control-sm" } })
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group" style="position: absolute; bottom: 0;">
-                        <button type="submit" class="btn btn-primary" onclick="return addNumber();"><i class="fa fa-plus"></i> Add</button>
+                        <button type="submit" class="btn btn-sm btn-primary" onclick="return addNumber();"><i class="fa fa-plus"></i> Add</button>
                     </div>
                 </div>
             </div>
@@ -97,7 +120,7 @@
 @section scripts
 {
     <script>
-        String.prototype.replaceAll = function(search, replacement) {
+        String.prototype.replaceAll = function (search, replacement) {
             var target = this;
             return target.split(search).join(replacement);
         };
@@ -118,8 +141,9 @@
 
 
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('#Total').attr("disabled", "true");
+            $('.ddl').chosen();
         });
 
         function addNumber() {
@@ -187,7 +211,7 @@
                     type: "POST",
                     url: form.action,
                     data: dtoTangiblePurchase,
-                    success: function(data) {
+                    success: function (data) {
                         if (data.success) {
 
                             //resetForm();

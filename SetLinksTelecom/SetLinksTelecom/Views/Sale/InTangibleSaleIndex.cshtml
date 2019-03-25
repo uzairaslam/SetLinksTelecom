@@ -8,8 +8,8 @@
     }
 }
 
-<div class="jumbotron">
-    <h2>In Tangible Sale Portal</h2>
+<div class="jumbotron" style="padding-top: 13px;">
+    <h4>In Tangible Sale Portal</h4>
 
     @using (Html.BeginForm("SaveInTangibleSale", "Sale", FormMethod.Post, new { onsubmit = "return SubmitForm(this)" }))
     {
@@ -18,64 +18,111 @@
 
         @Html.HiddenFor(m => m.PersonId)
 
+        @*<div class="row">
+                <div class="col-2"><h5>@Html.LabelFor(m => m.PersonName, new { @class = "control-label" })</h5></div>
+                <div class="col-3">
+                    @Html.EditorFor(m => m.PersonName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(m => m.PersonName)
+                </div>
+                <div class="col-1"></div>
+                <div class="col-2"><h5>@Html.LabelFor(m => m.Date, new { @class = "control-label" })</h5></div>
+                <div class="col-3">@Html.EditorFor(m => m.Date, new { htmlAttributes = new { @class = "form-control" } })</div>
+                <div class="col-1"></div>
+            </div>*@
         <div class="row">
-            <div class="col-2"><h5>@Html.LabelFor(m => m.PersonName, new { @class = "control-label" })</h5></div>
-            <div class="col-3">
-                @Html.EditorFor(m => m.PersonName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(m => m.PersonName)
+            <div class="col">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.PersonName, new { @class = "col-form-label col-form-label-sm" })
+                    @Html.EditorFor(m => m.PersonName, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                    @Html.ValidationMessageFor(m => m.PersonName)
+                </div>
             </div>
-            <div class="col-1"></div>
-            <div class="col-2"><h5>@Html.LabelFor(m => m.Date, new { @class = "control-label" })</h5></div>
-            <div class="col-3">@Html.EditorFor(m => m.Date, new { htmlAttributes = new { @class = "form-control" } })</div>
-            <div class="col-1"></div>
-        </div>
-        <div class="form-group" id="dvRemarks">
-            @Html.LabelFor(m => m.Remarks, new { @class = "control-label" })
-            @Html.TextAreaFor(m => m.Remarks, new { @class = "form-control", @id = "Remarks" })
-        </div>
-        <div class="clear-fix">
-            &nbsp;
-        </div>
-        <div class="form-group">
-            <a class="btn btn-success" style="margin-bottom: 10px;" onclick="popUpForm('@Url.Action("PurchaseGrid", "Purchase")', 'Purchase')"><i class="fa fa-plus"></i> Add Item</a>
-        </div>
 
-        <table id="intangibleItemsSale" class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Item Code</th>
-                    <th>Item</th>
-                    <th>Balance Applied</th>
-                    <th>Comm. Per</th>
-                    <th>Balance Transferred</th>
-                    <th>Line</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+            <div class="col">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Date, new { @class = "col-form-label col-form-label-sm" })
+                    @Html.EditorFor(m => m.Date, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                </div>
+
+            </div>
 
 
-        <div class="clear-fix">
-            &nbsp;
-        </div>
+            <div class="col">
+                <div class="form-group" id="dvRemarks">
+                    @Html.LabelFor(m => m.Remarks, new { @class = "col-form-label col-form-label-sm" })
+                    @Html.EditorFor(m => m.Remarks, new { htmlAttributes = new { @class = "form-control form-control-sm", @id = "Remarks" }})
+                </div>
 
-        <div class="card text-white bg-secondary mb-3" style="max-width: 15rem;">
-            <div class="card-header">
-                @Html.LabelFor(m => m.OverAllTotal, new { @class = "control-label" })
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <span id="OverAllTotal">
-                    @Html.DisplayFor(m => m.OverAllTotal)
-                </span>
             </div>
         </div>
-        <div class="clear-fix">
-            &nbsp;
+
+        <hr />
+        @*<div class="clear-fix">
+                &nbsp;
+            </div>*@
+
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <a class="btn btn-sm btn-success" style="margin-bottom: 10px;" onclick="popUpForm('@Url.Action("PurchaseGrid", "Purchase")', 'Purchase')"><i class="fa fa-plus"></i> Add Item</a>
+                </div>
+            </div>
+            
+            <div class="col">
+                <button type="button" class="btn btn-primary btn-sm">
+                    @Html.LabelFor(m => m.OverAllTotal, new { @class = "col-form-label col-form-label-sm" })
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <span id="OverAllTotal">
+                        @Html.DisplayFor(m => m.OverAllTotal)
+                    </span>
+                </button>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <button type="submit" value="Submit" class="btn btn-sm btn-primary" style="margin-right: 10px;"><i class="fa fa-save"></i> Submit</button>
+                    <button type="reset" value="Reset" class="btn btn-sm btn-warning"><i class="fa fa-refresh"></i> Reset</button>
+                </div>
+            </div>
+
         </div>
-        <div class="form-group">
-            <button type="submit" value="Submit" class="btn btn-primary" style="margin-right: 10px;"><i class="fa fa-save"></i> Submit</button>
-            <button type="reset" value="Reset" class="btn btn-warning"><i class="fa fa-refresh"></i> Reset</button>
-        </div>
+
+
+            <table id="intangibleItemsSale" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Item Code</th>
+                        <th>Item</th>
+                        <th>Balance Applied</th>
+                        <th>Comm. Per</th>
+                        <th>Balance Transferred</th>
+                        <th>Line</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+
+
+            <div class="clear-fix">
+                &nbsp;
+            </div>
+
+            @*<div class="card text-white bg-secondary mb-3" style="max-width: 15rem;">
+                <div class="card-header">
+                    @Html.LabelFor(m => m.OverAllTotal, new { @class = "control-label" })
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <span id="OverAllTotal">
+                        @Html.DisplayFor(m => m.OverAllTotal)
+                    </span>
+                </div>
+            </div>
+            <div class="clear-fix">
+                &nbsp;
+            </div>
+            <div class="form-group">
+                <button type="submit" value="Submit" class="btn btn-primary" style="margin-right: 10px;"><i class="fa fa-save"></i> Submit</button>
+                <button type="reset" value="Reset" class="btn btn-warning"><i class="fa fa-refresh"></i> Reset</button>
+            </div>*@
     }
 </div>
 

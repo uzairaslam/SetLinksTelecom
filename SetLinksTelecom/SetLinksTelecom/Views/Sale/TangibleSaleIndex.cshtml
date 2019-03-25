@@ -8,8 +8,8 @@
     }
 }
 
-<div class="jumbotron">
-    <h2>Tangible Sale Portal</h2>
+<div class="jumbotron" style="padding-top: 13px;">
+    <h4>Tangible Sale Portal</h4>
 
     @using (Html.BeginForm("SaveSale", "Sale", FormMethod.Post, new { onsubmit = "return SubmitForm(this)" }))
     {
@@ -18,64 +18,106 @@
 
         @Html.HiddenFor(m => m.PersonId)
 
+        @*<div class="row">
+                <div class="col-2"><h5>@Html.LabelFor(m => m.PersonName, new { @class = "control-label" })</h5></div>
+                <div class="col-3">
+                    @Html.EditorFor(m => m.PersonName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(m => m.PersonName)
+                </div>
+                <div class="col-1"></div>
+                <div class="col-2"><h5>@Html.LabelFor(m => m.Date, new { @class = "control-label" })</h5></div>
+                <div class="col-3">@Html.EditorFor(m => m.Date, new { htmlAttributes = new { @class = "form-control" } })</div>
+                <div class="col-1"></div>
+            </div>*@
         <div class="row">
-            <div class="col-2"><h5>@Html.LabelFor(m => m.PersonName, new { @class = "control-label" })</h5></div>
-            <div class="col-3">
-                @Html.EditorFor(m => m.PersonName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(m => m.PersonName)
+
+            <div class="col">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.PersonName, new { @class = "col-form-label col-form-label-sm" })
+                    @Html.EditorFor(m => m.PersonName, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                    @Html.ValidationMessageFor(m => m.PersonName)
+                </div>
             </div>
-            <div class="col-1"></div>
-            <div class="col-2"><h5>@Html.LabelFor(m => m.Date, new { @class = "control-label" })</h5></div>
-            <div class="col-3">@Html.EditorFor(m => m.Date, new { htmlAttributes = new { @class = "form-control" } })</div>
-            <div class="col-1"></div>
-        </div>
-        <div class="form-group" id="dvRemarks">
-            @Html.LabelFor(m => m.Remarks, new { @class = "control-label" })
-            @Html.TextAreaFor(m => m.Remarks, new { @class = "form-control", @id = "Remarks" })
-        </div>
-        <div class="clear-fix">
-            &nbsp;
-        </div>
-        <div class="form-group">
-            <a class="btn btn-success" style="margin-bottom: 10px;" onclick="popUpForm('@Url.Action("PurchaseGrid", "Purchase")', 'Purchase')"><i class="fa fa-plus"></i> Add Item</a>
-            @*<a class="btn btn-success" style="margin-bottom: 10px;" onclick="saleItemRow('@Url.Action("SaleItemRow", "Sale")')"><i class="fa fa-plus"></i> Add Item</a>*@
-        </div>
 
-        <table id="tangibleItemsSale" class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Item Code</th>
-                    <th>Item</th>
-                    <th>Quantity</th>
-                    <th>Rate</th>
-                    <th>Sub Total</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+            <div class="col">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Date, new { @class = "col-form-label col-form-label-sm" })
+                    @Html.EditorFor(m => m.Date, new { htmlAttributes = new { @class = "form-control form-control-sm", @id = "DatePurchased" } })
+                </div>
 
-
-        <div class="clear-fix">
-            &nbsp;
-        </div>
-
-        <div class="card text-white bg-secondary mb-3" style="max-width: 15rem;">
-            <div class="card-header">
-                @Html.LabelFor(m => m.OverAllTotal, new { @class = "control-label" })
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <span id="OverAllTotal">
-                    @Html.DisplayFor(m => m.OverAllTotal)
-                </span>
             </div>
+
+            <div class="col">
+                <div class="form-group" id="dvRemarks">
+                    @Html.LabelFor(m => m.Remarks, new { @class = "col-form-label col-form-label-sm" })
+                    @Html.EditorFor(m => m.Remarks, new { htmlAttributes = new { @class = "form-control form-control-sm" }})
+                </div>
+            </div>
+
+
         </div>
-        <div class="clear-fix">
-            &nbsp;
+        <hr />
+        @*<div class="clear-fix">
+                &nbsp;
+            </div>*@
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <a class="btn btn-success btn-sm" style="margin-bottom: 10px;" onclick="popUpForm('@Url.Action("PurchaseGrid", "Purchase")', 'Purchase')"><i class="fa fa-plus"></i> Add Item</a>
+                    @*<a class="btn btn-success" style="margin-bottom: 10px;" onclick="saleItemRow('@Url.Action("SaleItemRow", "Sale")')"><i class="fa fa-plus"></i> Add Item</a>*@
+                </div>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-primary btn-sm">
+                    @Html.LabelFor(m => m.OverAllTotal, new { @class = "col-form-label col-form-label-sm" })
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <span id="OverAllTotal">
+                        @Html.DisplayFor(m => m.OverAllTotal)
+                    </span>
+                </button>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <button type="submit" value="Submit" class="btn btn-sm btn-primary" style="margin-right: 10px;"><i class="fa fa-save"></i> Submit</button>
+                    <button type="reset" value="Reset" class="btn btn-sm btn-warning"><i class="fa fa-refresh"></i> Reset</button>
+                </div>
+            </div>
+            @*<div class="col">
+
+            </div>*@
         </div>
-        <div class="form-group">
-            <button type="submit" value="Submit" class="btn btn-primary" style="margin-right: 10px;"><i class="fa fa-save"></i> Submit</button>
-            <button type="reset" value="Reset" class="btn btn-warning"><i class="fa fa-refresh"></i> Reset</button>
-        </div>
+
+            <table id="tangibleItemsSale" class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Item Code</th>
+                        <th>Item</th>
+                        <th>Quantity</th>
+                        <th>Rate</th>
+                        <th>Sub Total</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+
+
+            <div class="clear-fix">
+                &nbsp;
+            </div>
+
+            @*<div class="card text-white bg-secondary mb-3" style="max-width: 15rem;">
+                    <div class="card-header">
+                        @Html.LabelFor(m => m.OverAllTotal, new {@class = "control-label"})
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <span id="OverAllTotal">
+                            @Html.DisplayFor(m => m.OverAllTotal)
+                        </span>
+                    </div>
+                </div>*@
+            <div class="clear-fix">
+                &nbsp;
+            </div>
     }
 </div>
 <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
@@ -88,8 +130,8 @@
 
     <script>
         var tangibleItemsSale, purchaseTable;
-        $(document).ready(function() {
-            $('#PersonName').keypress(function(event) {
+        $(document).ready(function () {
+            $('#PersonName').keypress(function (event) {
 
                 var keycode = (event.keyCode ? event.keyCode : event.which);
                 if (keycode == '13') {
@@ -153,7 +195,7 @@
                     type: "POST",
                     url: form.action,
                     data: dtoTangibleSale,
-                    success: function(data) {
+                    success: function (data) {
                         if (data.success) {
 
                             resetForm();
@@ -190,7 +232,7 @@
         function popUpForm(url, type) {
             //console.log(type);
             var formDiv = $('<div class="popDiv" />');
-            $.get(url).done(function(response) {
+            $.get(url).done(function (response) {
                 formDiv.html(response);
 
                 popUp = formDiv.dialog({
@@ -201,7 +243,7 @@
                     width: $(window).width() - 50,
                     height: 600,
                     modal: true,
-                    close: function() {
+                    close: function () {
                         dataTable.destroy();
                         popUp.dialog('close');
                         $('.popDiv').remove();
@@ -246,7 +288,7 @@
             //bind row event
             $('#purchaseTable tbody').on('dblclick',
                 'tr',
-                function() {
+                function () {
                     var data = dataTable.row(this).data();
                     saleItemRow('@Url.Action("SaleItemRow", "Sale")/' + data['PurchaseId']);
                     popUp.dialog('close');
@@ -256,7 +298,7 @@
 
         function saleItemRow(url) {
             var rowItem = $('<tr />');
-            $.get(url).done(function(response) {
+            $.get(url).done(function (response) {
                 rowItem.html(response);
 
                 tangibleItemsSale.row.add(rowItem).draw(true);
@@ -303,7 +345,7 @@
             //bind row event
             $('#personTable tbody').on('dblclick',
                 'tr',
-                function() {
+                function () {
                     var data = dataTable.row(this).data();
                     $('#PersonId').val(data['PersonId']);
                     $('#PersonName').val(data['Name']);
@@ -321,7 +363,7 @@
 
         function changeOverallStatus() {
             var sum = 0;
-            $('.subTotal').each(function() {
+            $('.subTotal').each(function () {
                 sum += parseFloat($(this).text()); // Or this.innerHTML, this.innerText
             });
             $('#OverAllTotal').html(sum);
