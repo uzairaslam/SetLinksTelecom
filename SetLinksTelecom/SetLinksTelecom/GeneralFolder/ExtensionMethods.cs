@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Web;
+using SetLinksTelecom.Data;
+using SetLinksTelecom.DTO;
 
 namespace SetLinksTelecom.GeneralFolder
 {
     public static class ExtensionMethods
     {
+        private static DataContext _db = new DataContext();
         public static T ParseEnum<T>(this string value)
         {
             return (T)Enum.Parse(typeof(T), value, true);
@@ -54,5 +58,28 @@ namespace SetLinksTelecom.GeneralFolder
             return dataTable;
         }
 
+        public static void GetInvalidPersons(this List<DtoPersonExcel> persons)
+        {
+            Regex cnic = new Regex(@"^[1-4]{1}[0-9]{4}(-)?[0-9]{7}(-)?[0-9]{1}$");
+            persons.RemoveAll(p => !string.IsNullOrWhiteSpace(p.Name) && p.Name.Length >= 3 && p.Name.Length <= 30
+                                   && p.FatherName.Length <= 30 && cnic.IsMatch(p.CNIC) &&
+                                   (p.Gender.Equals("Male") || p.Gender.Equals("Female"))
+                                   && !string.IsNullOrWhiteSpace(p.MobilePersonal) && !string.IsNullOrWhiteSpace(p.MobileBusiness)
+                                   && p.MobileBusiness != p.MobilePersonal && !ExtensionMethods.PhoneExist(p.MobilePersonal)
+                                   && !ExtensionMethods.PhoneExist(p.MobileBusiness) && ExtensionMethods.LineExist(p.BusinessLine)
+                                   && ExtensionMethods.LineExist(p.PersonalLine)
+            );
+        }
+
+        private static bool PhoneExist(string phone)
+        {
+            return _db.Persons.Any(p => p.MobileBusiness.Substring(p.MobileBusiness.Length - 10).Equals(phone)
+                                        || p.MobilePersonal.Substring(p.MobilePersonal.Length - 10).Equals(phone));
+        }
+
+        private static bool LineExist(string line)
+        {
+            return _db.Lines.Any(l => l.Name.Equals(line));
+        }
     }
 }

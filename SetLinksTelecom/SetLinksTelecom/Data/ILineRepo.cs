@@ -13,5 +13,6 @@ namespace SetLinksTelecom.Data
         Line GetLine(int id);
         void SaveLine(Line line);
         void UpdateLine(Line line);
+        bool LineExist(string name);
     }
 }

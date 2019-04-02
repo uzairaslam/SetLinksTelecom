@@ -18,6 +18,7 @@ namespace SetLinksTelecom.Repositories
         }
         public IList<Line> GetLines()
         {
+
             return _db.Lines.ToList();
         }
 
@@ -36,6 +37,11 @@ namespace SetLinksTelecom.Repositories
         {
             _db.Entry(line).State = EntityState.Modified;
             _db.SaveChanges();
+        }
+
+        public bool LineExist(string name)
+        {
+            return _db.Lines.Any(l => l.Name.ToLower().Equals(name.ToLower()));
         }
     }
 }

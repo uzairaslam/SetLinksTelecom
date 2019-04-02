@@ -56,9 +56,9 @@ namespace SetLinksTelecom.Models
         public string PermanentAddress { get; set; }
 
         [Required(ErrorMessage = "You must provide a Phone Number")]
-        [Display(Name = "Mobile Bussiness")]
+        [Display(Name = "Mobile Business")]
         [DataType(DataType.PhoneNumber)]
-        [RegularExpression(@"^((\+92)|(0092))-{0,1}\d{3}-{0,1}\d{7}$|^\d{11}$|^\d{4}-\d{7}$", ErrorMessage = "Not a valid Mobile Business number\nFormat: +923031234567 OR 03031234567")]
+        [RegularExpression(@"^(((\+92)|(0092)|(92))-{0,1})?\d{3}-{0,1}\d{7}$|^\d{11}$|^\d{4}-\d{7}$p", ErrorMessage = "Not a valid Mobile Business number\nFormat: +923031234567 OR 03031234567")]
         public string MobileBusiness { get; set; }
 
         //[CantSameValue("PersonalLineMap")]

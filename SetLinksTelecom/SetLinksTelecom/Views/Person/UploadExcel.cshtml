@@ -1,0 +1,96 @@
+﻿@using SetLinksTelecom.DTO
+@model List<SetLinksTelecom.DTO.DtoPersonExcel>
+@{
+    ViewBag.Title = "PersonExcel";
+    //if (Session["userName"] == null)
+    //{
+    //    Response.Redirect("~/User/Login");
+    //}
+}
+
+<h4>Upload Person Excel</h4>
+
+@using (Html.BeginForm("UploadExcel", "Person", FormMethod.Post, new {enctype = "multipart/form-data", onsubmit = "return myFunction"}))
+{
+    @*<div class="form-group">
+        <div class="input-group mb-3">
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="fileUpload">
+                <label class="custom-file-label" for="fileUpload">Choose file</label>
+            </div>
+            <div class="input-group-append">
+                <input type="submit" value="Upload" id="btnSubmit" class="btn btn-sm btn-primary" />  
+            </div>
+        </div>
+    </div>*@
+
+
+    <div class="form-group">  
+  
+        <div class="control-label col-md-2">Excel:</div>  
+        <div class="col-md-10">  
+            <input type="file" id="FileUpload" name="FileUpload" class="" />  
+        </div>  
+    </div>  
+    <div class="form-group">  
+        <div class="col-md-offset-2 col-md-10">  
+            <input type="submit" value="Upload" id="btnSubmit" class="btn btn-primary" />  
+  
+        </div>  
+    </div> 
+}
+
+@if (Model.Count > 0)
+{
+    <table id="personTable" class="table table-hover">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Father Name</th>
+            <th>CNIC</th>
+            <th>CNICIssueDate</th>
+            <th>DateofBirth</th>
+            <th>Designation</th>
+            <th>Gender</th>
+            <th>Qualification</th>
+            <th>CurrentAddress</th>
+            <th>PermanentAddress</th>
+            <th>MobileBusiness</th>
+            <th>BusinessLine</th>
+            <th>MobilePersonal</th>
+            <th>PersonalLine</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (DtoPersonExcel p in Model)
+        {
+            <tr data-toggle="tooltip" data-html="true" data-placement="bottom" title="@p.ErrorMessage">
+                <td>@p.Name</td>
+                <td>@p.FatherName</td>
+                <td>@p.CNIC</td>
+                <td>@p.CNICIssueDate</td>
+                <td>@p.DOB</td>
+                <td>@p.Designation</td>
+                <td>@p.Gender</td>
+                <td>@p.Qualification</td>
+                <td>@p.CurrentAddress</td>
+                <td>@p.PermanentAddress</td>
+                <td>@p.MobileBusiness</td>
+                <td>@p.BusinessLine</td>
+                <td>@p.MobilePersonal</td>
+                <td>@p.PersonalLine</td>
+
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@section scripts
+{
+    <script>
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip(); 
+        });
+    </script>
+}

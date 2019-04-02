@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SetLinksTelecom.DTO;
 using SetLinksTelecom.Models;
 
 namespace SetLinksTelecom.Data
@@ -16,5 +17,7 @@ namespace SetLinksTelecom.Data
         void DeletePerson(int id);
         void AssignBoss(int BossId, int FollowerId);
         void RemoveBoss(int PersonId = 0);
+        bool PhoneExist(string phone);
+        void ValidatePerson(DtoPersonExcel p);
     }
 }

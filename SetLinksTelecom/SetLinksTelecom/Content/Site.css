@@ -66,3 +66,17 @@ tr.shown td.details-control {
     padding-top: 5px;
 
 }
+
+.tooltip-inner {
+    white-space:pre-wrap;
+}
+
+.ui-tooltip {
+    /* tooltip container box */
+    white-space: pre-line;
+}
+
+.ui-tooltip-content {
+    /* tooltip content */
+    white-space: pre-line;
+}
