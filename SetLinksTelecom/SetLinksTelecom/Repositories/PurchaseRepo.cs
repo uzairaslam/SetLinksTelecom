@@ -181,7 +181,7 @@ namespace SetLinksTelecom.Repositories
                         Subname = dtoPurchase.Subname,
                         Percentage = dtoPurchase.Percentage,
                         Rate = dtoPurchase.Rate,
-                        StockOut = (type.Name == "Tangible") ? dtoPurchase.Qty : dtoPurchase.Total,
+                        //StockOut = (type.Name == "Tangible") ? dtoPurchase.Qty : dtoPurchase.Total,
                         DatePurchased = dtoPurchase.DatePurchased
                     };
                     _db.Purchases.Add(purchase);

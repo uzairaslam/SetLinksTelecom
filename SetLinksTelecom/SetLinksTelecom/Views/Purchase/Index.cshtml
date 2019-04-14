@@ -126,6 +126,7 @@
                 } else {
                     $('#Total').val(0);
                     $('#Total').innerText = '0';
+                    
                 }
             } else if ($($('#InventoryTypeId').find('option:selected')).text() === 'Intangible') {
                 if (Qty != null && Qty != 0 && Percentage != null && Percentage != 0) {
@@ -133,8 +134,10 @@
                     $('#Total').val(total);
                     $('#Total').innerText = total;
                 } else {
-                    $('#Total').val(0);
-                    $('#Total').innerText = '0';
+                    //$('#Total').val(0);
+                    //$('#Total').innerText = '0';
+                    $('#Total').val(Qty);
+                    $('#Total').innerText = Qty;
                 }
             } else {
                 $('#Total').val(0);

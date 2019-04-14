@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -17,6 +18,7 @@ namespace SetLinksTelecom.Models
         [MaxLength(12)]
         public string AccString { get; set; }
 
+        [NotMapped]
         public virtual ICollection<Purchase> Purchases { get; set; }
     }
 }

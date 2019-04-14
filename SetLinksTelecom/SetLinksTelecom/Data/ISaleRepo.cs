@@ -14,5 +14,6 @@ namespace SetLinksTelecom.Data
         void SaveInTangibleSale(DtoInTangibleSale dtoInTangibleSale);
         IList<DtoSaleReturnView> GetDataForReturn();
         DtoTangibleSaleDetailItem GetSpecificSaleDetailItem(int id);
+        DisplayDtoJazzCashExcel SaveJazzCashSales(DisplayDtoJazzCashExcel cashExcels);
     }
 }

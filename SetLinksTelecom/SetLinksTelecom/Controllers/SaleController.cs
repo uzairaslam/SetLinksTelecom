@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using LinqToExcel;
 using SetLinksTelecom.Data;
 using SetLinksTelecom.DTO;
 
@@ -85,5 +86,64 @@ namespace SetLinksTelecom.Controllers
             return View(dtoInTangibleSale);
         }
 
+        [HttpGet]
+        public ActionResult JazzCashExcel()
+        {
+            DisplayDtoJazzCashExcel model = new DisplayDtoJazzCashExcel();
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult JazzCashExcel(DisplayDtoJazzCashExcel model, HttpPostedFileBase FileUpload)
+        {
+            if (FileUpload != null)
+            {
+                if (FileUpload.ContentType == "application/vnd.ms-excel" || FileUpload.ContentType ==
+                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                {
+                    string filename = FileUpload.FileName;
+                    string targetpath = Server.MapPath("~/Docs/");
+                    FileUpload.SaveAs(targetpath + filename);
+                    string pathToExcelFile = targetpath + filename;
+                    
+                    var excelFile = new ExcelQueryFactory(pathToExcelFile);
+                    excelFile.AddMapping<DtoJazzCashExcel>(x => x.TransactionId, "Transaction ID");
+                    excelFile.AddMapping<DtoJazzCashExcel>(x => x.MSISDN, "Organization MSISDN");
+                    excelFile.AddMapping<DtoJazzCashExcel>(x => x.BalanceBeforeTransaction, "The Balance before Transaction");
+                    excelFile.AddMapping<DtoJazzCashExcel>(x => x.TransactionAmount, "Transaction Amount");
+                    excelFile.AddMapping<DtoJazzCashExcel>(x => x.BalanceAfterTransaction, "The Balance after Transaction");
+                    excelFile.AddMapping<DtoJazzCashExcel>(x => x.TransactionTime, "Transaction Time");
+                    excelFile.AddMapping<DtoJazzCashExcel>(x => x.TransactionStatus, "Transaction Status");
+                    var worksheetNames = excelFile.GetWorksheetNames();
+
+                    var artistAlbums = (from a in excelFile.Worksheet<DtoJazzCashExcel>(worksheetNames.First()) select a).ToList();
+                    model = _saleRepo.SaveJazzCashSales(new DisplayDtoJazzCashExcel
+                    {
+                        jazzCashExcel = artistAlbums,
+                        PurchaseId = model.PurchaseId,
+                        ItemName = model.ItemName
+                    });
+
+
+                    if ((System.IO.File.Exists(pathToExcelFile)))
+                    {
+                        System.IO.File.Delete(pathToExcelFile);
+                    }
+
+                    //foreach (DtoJazzCashExcel sale in artistAlbums)
+                    //{
+                    //    if (sale.TransactionStatus.ToLower().Equals("Completed"))
+                    //    {
+                    //        if (sale.BalanceBeforeTransaction < sale.BalanceAfterTransaction)
+                    //        {
+
+                    //        }
+                    //    }
+                    //}
+                }
+            }
+
+            return View(model);
+        }
     }
 }

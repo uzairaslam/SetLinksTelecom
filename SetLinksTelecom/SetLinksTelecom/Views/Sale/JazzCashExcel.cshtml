@@ -1,0 +1,172 @@
+﻿@using SetLinksTelecom.DTO
+@model SetLinksTelecom.DTO.DisplayDtoJazzCashExcel
+@{
+    ViewBag.Title = "JazzCashExcel";
+    if (Session["userName"] == null)
+    {
+        Response.Redirect("~/User/Login");
+    }
+}
+
+<h4>Jazz Cash Excel</h4>
+
+@using (Html.BeginForm("JazzCashExcel", "Sale", FormMethod.Post, new { enctype = "multipart/form-data", onsubmit = "return myFunction" }))
+{
+    @*<div class="form-group">
+            <div class="input-group mb-3">
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="fileUpload">
+                    <label class="custom-file-label" for="fileUpload">Choose file</label>
+                </div>
+                <div class="input-group-append">
+                    <input type="submit" value="Upload" id="btnSubmit" class="btn btn-sm btn-primary" />
+                </div>
+            </div>
+        </div>*@
+    @Html.HiddenFor(m => m.PurchaseId)
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.ItemName, new { @class = "col-form-label col-form-label-sm" })
+        @Html.EditorFor(m => m.ItemName, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+        @Html.ValidationMessageFor(m => m.ItemName)
+    </div>
+
+    <div class="form-group">
+
+        <div class="control-label col-md-2">Excel:</div>
+        <div class="col-md-10">
+            <input type="file" id="FileUpload" name="FileUpload" class="" />
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Upload" id="btnSubmit" class="btn btn-primary" />
+
+        </div>
+    </div>
+    <div class="field-validation-error">
+        @Html.DisplayFor(m => m.ErrorMessage)
+    </div>
+    if (Model.jazzCashExcel.Count > 0)
+    {
+        
+        <table id="personTable" class="table table-hover">
+            <thead>
+                <tr>
+                    <td>Transaction ID</td>
+                    <td>MSISDN</td>
+                    <td>BeforeTransaction</td>
+                    <td>TransactionAmount</td>
+                    <td>BalanceAfterTransaction</td>
+                    <td>TransactionTime</td>
+                    <td>TransactionStatus</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (DtoJazzCashExcel sale in Model.jazzCashExcel)
+                {
+                    <tr>
+                        <td>@sale.TransactionId</td>
+                        <td>@sale.MSISDN</td>
+                        <td>@sale.BalanceBeforeTransaction</td>
+                        <td>@sale.TransactionAmount</td>
+                        <td>@sale.BalanceAfterTransaction</td>
+                        <td>@sale.TransactionTime</td>
+                        <td>@sale.TransactionStatus</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}
+
+
+<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+
+@section scripts
+{
+
+<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+        var popUp, dataTable;
+        $(document).ready(function() {
+            $('#ItemName').keypress(function(event) {
+
+                var keycode = (event.keyCode ? event.keyCode : event.which);
+                if (keycode == '13') {
+                    event.preventDefault();
+                    popUpForm('@Url.Action("PurchaseGrid", "Purchase")', "Purchase");
+                } else {
+                    event.preventDefault();
+                }
+                return false;
+            });
+        });
+
+        function popUpForm(url, type) {
+
+            var formDiv = $('<div class="popDiv" />');
+            $.get(url).done(function (response) {
+                formDiv.html(response);
+
+                popUp = formDiv.dialog({
+                    autoOpen: true,
+                    resizable: false,
+                    title: 'Select Items',
+                    draggable: false,
+                    width: $(window).width() - 50,
+                    height: 600,
+                    modal: true,
+                    close: function () {
+                        dataTable.destroy();
+                        popUp.dialog('close');
+                        $('.popDiv').remove();
+                    }
+                });
+                loadDialogContent();
+            });
+
+            function loadDialogContent() {
+                dataTable = $("#purchaseTable").DataTable({
+                    "ajax": {
+                        "url": "/Purchase/GetData?inventoryType=InTangible",
+                        "type": "Get",
+                        "datatype": "json"
+                    },
+                    "columns": [
+                        { "data": "PortalName", "name": "PortalName" },
+                        { "data": "InventoryType", "name": "InventoryType" },
+                        { "data": "CategoryName", "name": "CategoryName" },
+                        { "data": "ItemName", "name": "ItemName" },
+                        { "data": "Subname", "name": "Subname" },
+                        { "data": "Qty", "name": "Qty" },
+                        { "data": "Rate", "name": "Rate" },
+                        { "data": "Total", "name": "Total" },
+                        { "data": "Percentage", "name": "Percentage" },
+                        { "data": "DatePurchasedFormatted", "name": "DatePurchased" }
+                    ],
+                    "language": {
+                        "emptyTable": "No data found, Please Click on <b>Add New</b> button",
+                        "processing": "Processing... Please wait"
+                    },
+                    keys: true
+                });
+
+                //bind row event
+                $('#purchaseTable tbody').on('dblclick',
+                    'tr',
+                    function () {
+                        var data = dataTable.row(this).data();
+                        console.log(data);
+                        $('#PurchaseId').val(data['PurchaseId']);
+                        $('#ItemName').val(data['ItemName']);
+                        popUp.dialog('close');
+                    });
+            }
+
+        }
+
+    </script>
+}

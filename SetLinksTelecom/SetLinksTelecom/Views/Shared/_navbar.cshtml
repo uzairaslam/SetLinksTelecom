@@ -1,6 +1,6 @@
 ﻿@using SetLinksTelecom.Data
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="padding-left: 50px;padding-right: 50px;">
-    <a class="navbar-brand" href="#">Set Links Telecom</a>
+    <a class="navbar-brand" href="/Home/Index">Set Links Telecom</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -75,9 +75,9 @@
                         <li class="nav-item @Html.IsActiveLink(actions: "InTangibleSaleIndex", controllers: "Sale")">
                             @Html.ActionLink("InTangible Items", "InTangibleSaleIndex", "Sale", null, new { @class = "dropdown-item" })
                         </li>
-                        @*<li class="nav-item @Html.IsActiveLink(actions: "InTangibleSaleIndex", controllers: "SaleReturn")">
-                                @Html.ActionLink("Tangible Sale Return", "TangibleSaleReturnIndex", "SaleReturn", null, new { @class = "dropdown-item" })
-                            </li>*@
+                        <li class="nav-item @Html.IsActiveLink(actions: "InTangibleSaleIndex", controllers: "Sale")">
+                            @Html.ActionLink("Jazz Cash Excel", "JazzCashExcel", "Sale", null, new { @class = "dropdown-item" })
+                        </li>
                         <li class="nav-item @Html.IsActiveLink(actions: "BvsAllotment", controllers: "BVS")">
                             @Html.ActionLink("Bvs Allotment", "BvsAllotment", "BVS", null, new { @class = "dropdown-item" })
                         </li>

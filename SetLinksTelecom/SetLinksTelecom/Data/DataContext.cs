@@ -42,6 +42,7 @@ namespace SetLinksTelecom.Data
         public DbSet<BVSAllotService> BvsAllotServices { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Bank> Banks { get; set; }
+        public DbSet<SalePurchaseStockOutMap> StockOutMaps { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -60,6 +61,7 @@ namespace SetLinksTelecom.Data
             modelBuilder.Entity<AccVoucher>().Property(s => s.Debit).HasPrecision(20, 4);
             modelBuilder.Entity<AccVoucher>().Property(s => s.Credit).HasPrecision(20, 4);
             modelBuilder.Entity<Line>().Property(s => s.Percentage).HasPrecision(20, 2);
+            modelBuilder.Entity<SalePurchaseStockOutMap>().Property(s => s.Amount).HasPrecision(20, 4);
             modelBuilder.Configurations.Add(new PersonMapping());
         }
     }

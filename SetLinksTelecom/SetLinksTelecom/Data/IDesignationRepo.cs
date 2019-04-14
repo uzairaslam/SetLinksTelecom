@@ -18,5 +18,8 @@ namespace SetLinksTelecom.Data
         void UpdateDesignation(Designation designation);
 
         void DeleteDesignation(int id);
+
+        int GetDesignationId(string name);
+        bool DesignationExist(string name);
     }
 }

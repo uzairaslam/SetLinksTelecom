@@ -2,10 +2,10 @@
 @model List<SetLinksTelecom.DTO.DtoPersonExcel>
 @{
     ViewBag.Title = "PersonExcel";
-    //if (Session["userName"] == null)
-    //{
-    //    Response.Redirect("~/User/Login");
-    //}
+    if (Session["userName"] == null)
+    {
+        Response.Redirect("~/User/Login");
+    }
 }
 
 <h4>Upload Person Excel</h4>
@@ -90,7 +90,9 @@
 {
     <script>
         $(document).ready(function(){
-            $('[data-toggle="tooltip"]').tooltip(); 
+            $('[data-toggle="tooltip"]').tooltip();
+            @*var model = @Html.Raw(Json.Encode(Model));
+            console.log(model);*@
         });
     </script>
 }

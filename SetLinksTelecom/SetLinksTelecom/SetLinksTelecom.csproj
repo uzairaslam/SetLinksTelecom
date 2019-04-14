@@ -488,6 +488,26 @@
     <Compile Include="Migrations\201903191628374_AddedBanksTable.Designer.cs">
       <DependentUpon>201903191628374_AddedBanksTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904071600017_TransactionIdinSale.cs" />
+    <Compile Include="Migrations\201904071600017_TransactionIdinSale.Designer.cs">
+      <DependentUpon>201904071600017_TransactionIdinSale.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904091156117_SalePurchaseStockOutMap.cs" />
+    <Compile Include="Migrations\201904091156117_SalePurchaseStockOutMap.Designer.cs">
+      <DependentUpon>201904091156117_SalePurchaseStockOutMap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904091451103_SaleTransactionIdChanged.cs" />
+    <Compile Include="Migrations\201904091451103_SaleTransactionIdChanged.Designer.cs">
+      <DependentUpon>201904091451103_SaleTransactionIdChanged.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904121154119_PersonNameLength.cs" />
+    <Compile Include="Migrations\201904121154119_PersonNameLength.Designer.cs">
+      <DependentUpon>201904121154119_PersonNameLength.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904131352362_unmapPortalAndPurchase.cs" />
+    <Compile Include="Migrations\201904131352362_unmapPortalAndPurchase.Designer.cs">
+      <DependentUpon>201904131352362_unmapPortalAndPurchase.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Bank.cs" />
     <Compile Include="Models\BVSAllot.cs" />
@@ -508,6 +528,7 @@
     <Compile Include="Models\Purchase.cs" />
     <Compile Include="Models\Sale.cs" />
     <Compile Include="Models\SaleDetail.cs" />
+    <Compile Include="Models\SalePurchaseStockOutMap.cs" />
     <Compile Include="Models\Stock.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -741,6 +762,7 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Person\UploadExcel.cshtml" />
+    <Content Include="Views\Sale\JazzCashExcel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -926,6 +948,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201903191628374_AddedBanksTable.resx">
       <DependentUpon>201903191628374_AddedBanksTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904071600017_TransactionIdinSale.resx">
+      <DependentUpon>201904071600017_TransactionIdinSale.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904091156117_SalePurchaseStockOutMap.resx">
+      <DependentUpon>201904091156117_SalePurchaseStockOutMap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904091451103_SaleTransactionIdChanged.resx">
+      <DependentUpon>201904091451103_SaleTransactionIdChanged.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904121154119_PersonNameLength.resx">
+      <DependentUpon>201904121154119_PersonNameLength.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904131352362_unmapPortalAndPurchase.resx">
+      <DependentUpon>201904131352362_unmapPortalAndPurchase.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\BalanceSheet.rdlc" />
     <EmbeddedResource Include="Migrations\201902251355230_PersonSelfReference.resx">

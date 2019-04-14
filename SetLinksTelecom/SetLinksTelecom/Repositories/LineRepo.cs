@@ -43,5 +43,10 @@ namespace SetLinksTelecom.Repositories
         {
             return _db.Lines.Any(l => l.Name.ToLower().Equals(name.ToLower()));
         }
+
+        public int GetLineId(string name)
+        {
+            return _db.Lines.Single(l => l.Name.ToLower().Equals(name.ToLower())).LineId;
+        }
     }
 }

@@ -138,4 +138,34 @@ namespace SetLinksTelecom.DTO
         public decimal SubTotal { get; set; }
     }
 
+
+    public class DtoJazzCashExcel
+    {
+        public DtoJazzCashExcel()
+        {
+            
+        }
+        public string TransactionId { get; set; }
+        public string MSISDN { get; set; }
+        public decimal BalanceBeforeTransaction { get; set; }
+        public decimal TransactionAmount { get; set; }
+        public decimal BalanceAfterTransaction { get; set; }
+        public string TransactionTime { get; set; }
+        public string TransactionStatus { get; set; }
+    }
+
+    public class DisplayDtoJazzCashExcel
+    {
+        public DisplayDtoJazzCashExcel()
+        {
+            jazzCashExcel = new List<DtoJazzCashExcel>();
+        }
+
+        public int PurchaseId { get; set; }
+        [Display(Name = "Item Name")]
+        public string ItemName { get; set; }
+
+        public string ErrorMessage { get; set; }
+        public List<DtoJazzCashExcel> jazzCashExcel;
+    }
 }

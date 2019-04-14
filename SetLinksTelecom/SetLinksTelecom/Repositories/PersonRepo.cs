@@ -121,9 +121,9 @@ namespace SetLinksTelecom.Repositories
                 p.IsInvalid = true;
             }
 
-            if(!string.IsNullOrWhiteSpace(p.Name) && (p.Name.Length < 3 || p.Name.Length > 30))
+            if(!string.IsNullOrWhiteSpace(p.Name) && (p.Name.Length < 3 || p.Name.Length > 100))
             {
-                p.ErrorMessage = p.ErrorMessage + "Length of name should \n";
+                p.ErrorMessage = p.ErrorMessage + "Length of name should be between 3 and 100 \n";
                 p.IsInvalid = true;
             }
 

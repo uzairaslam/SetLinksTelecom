@@ -17,6 +17,8 @@ namespace SetLinksTelecom.Models
         public decimal OverAllTotal { get; set; }
         [MaxLength(150)]
         public string Remarks { get; set; }
+
+        public string TransactionId { get; set; }
         public virtual List<SaleDetail> SaleDetails { get; set; }
     }
 }

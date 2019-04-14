@@ -8,7 +8,29 @@
 
 <h4>Persons</h4>
 
-<a class="btn btn-sm btn-success" style="margin-bottom: 10px;" onclick="popUpForm('@Url.Action("AddOrEdit", "Person")')"><i class="fa fa-plus"></i> Add New</a>
+<div class="row">
+    <div class="col">
+        <a class="btn btn-sm btn-success" style="margin-bottom: 10px;" onclick="popUpForm('@Url.Action("AddOrEdit", "Person")')"><i class="fa fa-plus"></i> Add New</a>
+    </div>
+    <div class="col">
+    @using (Html.BeginForm("UploadExcel", "Person", FormMethod.Post, new {enctype = "multipart/form-data", onsubmit = "return myFunction"}))
+    {
+        <div class="form-group">
+            <div class="input-group mb-3">
+                <div class="custom-file">
+                    @*<input type="file" class="custom-file-input" id="FileUpload">*@
+                    <input type="file" id="FileUpload" name="FileUpload" class="custom-file-input" />
+                    <label class="custom-file-label" for="FileUpload">Choose Excel file</label>
+                </div>
+                <div class="input-group-append">
+                    @*<span class="input-group-text" id="">Upload</span>*@
+                    <input type="submit" value="Upload" id="btnSubmit" class="btn btn-primary" /> 
+                </div>
+            </div>
+        </div>
+    }
+    </div>
+</div>
 <table id="personTable" class="table table-hover">
     <thead>
         <tr>

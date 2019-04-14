@@ -20,7 +20,7 @@ namespace SetLinksTelecom.Models
         [Display(Name = "Portal")]
         public int PortalId { get; set; }
         [NotMapped]
-        [ForeignKey("PortalId")]
+        //[ForeignKey("PortalId")]
         public virtual Portal Portal { get; set; }
 
         [Column("ItemId", Order = 2)]

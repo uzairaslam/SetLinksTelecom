@@ -14,7 +14,7 @@ namespace SetLinksTelecom.Models
         public int PersonId { get; set; }
 
         [Required(ErrorMessage = "Name is required")]
-        [MinLength(3),MaxLength(30)]
+        [MinLength(3),MaxLength(50)]
         public string Name { get; set; }
 
         [MaxLength(30)]
@@ -58,7 +58,7 @@ namespace SetLinksTelecom.Models
         [Required(ErrorMessage = "You must provide a Phone Number")]
         [Display(Name = "Mobile Business")]
         [DataType(DataType.PhoneNumber)]
-        [RegularExpression(@"^(((\+92)|(0092)|(92))-{0,1})?\d{3}-{0,1}\d{7}$|^\d{11}$|^\d{4}-\d{7}$p", ErrorMessage = "Not a valid Mobile Business number\nFormat: +923031234567 OR 03031234567")]
+        [RegularExpression(@"^(((\+92)|(0092)|(92))-{0,1})?\d{3}-{0,1}\d{7}$|^\d{11}$|^\d{4}-\d{7}$", ErrorMessage = "Not a valid Mobile Business number\nFormat: +923031234567 OR 03031234567")]
         public string MobileBusiness { get; set; }
 
         //[CantSameValue("PersonalLineMap")]
@@ -71,7 +71,7 @@ namespace SetLinksTelecom.Models
         [Required(ErrorMessage = "You must provide a Phone Number")]
         [Display(Name = "Mobile Personal")]
         [DataType(DataType.PhoneNumber)]
-        [RegularExpression(@"^((\+92)|(0092))-{0,1}\d{3}-{0,1}\d{7}$|^\d{11}$|^\d{4}-\d{7}$", ErrorMessage = "Not a valid Mobile Personal number\nFormat: +923031234567 OR 03031234567")]
+        [RegularExpression(@"^(((\+92)|(0092)|(92))-{0,1})?\d{3}-{0,1}\d{7}$|^\d{11}$|^\d{4}-\d{7}$", ErrorMessage = "Not a valid Mobile Personal number\nFormat: +923031234567 OR 03031234567")]
         public string MobilePersonal { get; set; }
 
         //[CantSameValue("BusinessLineMap")]

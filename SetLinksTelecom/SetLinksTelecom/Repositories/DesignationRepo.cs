@@ -82,5 +82,15 @@ namespace SetLinksTelecom.Repositories
                 _db.SaveChanges();
             }
         }
+
+        public int GetDesignationId(string name)
+        {
+            return _db.Designations.Single(d => d.Name.Equals(name)).Id;
+        }
+
+        public bool DesignationExist(string name)
+        {
+            return _db.Designations.Any(d => d.Name.ToLower().Equals(name.ToLower()));
+        }
     }
 }

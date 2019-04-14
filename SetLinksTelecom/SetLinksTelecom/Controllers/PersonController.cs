@@ -178,10 +178,26 @@ namespace SetLinksTelecom.Controllers
 
                     //DataTable dtable = ds.Tables["ExcelTable"];
 
-                    string sheetName = "Sheet1";
+                    
 
                     var excelFile = new ExcelQueryFactory(pathToExcelFile);
+                    excelFile.AddMapping<DtoPersonExcel>(x => x.Name, "Name");
+                    excelFile.AddMapping<DtoPersonExcel>(x => x.FatherName, "Father Name");
+                    excelFile.AddMapping<DtoPersonExcel>(x => x.CNIC, "CNIC");
+                    excelFile.AddMapping<DtoPersonExcel>(x => x.CNICIssueDate, "CNIC Issue Date");
+                    excelFile.AddMapping<DtoPersonExcel>(x => x.DOB, "Date of Birth");
+                    excelFile.AddMapping<DtoPersonExcel>(x => x.Designation, "Designation");
+                    excelFile.AddMapping<DtoPersonExcel>(x => x.Gender, "Gender");
+                    excelFile.AddMapping<DtoPersonExcel>(x => x.Qualification, "Qualification");
+                    excelFile.AddMapping<DtoPersonExcel>(x => x.CurrentAddress, "Current Address");
+                    excelFile.AddMapping<DtoPersonExcel>(x => x.PermanentAddress, "Permanent Address");
+                    excelFile.AddMapping<DtoPersonExcel>(x => x.MobileBusiness, "Mobile Bussiness");
+                    excelFile.AddMapping<DtoPersonExcel>(x => x.BusinessLine, "Business Line");
+                    excelFile.AddMapping<DtoPersonExcel>(x => x.MobilePersonal, "Mobile Personal");
+                    excelFile.AddMapping<DtoPersonExcel>(x => x.PersonalLine, "Personal Line");
+                    string sheetName = excelFile.GetWorksheetNames().First();
                     var artistAlbums = (from a in excelFile.Worksheet<DtoPersonExcel>(sheetName) select a).ToList();
+                    //var persons = _personRepo.GetData();
                     //artistAlbums.GetInvalidPersons();
                     //artistAlbums.ToList();
 
@@ -191,59 +207,96 @@ namespace SetLinksTelecom.Controllers
                     }
 
                     var invalidPersons = artistAlbums.Where(p => p.IsInvalid).ToList();
-
-                    //foreach (var a in artistAlbums)
-                    //{
-                    //    try
-                    //    {
-                    //        //if (a.Name != "" && a.Address != "" && a.ContactNo != "")
-                    //        //{
-                    //        //    DtoPersonExcel TU = new DtoPersonExcel();
-                    //        //    TU.Name = a.Name;
-                    //        //    TU.Address = a.Address;
-                    //        //    TU.ContactNo = a.ContactNo;
-                    //        //    db.Users.Add(TU);
-
-                    //        //    db.SaveChanges();
-
-
-
-                    //        //}
-                    //        //else
-                    //        //{
-                    //        //    data.Add("<ul>");
-                    //        //    if (a.Name == "" || a.Name == null) data.Add("<li> name is required</li>");
-                    //        //    if (a.Address == "" || a.Address == null) data.Add("<li> Address is required</li>");
-                    //        //    if (a.ContactNo == "" || a.ContactNo == null) data.Add("<li>ContactNo is required</li>");
-
-                    //        //    data.Add("</ul>");
-                    //        //    data.ToArray();
-                    //        //    return Json(data, JsonRequestBehavior.AllowGet);
-                    //        //}
-                    //    }
-
-                    //    catch (DbEntityValidationException ex)
-                    //    {
-                    //        foreach (var entityValidationErrors in ex.EntityValidationErrors)
-                    //        {
-
-                    //            foreach (var validationError in entityValidationErrors.ValidationErrors)
-                    //            {
-
-                    //                Response.Write("Property: " + validationError.PropertyName + " Error: " + validationError.ErrorMessage);
-
-                    //            }
-
-                    //        }
-                    //    }
-                    //}
-                    //deleting excel file from folder  
+                      
                     if ((System.IO.File.Exists(pathToExcelFile)))
                     {
                         System.IO.File.Delete(pathToExcelFile);
                     }
 
-                    return View(invalidPersons); //Json("success", JsonRequestBehavior.AllowGet);
+                    if (invalidPersons.Count > 0)
+                    {
+                        return View(invalidPersons); //Json("success", JsonRequestBehavior.AllowGet);   
+                    }
+                    else
+                    {
+                        foreach (DtoPersonExcel dtoPerson in artistAlbums)
+                        {
+                            try
+                            {
+                                var businessLine =
+                                    !string.IsNullOrWhiteSpace(dtoPerson.BusinessLine) //&&
+                                    //_lineRepo.LineExist(dtoPerson.BusinessLine)
+                                        ? _lineRepo.GetLineId(dtoPerson.BusinessLine)
+                                        : 0;
+
+                                var personalLine =
+                                    !string.IsNullOrWhiteSpace(dtoPerson.PersonalLine) //&&
+                                    //_lineRepo.LineExist(dtoPerson.PersonalLine)
+                                        ? _lineRepo.GetLineId(dtoPerson.PersonalLine)
+                                        : 0;
+                                var designation =
+                                    !string.IsNullOrWhiteSpace(dtoPerson.Designation) //&&
+                                    //_lineRepo.LineExist(dtoPerson.Designation)
+                                        ? _designationRepo.GetDesignationId(dtoPerson.Designation)
+                                        : 0;
+                                Person person = new Person
+                                {
+                                    Name = dtoPerson.Name,
+                                    FatherName = dtoPerson.FatherName,
+                                    CNIC = dtoPerson.CNIC,
+                                    MobileBusiness = dtoPerson.MobileBusiness,
+                                    Gender = dtoPerson.Gender,
+                                    DOB = dtoPerson.DOB,
+                                    CNICIssueDate = dtoPerson.CNICIssueDate,
+                                    CurrentAddress = dtoPerson.CurrentAddress,
+                                    PermanentAddress = dtoPerson.PermanentAddress,
+                                    BusinessLineMap = businessLine,
+                                    MobilePersonal = dtoPerson.MobilePersonal,
+                                    PersonalLineMap = personalLine,
+                                    Qualification = dtoPerson.Qualification,
+                                    DesignationId = designation
+                                };
+                                try
+                                {
+                                    _personRepo.SavePerson(person);
+                                }
+                                catch (DbEntityValidationException ex)
+                                {
+                                    // Retrieve the error messages as a list of strings.
+                                    var errorMessages = ex.EntityValidationErrors
+                                        .SelectMany(x => x.ValidationErrors)
+                                        .Select(x => x.ErrorMessage);
+
+                                    // Join the list to a single string.
+                                    var fullErrorMessage = string.Join(" ", errorMessages);
+
+                                    // Combine the original exception message with the new one.
+                                    var exceptionMessage = string.Concat(ex.Message, " The validation errors are: ",
+                                        fullErrorMessage);
+
+                                    // Throw a new DbEntityValidationException with the improved exception message.
+                                    //throw new DbEntityValidationException(exceptionMessage, ex.EntityValidationErrors);
+                                    dtoPerson.IsInvalid = true;
+                                    dtoPerson.ErrorMessage = exceptionMessage;
+                                    invalidPersons.Add(dtoPerson);
+                                }
+                                catch (Exception ex)
+                                {
+                                    dtoPerson.IsInvalid = true;
+                                    dtoPerson.ErrorMessage = ex.Message;
+                                    invalidPersons.Add(dtoPerson);
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                dtoPerson.IsInvalid = true;
+                                dtoPerson.ErrorMessage = e.Message;
+                                invalidPersons.Add(dtoPerson);
+                            }
+                        }
+
+                        return View(invalidPersons);
+                    }
                 }
                 else
                 {
@@ -257,11 +310,8 @@ namespace SetLinksTelecom.Controllers
             }
             else
             {
-                data.Add("<ul>");
-                if (FileUpload == null) data.Add("<li>Please choose Excel file</li>");
-                data.Add("</ul>");
-                data.ToArray();
-                return Json(data, JsonRequestBehavior.AllowGet);
+                List<DtoPersonExcel> list = new List<DtoPersonExcel>();
+                return View(list);
             }
         }
     }
